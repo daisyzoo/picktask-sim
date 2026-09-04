@@ -1,0 +1,29 @@
+# LeRobot 录制依赖（mujoco_demo / Python 3.12，对齐 lerobot/pyproject.toml）
+#
+# 安装前可先运行: python picktask/scripts/check_recording_deps.py
+#
+# pip:
+#   pip install -r picktask/requirements-recording.txt
+#
+# conda（macOS 网络/SSL 问题时推荐）:
+#   conda install -c pytorch -c conda-forge \
+#     "numpy>=2.0,<2.3" pytorch torchvision pyarrow opencv av datasets
+
+numpy>=2.0.0,<2.3.0
+torch>=2.7.0,<2.11.0
+torchvision>=0.22.0,<0.26.0
+pyarrow
+opencv-python-headless
+# macOS 第二预览窗口若 imshow 失败，可改用: pip install opencv-python
+datasets
+packaging
+
+# mp4 视频编码（pip 编译失败时: conda install -c conda-forge av）
+av
+
+# ACT 训练（pickcup_train_act.py）
+accelerate
+einops
+draccus
+termcolor
+diffusers>=0.27.2,<0.32.0

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+assets/cache/*
+!assets/cache/.gitkeep
+data/sessions/*
+!data/sessions/.gitkeep
+# RoboCasa 下载体积大；保留 README / manifest 说明
+assets/robocasa/**
+!assets/robocasa/README.md
+!assets/robocasa/manifest.json

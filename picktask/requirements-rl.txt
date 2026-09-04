@@ -1,0 +1,13 @@
+# Pick Cup RL 依赖
+#
+# 默认使用 lib/pickcup_ppo.py（纯 PyTorch），只需 gymnasium + 已有 torch。
+# gymnasium 通常已随其他依赖安装；若缺失：
+#   pip install gymnasium
+#
+# pip / conda SSL 失败时（Mac 常见），可试清华镜像：
+#   pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gymnasium
+#
+# 可选：stable-baselines3（当前脚本未使用，无需安装）
+#   pip install stable-baselines3
+
+gymnasium>=1.0.0,<2.0.0

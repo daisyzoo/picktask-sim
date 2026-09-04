@@ -1,0 +1,221 @@
+<mxfile host="65bd71144e">
+    <diagram id="picktask-act" name="PickTask ACT Architecture">
+        <mxGraphModel dx="1032" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1500" background="#1A1F2E" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1A1F2E;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry width="2400" height="1500" as="geometry"/>
+                </mxCell>
+                <mxCell id="title" value="PickTask ACT 模型架构（LeRobot ACTPolicy）&#10;pickcup_train_200 · step_080000 · ~51.7M params · use_vae=true" style="text;html=1;strokeColor=none;fillColor=#243047;fontColor=#F0F4FA;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="20" width="1360" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="图例&#10;━━ 实线：训练 + 推理共用路径&#10;┄┄ 虚线：仅训练阶段（GT action / VAE / Loss）&#10;■ 青底框：推理时 latent z := 0（VAE encoder 不运行）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#243047;strokeColor=#6B7280;fontColor=#DDE4F0;fontSize=13;align=left;spacing=8;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="320" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_input" value="1. 输入 / 预处理（Preprocessor）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A2F;strokeColor=#3DDC97;fontColor=#B8F5D4;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="130" width="360" height="620" as="geometry"/>
+                </mxCell>
+                <mxCell id="dataset" value="LeRobot Dataset v3&#10;pickcupdata/train/pickcup_train_200&#10;200 episodes · 34,672 frames · 30 Hz&#10;脚本: pickcup_train_act.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#3DDC97;fontColor=#E8ECF1;fontSize=13;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="175" width="320" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="img_raw" value="observation.images.head_camera&#10;存储: video (480×640×3) uint8&#10;训练 batch: (B, 3, 480, 640) float&#10;归一化: MEAN_STD（dataset stats）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#3DDC97;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="265" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="state_raw" value="observation.state · proprio (B, 8)&#10;归一化: MEAN_STD&#10;&#10;8 维关节角 (rad):&#10;waist_yaw · R_shoulder_p/r/y · R_elbow · R_wrist_roll&#10;task_gripper_right · task_gripper_left&#10;⚠ 不含杯子位姿" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#3DDC97;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="360" width="320" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="action_gt" value="【仅训练】action GT chunk&#10;(B, 100, 8) 未来 100 步关节目标&#10;delta_timestamps: 0…99 @ 30Hz&#10;episode 末尾 padding → action_is_pad&#10;与 state 同 8 维，绝对关节角非 delta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A2A1A;strokeColor=#F0A050;fontColor=#FFDDB8;fontSize=12;strokeWidth=2;dashed=1;dashPattern=8 4;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="505" width="320" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="preprocess" value="Preprocessor Pipeline&#10;RenameObs → AddBatch → Device&#10;→ Normalizer (VISUAL/STATE/ACTION)&#10;&#10;Postprocess（推理输出）:&#10;Unnormalizer → CPU → 8D 关节 rad" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#3DDC97;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="620" width="320" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_vision" value="2. 视觉编码器 ResNet18 (~11.5M)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E2A3F;strokeColor=#6BA4FF;fontColor=#C5DCFF;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="130" width="340" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="resnet" value="torchvision ResNet18&#10;pretrained: IMAGENET1K_V1&#10;FrozenBatchNorm2d&#10;IntermediateLayerGetter → layer4&#10;&#10;输入: (B, 3, 480, 640)&#10;输出 feature_map: (B, 512, 15, 20)&#10;stride=32 → 15×20=300 spatial cells" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="180" width="300" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="img_proj" value="1×1 Conv2d: 512 → dim_model (512)&#10;+ ACTSinusoidalPositionEmbedding2d&#10;  (256-d sin/cos per H,W axis)&#10;rearrange → (300, B, 512)&#10;300 个 image tokens 进入主 Encoder" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="315" width="300" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_tokens" value="3. 1D Token 投影" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E2A3F;strokeColor=#6BA4FF;fontColor=#C5DCFF;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="450" width="340" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="state_proj" value="State Token&#10;Linear(8 → 512)&#10;(B, 8) → (1, B, 512)&#10;+ learned 1D pos embed (slot 1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="495" width="300" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="latent_proj" value="Latent Token&#10;Linear(32 → 512) → (1, B, 512)&#10;+ learned 1D pos embed (slot 0)&#10;&#10;训练: z ~ q(z|state, action_GT) 采样&#10;推理: z = zeros(B, 32) 固定先验均值&#10;config.use_vae=true 但 infer 不跑 VAE enc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3040;strokeColor=#5BC0BE;fontColor=#A8E8F0;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="585" width="300" height="145" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_vae" value="4. CVAE 分支 — 仅训练 forward（~17.3M）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A2A1A;strokeColor=#F0A050;fontColor=#FFDDB8;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;dashed=1;dashPattern=8 4;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="780" width="740" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="vae_build" value="VAE Encoder 输入 token 序列 (B, 102, 512)&#10;[CLS] + [state] + [a₀…a₉₉]&#10;&#10;CLS: Embedding(1, 512)&#10;state: Linear(8→512) + unsqueeze&#10;each action step: Linear(8→512)&#10;+ 固定 1D sinusoidal pos enc (102 slots)&#10;key_padding_mask: action_is_pad" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#F0A050;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="830" width="300" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="vae_enc" value="VAE Transformer Encoder&#10;4 × ACTEncoderLayer&#10;  Self-Attn: 8 heads, D=512&#10;  FFN: 512 → 3200 → 512, ReLU&#10;  LayerNorm + residual, dropout=0.1&#10;取输出 [CLS] token → (B, 512)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#F0A050;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="830" width="280" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="vae_out" value="Latent 分布头&#10;Linear(512 → 64)&#10;μ = [:32],  log σ² = [32:]&#10;重参数化: z = μ + σ·ε, ε~N(0,I)&#10;z shape: (B, 32) → 主 Encoder" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#F0A050;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="965" width="280" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="vae_role" value="作用: 把 GT 100 步轨迹模式压入 z，减轻多解平均化&#10;KL 正则 → N(0,I)，使推理 z=0 可用&#10;推理时此模块不参与前向" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333A4A;strokeColor=#F0A050;fontColor=#FFDDB8;fontSize=12;strokeWidth=1;align=left;spacing=6;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="995" width="300" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_enc" value="5. 主 Transformer Encoder (~17.3M)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E2A3F;strokeColor=#6BA4FF;fontColor=#C5DCFF;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="130" width="380" height="620" as="geometry"/>
+                </mxCell>
+                <mxCell id="enc_concat" value="Encoder 输入 token 拼接 (302, B, 512)&#10;顺序: [latent] + [state] + [300 image tokens]&#10;共 302 tokens&#10;&#10;训练时 CVAE 的「decoder」角色:&#10;  条件生成 p(action|image,state,z)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="845" y="180" width="330" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="enc_layers" value="4 × ACTEncoderLayer&#10;  Multi-Head Self-Attention&#10;    n_heads=8, dim_model=512&#10;  Feed-Forward Network&#10;    512 → dim_feedforward=3200 → 512&#10;    activation=ReLU&#10;  pre_norm=false (Post-LN)&#10;  dropout=0.1&#10;输出 memory: (302, B, 512)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="845" y="310" width="330" height="155" as="geometry"/>
+                </mxCell>
+                <mxCell id="enc_note" value="作用: 融合视觉 + 本体 + latent&#10;形成 cross-attention 的 KV memory&#10;图像 token 占 99% 序列长度，&#10;负责空间定位与场景理解" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333A4A;strokeColor=#6BA4FF;fontColor=#B0B8C8;fontSize=12;strokeWidth=1;align=left;spacing=6;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="845" y="480" width="330" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_dec" value="6. Transformer Decoder (~5.4M)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A2240;strokeColor=#A98BFF;fontColor=#DDD0FF;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="130" width="380" height="620" as="geometry"/>
+                </mxCell>
+                <mxCell id="dec_queries" value="100 个可学习 Decoder Queries&#10;Embedding(chunk_size=100, dim=512)&#10;初始 decoder_in = zeros(100, B, 512)&#10;+ query pos embed (100, 1, 512)&#10;每个 query 对应未来 1 个 control step" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#A98BFF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1265" y="180" width="330" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="dec_layer" value="1 × ACTDecoderLayer（原版 ACT 仅 1 层有效）&#10;  ① Self-Attn: queries 之间交互&#10;  ② Cross-Attn: queries ← encoder memory&#10;  ③ FFN: 512 → 3200 → 512, ReLU&#10;  LayerNorm + residual, dropout=0.1&#10;输出: (100, B, 512) → transpose → (B,100,512)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#A98BFF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1265" y="305" width="330" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="action_head" value="Action Head&#10;Linear(512 → 8) per query step&#10;actions_hat: (B, 100, 8)&#10;&#10;chunk_size=100, n_action_steps=100&#10;开环 horizon = 100/30Hz ≈ 3.33s&#10;每 100 步才重新 query 一次" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#A98BFF;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1265" y="455" width="330" height="115" as="geometry"/>
+                </mxCell>
+                <mxCell id="output" value="输出 action chunk (B, 100, 8)&#10;8D 绝对关节目标 (rad)&#10;→ postprocess 反归一化&#10;→ MuJoCo apply_action_vector" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A2F;strokeColor=#3DDC97;fontColor=#9AE6B4;fontSize=13;strokeWidth=2;fontStyle=1;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1265" y="590" width="330" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_loss" value="7. 训练损失（仅训练）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A2A1A;strokeColor=#F0A050;fontColor=#FFDDB8;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;dashed=1;dashPattern=8 4;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="780" width="380" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="l1" value="L1 Reconstruction Loss&#10;L1(actions_hat, action_GT)&#10;mask: ~action_is_pad&#10;拟合整条 100 步 demo 轨迹" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#F0A050;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="825" width="170" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="kl" value="KL Divergence&#10;KL(q(z|s,a) ‖ N(0,I))&#10;kl_weight = 10.0&#10;约束 z 分布 → 推理 z=0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#F0A050;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="825" width="150" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="total_loss" value="Total Loss = L1 + 10 × KL&#10;Optimizer: AdamW&#10;lr=1e-5, weight_decay=1e-4&#10;无 LR scheduler · 无 AMP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333A4A;strokeColor=#F0A050;fontColor=#FFDDB8;fontSize=12;strokeWidth=1;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="930" width="340" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_infer" value="8. 推理 / 闭环 Eval（pickcup_sim_eval.py）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3040;strokeColor=#5BC0BE;fontColor=#A8E8F0;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="780" width="380" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="infer_loop" value="30 Hz 控制循环&#10;render_rgb(640×480) + proprio(8)&#10;build_inference_frame → preprocess&#10;ACTPolicy.select_action(batch)&#10;  queue 空 → predict_action_chunk&#10;  取 [:100] 步入队&#10;  每步 pop 一个 8D action&#10;postprocess → apply_action_vector&#10;policy.reset() 每 episode 清空 queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#5BC0BE;fontColor=#E8ECF1;fontSize=12;strokeWidth=2;align=left;spacing=6;" parent="1" vertex="1">
+                    <mxGeometry x="1260" y="825" width="340" height="155" as="geometry"/>
+                </mxCell>
+                <mxCell id="infer_note" value="macOS: 须先 ACTPolicy.from_pretrained&#10;再 import mujoco（防 segfault）&#10;temporal_ensemble_coeff=null（未启用）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#333A4A;strokeColor=#5BC0BE;fontColor=#A8E8F0;fontSize=11;strokeWidth=1;align=left;spacing=6;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="1260" y="995" width="340" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_cfg" value="超参 / 规模（config.json）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#243047;strokeColor=#6B7280;fontColor=#DDE4F0;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="1660" y="130" width="300" height="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="cfg_table" value="n_obs_steps = 1&#10;chunk_size = 100&#10;n_action_steps = 100&#10;use_vae = true · latent_dim = 32&#10;&#10;dim_model = 512&#10;n_heads = 8&#10;dim_feedforward = 3200&#10;n_encoder_layers = 4&#10;n_decoder_layers = 1&#10;n_vae_encoder_layers = 4&#10;dropout = 0.1 · kl_weight = 10&#10;&#10;vision_backbone = resnet18&#10;pretrained_backbone = ImageNet&#10;&#10;参数量 (~51.7M):&#10;  ResNet18 backbone ··· 11.5M&#10;  主 TF Encoder ······· 17.3M&#10;  VAE TF Encoder ······ 17.3M&#10;  TF Decoder + head ···  5.4M&#10;model.safetensors ··· ~197 MB&#10;&#10;训练: 80k steps, batch=2, CPU&#10;数据集: pickcup_train_200" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6B7280;fontColor=#E8ECF1;fontSize=12;strokeWidth=1;align=left;spacing=6;fontFamily=Courier New;" parent="1" vertex="1">
+                    <mxGeometry x="1675" y="175" width="270" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="g_flow" value="数据流摘要" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#243047;strokeColor=#6BA4FF;fontColor=#F0F4FA;fontStyle=1;fontSize=16;strokeWidth=2;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+                    <mxGeometry x="1660" y="720" width="300" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_train" value="【训练】&#10;RGB(B,3,480,640) ──► ResNet ──► 300 tok&#10;state(B,8) ──► state tok&#10;action(B,100,8) ──► VAE enc ──► z(B,32) ──► latent tok&#10;302 tok ──► TF Enc(×4) ──► memory&#10;100 queries ──► TF Dec(×1) ──► (B,100,8)&#10;Loss = L1 + 10·KL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A3140;strokeColor=#6BA4FF;fontColor=#E8ECF1;fontSize=11;strokeWidth=1;align=left;spacing=5;fontFamily=Courier New;" parent="1" vertex="1">
+                    <mxGeometry x="1675" y="760" width="270" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_infer" value="【推理】&#10;RGB + state ──► ResNet + proj&#10;z = 0 (B,32) ──► latent tok&#10;302 tok ──► TF Enc ──► TF Dec&#10;──► chunk(B,100,8)&#10;──► queue ──► 逐步 8D action&#10;（每 100 步重规划）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3040;strokeColor=#5BC0BE;fontColor=#A8E8F0;fontSize=11;strokeWidth=1;align=left;spacing=5;fontFamily=Courier New;" parent="1" vertex="1">
+                    <mxGeometry x="1675" y="905" width="270" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="flow_eval" value="Eval 成功率 (80k): ~15% (3/20)&#10;瓶颈: 抓握/保持（接触 100%）&#10;详见 act_granular_eval_30ep_notes.md" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A2A1A;strokeColor=#F0A050;fontColor=#FFDDB8;fontSize=11;strokeWidth=1;align=left;spacing=5;" parent="1" vertex="1">
+                    <mxGeometry x="1675" y="1030" width="270" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#3DDC97;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="img_raw" target="resnet" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6BA4FF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="resnet" target="img_proj" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6BA4FF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="img_proj" target="enc_concat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#3DDC97;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="state_raw" target="state_proj" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6BA4FF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="state_proj" target="enc_concat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#5BC0BE;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="latent_proj" target="enc_concat" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6BA4FF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="enc_concat" target="enc_layers" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A98BFF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="enc_layers" target="dec_layer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                    <Array as="points">
+                        <mxPoint x="1200" y="387"/>
+                        <mxPoint x="1200" y="370"/>
+                    </Array>
+                </mxCell>
+                <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A98BFF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="dec_queries" target="dec_layer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#A98BFF;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="dec_layer" target="action_head" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#3DDC97;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="action_head" target="output" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#5BC0BE;strokeWidth=2;endArrow=block;fontColor=#E8ECF1;" parent="1" source="output" target="infer_loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="action_gt" target="vae_build" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="state_raw" target="vae_build" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="30" y="425"/>
+                            <mxPoint x="30" y="905"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="vae_build" target="vae_enc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="vae_enc" target="vae_out" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="vae_out" target="latent_proj" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="800" y="1012"/>
+                            <mxPoint x="800" y="652"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="output" target="l1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1430" y="680"/>
+                            <mxPoint x="1430" y="760"/>
+                            <mxPoint x="925" y="760"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="action_gt" target="l1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="220" y="760"/>
+                            <mxPoint x="925" y="760"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#F0A050;strokeWidth=2;dashed=1;endArrow=block;fontColor=#FFDDB8;" parent="1" source="vae_out" target="kl" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

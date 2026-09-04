@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>仿真健康度评估口径 · SIMPLER</title>
+<style>
+  @page { size: A4 landscape; margin: 8mm; }
+  :root {
+    --ink: #0b1220;
+    --muted: #64748b;
+    --line: #dbe3ee;
+    --soft: #f4f7fb;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-soft: #eff6ff;
+    --teal: #0d9488;
+    --teal-soft: #f0fdfa;
+    --violet: #6d28d9;
+    --violet-soft: #f5f3ff;
+    --amber: #b45309;
+    --amber-soft: #fffbeb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #e8eef5;
+    color: var(--ink);
+  }
+  .slide {
+    width: min(1280px, 100vw - 24px);
+    margin: 12px auto;
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(15, 23, 42, 0.08);
+    padding: 22px 28px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .top h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .top h1 em { font-style: normal; color: var(--blue); }
+  .top .aside {
+    text-align: right;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .value {
+    background: #eff6ff;
+    border-left: 3px solid var(--blue);
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #1e3a5f;
+    line-height: 1.45;
+  }
+  .value b { color: var(--ink); }
+
+  .layers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .layer {
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .layer.l1 { border-color: #c4b5fd; background: var(--violet-soft); }
+  .layer.l2 { border-color: #bfdbfe; background: var(--blue-soft); }
+  .layer.l3 { border-color: #99f6e4; background: var(--teal-soft); }
+  .layer .tag {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .layer.l1 .tag { color: var(--violet); }
+  .layer.l2 .tag { color: var(--blue); }
+  .layer.l3 .tag { color: var(--teal); }
+  .layer .title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .layer .desc {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.4;
+  }
+
+  .sec-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .mcard {
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 118px;
+  }
+  .mcard .id {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .mcard .name {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+  .mcard .why {
+    font-size: 11.5px;
+    color: #475569;
+    line-height: 1.35;
+    flex: 1;
+  }
+  .mcard .val {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #334155;
+    background: var(--soft);
+    border-radius: 6px;
+    padding: 4px 7px;
+  }
+  .mcard .val b { color: var(--ink); }
+  .mcard.ref {
+    background: linear-gradient(160deg, #f0fdfa 0%, #fff 70%);
+    border-color: #99f6e4;
+  }
+
+  .bottom {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 10px;
+  }
+  .panel {
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .panel h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .panel ul {
+    padding-left: 16px;
+    font-size: 12.5px;
+    color: #334155;
+    line-height: 1.5;
+  }
+  .panel li { margin-bottom: 2px; }
+  .panel b { color: var(--ink); }
+
+  .pass {
+    background: var(--amber-soft);
+    border-color: #fcd34d;
+  }
+  .pass .rule {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #334155;
+  }
+  .pass .rule b { color: var(--ink); }
+
+  .foot {
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px dashed var(--line);
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  /* —— 第 2 页：SIMPLER 论文 —— */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .gap2 {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 10px;
+  }
+  .method {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .method .box {
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .method .box.ctrl { background: var(--violet-soft); border-color: #c4b5fd; }
+  .method .box.vis { background: var(--blue-soft); border-color: #bfdbfe; }
+  .method .box .k {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .method .box.ctrl .k { color: var(--violet); }
+  .method .box.vis .k { color: var(--blue); }
+  .method .box .t {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .method .box .d {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.4;
+  }
+  .numrow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .num {
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: var(--soft);
+    text-align: center;
+  }
+  .num.em {
+    background: linear-gradient(160deg, #f0fdfa 0%, #fff 70%);
+    border-color: #99f6e4;
+  }
+  .num .l { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .num .v { font-size: 22px; font-weight: 700; margin: 3px 0; letter-spacing: -0.02em; }
+  .num.em .v { color: var(--teal); }
+  .num .s { font-size: 11px; color: #475569; line-height: 1.3; }
+  .maplist {
+    display: grid;
+    gap: 6px;
+  }
+  .maprow {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 8px;
+    align-items: start;
+    font-size: 12.5px;
+  }
+  .maprow .badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 6px;
+    background: var(--teal-soft);
+    color: var(--teal);
+  }
+  .maprow .txt { color: #334155; line-height: 1.4; padding-top: 4px; }
+  .maprow .txt b { color: var(--ink); }
+
+  @media print {
+    body { background: #fff; }
+    .slide {
+      box-shadow: none;
+      margin: 0;
+      max-width: none;
+      width: 100%;
+      break-after: page;
+      page-break-after: always;
+    }
+    .slide:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="top">
+    <h1>仿真健康度评估 <em>· 口径模板</em></h1>
+    <div class="aside">
+      用途：判断仿真是否好用<br />
+      复用：填入实测值即可沿用
+    </div>
+  </div>
+
+  <p class="value">
+    <b>原则：</b>任务成功率衡量的是策略，不是仿真。
+    仿真好用 = <b>能稳定区分策略好坏</b>，且（理想情况下）<b>排名与真机一致</b>；不是仿真 SR 越高越好。
+  </p>
+
+  <div>
+    <div class="sec-label">三层判断标准</div>
+    <div class="layers">
+      <div class="layer l1">
+        <div class="tag">L1 · 工程可用性</div>
+        <div class="title">能不能天天用</div>
+        <div class="desc">稳、快、可复现、协议冻结<br />支撑录制 / 训练 / 评估日常</div>
+      </div>
+      <div class="layer l2">
+        <div class="tag">L2 · 任务有效性</div>
+        <div class="title">评测有没有意义</div>
+        <div class="desc">成功条件合理、不靠作弊<br />能拉开强弱策略差距</div>
+      </div>
+      <div class="layer l3">
+        <div class="tag">L3 · 真机代理性</div>
+        <div class="title">能不能替真机做决策</div>
+        <div class="desc">Sim–Real 相关高、排序不乱<br />对标 SIMPLER 权威口径</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-label">最小指标集（后续沿用填数）</div>
+    <div class="metrics">
+      <div class="mcard">
+        <div class="id">M1 · L2</div>
+        <div class="name">Scripted Oracle 通过率</div>
+        <div class="why">随机场景下专家脚本成功率，反映场景难度上界；过低可能过难/物理异常。</div>
+        <div class="val">实测：<b>__%</b>（建议区间参考：过严 10–20%）</div>
+      </div>
+      <div class="mcard">
+        <div class="id">M2 · L2</div>
+        <div class="name">分层成功率</div>
+        <div class="why">接触 / 抓握 / 抬升 / 保持，定位瓶颈，避免只看一个总分。</div>
+        <div class="val">接触 <b>__%</b> · 抓握 <b>__%</b> · 保持 <b>__%</b></div>
+      </div>
+      <div class="mcard">
+        <div class="id">M3 · L2</div>
+        <div class="name">标准任务 SR + 排序</div>
+        <div class="why">多 checkpoint / 多策略是否单调可分；仿真必须「有区分度」。</div>
+        <div class="val">主策略 SR <b>__%</b> · 排序一致：是 / 否</div>
+      </div>
+      <div class="mcard">
+        <div class="id">M4 · L2</div>
+        <div class="name">success-log vs random</div>
+        <div class="why">训练分布场景与全随机场景的 SR 差；差距过大提示过拟合分布。</div>
+        <div class="val">ΔSR = <b>__ pp</b>（log − random）</div>
+      </div>
+      <div class="mcard">
+        <div class="id">M5 · L1</div>
+        <div class="name">复现方差</div>
+        <div class="why">同协议重复评估的 SR 波动；过高则评测不可信。</div>
+        <div class="val">重复 3 次：均值 <b>__%</b> ± <b>__</b></div>
+      </div>
+      <div class="mcard ref">
+        <div class="id">M6 · L3 · 权威</div>
+        <div class="name">Sim–Real 相关 / MMRV</div>
+        <div class="why">多策略 sim SR 与 real SR 的 Pearson r；排序违规 MMRV（越低越好）。对标 SIMPLER。</div>
+        <div class="val">r = <b>__</b> · MMRV = <b>__</b>（暂无真机则填 N/A）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="panel">
+      <h3>辅助工程指标（按需）</h3>
+      <ul>
+        <li><b>吞吐</b>：ep/小时、录制成功入库率、崩溃率</li>
+        <li><b>实时性</b>：控制步耗时是否压住目标 Hz</li>
+        <li><b>协议冻结</b>：相机 / 状态维 / 动作维 / 频率有版本记录</li>
+        <li><b>物理异常</b>：穿透、穿模、数值爆炸发生率</li>
+      </ul>
+    </div>
+    <div class="panel pass">
+      <h3>过关口令（汇报可复述）</h3>
+      <p class="rule">
+        L1 日常可跑 + L2 能区分策略 → <b>研发可用</b>。<br />
+        再加上 L3 Sim–Real 排序一致 → <b>可作选型代理</b>。
+      </p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>参考：SIMPLER（Pearson r · MMRV · Visual Matching）· 分层 SR / Oracle 为任务侧通用做法</span>
+    <span>1 / 2 · 口径模板</span>
+  </div>
+
+</div>
+
+<!-- ========== 第 2 页：SIMPLER 论文 ========== -->
+<div class="slide">
+
+  <div class="top">
+    <h1>权威参考 <em>· SIMPLER</em></h1>
+    <div class="aside">
+      Evaluating Real-World Robot Manipulation<br />
+      Policies in Simulation · arXiv:2405.05941
+    </div>
+  </div>
+
+  <p class="value">
+    <b>主张：</b>仿真评测不必做成全保真数字孪生；只要
+    <b>策略相对表现与真机相关、排序一致</b>，即可作为可扩展、可复现的真机评测代理。
+  </p>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>要解决什么</h3>
+      <ul>
+        <li>通才操作策略真机评测<strong>贵、慢、难复现</strong></li>
+        <li>能力越广，评测负担越大</li>
+        <li>反转常见 sim→real：问「真机训好的策略，能否在仿真里可靠评？」</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>两大差距</h3>
+      <ul>
+        <li><b>控制差距</b>：同动作在 sim / real 对末端效果不同</li>
+        <li><b>视觉差距</b>：画面分布偏移导致策略行为变</li>
+        <li>不必极致物性建模；刚体任务上粗物性仍可保持相关</li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-label">缩小差距的方法</div>
+    <div class="method">
+      <div class="box ctrl">
+        <div class="k">CONTROL</div>
+        <div class="t">System Identification</div>
+        <div class="d">用少量真机轨迹开环回放，调仿真 PD（刚度/阻尼），使末端轨迹贴近真机。</div>
+      </div>
+      <div class="box vis">
+        <div class="k">VISION · 推荐默认</div>
+        <div class="t">Visual Matching</div>
+        <div class="d">绿幕：仿真前景叠真机背景；纹理匹配：真机物体/臂外观贴到仿真资产。优于大幅随机再平均（Variant Aggregation）。</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec-label">如何衡量「仿真评测管线好不好」</div>
+    <div class="numrow">
+      <div class="num em">
+        <div class="l">主指标</div>
+        <div class="v">MMRV ↓</div>
+        <div class="s">Mean Maximum Rank Violation<br />排错时按真机差距加权</div>
+      </div>
+      <div class="num em">
+        <div class="l">辅指标</div>
+        <div class="v">Pearson r ↑</div>
+        <div class="s">sim SR 与 real SR 线性相关<br />不必强求完美线性</div>
+      </div>
+      <div class="num">
+        <div class="l">论文量级（VisMatch）</div>
+        <div class="v">r≈0.92</div>
+        <div class="s">Google Robot 平均<br />MMRV≈0.056 · 很强相关</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap2">
+    <div class="panel">
+      <h3>与我们口径的对应</h3>
+      <div class="maplist">
+        <div class="maprow">
+          <div class="badge">相对排名</div>
+          <div class="txt">对应本模板 <b>M3 排序</b> + <b>L3</b>：多策略/多 ckpt 在 sim 与 real 同序</div>
+        </div>
+        <div class="maprow">
+          <div class="badge">MMRV / r</div>
+          <div class="txt">对应 <b>M6</b>：有真机对照后填入；暂无则标 N/A，先做 L1/L2</div>
+        </div>
+        <div class="maprow">
+          <div class="badge">Visual Match</div>
+          <div class="txt">相机内参/外参对齐、场景外观贴近真机，优先于盲目域随机</div>
+        </div>
+        <div class="maprow">
+          <div class="badge">反例</div>
+          <div class="txt">验证集 <b>action MSE</b> 几乎不能排策略 → 必须用闭环 SR，不能用 loss 代替</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel pass">
+      <h3>可带走的结论</h3>
+      <p class="rule">
+        1. 仿真好用看 <b>排名是否跟真机一致</b>，不是 SR 绝对值。<br />
+        2. 管线质量用 <b>MMRV + Pearson r</b> 报告。<br />
+        3. 优先 <b>Visual Matching + SysID</b>，不必先做全数字孪生。<br />
+        4. 开源套件：Google Robot / WidowX · Gym API
+      </p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>项目页 simpler-env.github.io · 机构 UCSD / Stanford / Berkeley / Google DeepMind</span>
+    <span>2 / 2 · SIMPLER 论文</span>
+  </div>
+
+</div>
+</body>
+</html>

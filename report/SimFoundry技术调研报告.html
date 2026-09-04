@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimFoundry 技术调研报告</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --paper: #ffffff;
+      --border: #d8e0ea;
+      --text: #1a2332;
+      --muted: #5c6b7f;
+      --accent: #1e4d8c;
+      --accent2: #0d7c8c;
+      --accent-light: #e8f1fb;
+      --stage1: #3b82f6;
+      --stage2: #8b5cf6;
+      --stage3: #10b981;
+      --stage4: #f59e0b;
+      --stage5: #ef4444;
+      --shadow: 0 2px 12px rgba(15, 35, 70, 0.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "PingFang SC", "Segoe UI", "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+      overflow-x: hidden;
+    }
+
+    /* Cover */
+    .cover {
+      background: linear-gradient(135deg, #0f2744 0%, #1e4d8c 55%, #0d7c8c 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 48px 44px 40px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .cover .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      padding: 5px 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .cover h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .cover .subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+
+    .cover .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      font-size: 13px;
+      opacity: 0.85;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 20px;
+    }
+
+    .cover .meta span {
+      flex: 1 1 220px;
+      min-width: 0;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .cover .meta strong { opacity: 1; font-weight: 600; }
+
+    /* Sections */
+    section {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 10px;
+    }
+
+    h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 14px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    p { margin-bottom: 12px; color: var(--text); }
+    p:last-child { margin-bottom: 0; }
+
+    .lead {
+      font-size: 16px;
+      color: var(--muted);
+      border-left: 4px solid var(--accent2);
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+
+    ul, ol { margin: 0 0 14px 20px; }
+    li { margin-bottom: 6px; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .card .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .card .value {
+      font-size: clamp(15px, 3.5vw, 22px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .card .desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 12px 0 16px;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .table-wrap table { min-width: 560px; }
+    .table-wrap.wide table { min-width: 720px; }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    th {
+      background: #1e3a5f;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    .io-in { color: #1d4ed8; font-weight: 600; }
+    .io-out { color: #047857; font-weight: 600; }
+    .io-tool { color: #7c3aed; font-size: 12px; }
+
+    /* Diagram container */
+    .diagram-wrap {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 12px;
+      margin: 16px 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    .diagram-wrap svg {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-width: 0;
+    }
+
+    .diagram-wrap .svg-label {
+      font-family: "PingFang SC", "Segoe UI", sans-serif;
+    }
+
+    .caption {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* Stage blocks */
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .stage-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .stage-badge.s1 { background: var(--stage1); }
+    .stage-badge.s2 { background: var(--stage2); }
+    .stage-badge.s3 { background: var(--stage3); }
+    .stage-badge.s4 { background: var(--stage4); }
+    .stage-badge.s5 { background: var(--stage5); }
+
+    .stage-title {
+      font-size: 16px;
+      font-weight: 700;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+
+    .model-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 8px;
+      line-height: 1.5;
+    }
+
+    .model-tags code {
+      display: inline-block;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin: 14px 0;
+    }
+
+    .glossary-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: #f8fafc;
+    }
+
+    .glossary-card h4 {
+      margin: 0 0 8px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
+    /* Callout */
+    .callout {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+
+    .callout.info {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .callout.warn {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    /* Figure grid */
+    .fig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 700px) {
+      .fig-grid { grid-template-columns: 1fr; }
+      .cover { padding: 32px 24px; }
+      .cover h1 { font-size: 24px; }
+      section { padding: 20px 18px; }
+    }
+
+    .fig-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .fig-box .fig-head {
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      word-break: break-word;
+      line-height: 1.35;
+    }
+
+    .fig-box .fig-head.twin { background: #dbeafe; color: #1e40af; }
+    .fig-box .fig-head.cousin { background: #d1fae5; color: #065f46; }
+    .fig-box .fig-head.input { background: #f3f4f6; color: #374151; }
+
+    .fig-box .fig-body {
+      padding: 16px;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 20px 0;
+    }
+
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: "SF Mono", Consolas, monospace;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 700px) {
+      .page { padding: 20px 14px 48px; }
+      section { padding: 20px 16px; }
+      .cover h1 { font-size: 22px; }
+      .cover .subtitle { font-size: 14px; }
+      h2 { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 封面 -->
+  <header class="cover">
+    <div class="tag">Real2Sim · 技术调研</div>
+    <h1>SimFoundry 技术调研报告</h1>
+    <p class="subtitle">
+      Modular and Automated Scene Generation for Policy Learning and Evaluation<br/>
+      从单段真实视频自动构建可交互仿真环境，支撑策略训练与评测的 Real2Sim 系统
+    </p>
+    <div class="meta">
+      <span><strong>发布机构</strong> NVIDIA GEAR · Stanford · Georgia Tech · UT Austin · U of Toronto</span>
+      <span><strong>论文</strong> arXiv:2606.28276 (2026-06)</span>
+      <span><strong>报告日期</strong> 2026-07-07</span>
+      <span><strong>项目主页</strong> <a href="https://research.nvidia.com/labs/gear/simfoundry/" style="color:#a5f3fc">research.nvidia.com/labs/gear/simfoundry</a></span>
+    </div>
+  </header>
+
+  <!-- 摘要 -->
+  <section>
+    <h2>执行摘要</h2>
+    <p class="lead">
+      SimFoundry 是一套<strong>模块化 Real2Sim 研究系统</strong>（非商业 SaaS 平台），输入一段真实世界 RGB 视频，
+      自动输出可物理交互的仿真场景（Digital Twin）及其变体（Digital Cousins），用于机器人策略的<strong>仿真训练</strong>与<strong>真机策略的仿真评测</strong>。
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="label">Sim ↔ Real 相关性</div>
+        <div class="value">Pearson 0.911</div>
+        <div class="desc">7 任务 × 5 种 policy 架构</div>
+      </div>
+      <div class="card">
+        <div class="label">Cousin 训练增益</div>
+        <div class="value">+17% / +21% / +40%</div>
+        <div class="desc">Object / Scene / Task cousins</div>
+      </div>
+      <div class="card">
+        <div class="label">重建 F1（零样本）</div>
+        <div class="value">0.81 – 0.92</div>
+        <div class="desc">3 min/物体微调后 → 0.93–0.99</div>
+      </div>
+      <div class="card">
+        <div class="label">开源状态</div>
+        <div class="value" style="font-size:18px">未公开代码</div>
+        <div class="desc">论文 + 官网 3D Demo 已发布</div>
+      </div>
+    </div>
+    <div class="callout info">
+      <strong>定位澄清</strong>
+      SimFoundry ≠ 单一算法，≠ LeRobot 式数据平台，≠ 可直接 pip install 的产品。
+      它是将感知、资产生成、物理标注、场景增强、训评闭环编排在一起的<strong>工程流水线 + 研究方法论</strong>。
+    </div>
+  </section>
+
+  <!-- 总体 Pipeline -->
+  <section>
+    <h2>一、总体 Pipeline 架构</h2>
+    <p>
+      SimFoundry 将 Real2Sim 分解为<strong>三大主阶段</strong>（Extraction → Generation → Augmentation），
+      并可选用<strong>背景重建分支</strong>融合 3D Gaussian Splat；最终导出至 <strong>PyBullet</strong>（物理稳定化）和 <strong>Isaac Lab</strong>（机器人训评）。
+    </p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 920 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline 总览">
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+          </marker>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3b82f6"/>
+            <stop offset="100%" style="stop-color:#2563eb"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6"/>
+            <stop offset="100%" style="stop-color:#7c3aed"/>
+          </linearGradient>
+          <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#10b981"/>
+            <stop offset="100%" style="stop-color:#059669"/>
+          </linearGradient>
+          <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f59e0b"/>
+            <stop offset="100%" style="stop-color:#d97706"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Input -->
+        <rect x="10" y="120" width="100" height="60" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="60" y="145" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">INPUT</text>
+        <text x="60" y="162" text-anchor="middle" font-size="10" fill="#64748b">RGB 视频</text>
+
+        <!-- Stage 1 -->
+        <rect x="140" y="110" width="130" height="80" rx="10" fill="url(#g1)"/>
+        <text x="205" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">① Extraction</text>
+        <text x="205" y="156" text-anchor="middle" font-size="9" fill="#dbeafe">感知·分割·深度</text>
+        <text x="205" y="172" text-anchor="middle" font-size="9" fill="#dbeafe">RGB-D crop</text>
+
+        <!-- Stage 2 -->
+        <rect x="300" y="110" width="130" height="80" rx="10" fill="url(#g2)"/>
+        <text x="365" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">② Generation</text>
+        <text x="365" y="156" text-anchor="middle" font-size="9" fill="#ede9fe">2D→3D·位姿</text>
+        <text x="365" y="172" text-anchor="middle" font-size="9" fill="#ede9fe">PyBullet 稳定</text>
+
+        <!-- Stage 3 -->
+        <rect x="460" y="110" width="130" height="80" rx="10" fill="url(#g3)"/>
+        <text x="525" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">③ Augment</text>
+        <text x="525" y="156" text-anchor="middle" font-size="9" fill="#d1fae5">Digital Cousins</text>
+        <text x="525" y="172" text-anchor="middle" font-size="9" fill="#d1fae5">Object/Scene/Task</text>
+
+        <!-- Background branch -->
+        <rect x="300" y="230" width="200" height="56" rx="8" fill="url(#g4)"/>
+        <text x="400" y="252" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">背景重建(可选)</text>
+        <text x="400" y="270" text-anchor="middle" font-size="9" fill="#fef3c7">3DGS 双路线</text>
+
+        <!-- Output -->
+        <rect x="630" y="100" width="140" height="100" rx="10" fill="#1e3a5f"/>
+        <text x="700" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Sim-Ready</text>
+        <text x="700" y="146" text-anchor="middle" font-size="9" fill="#93c5fd">Mesh·URDF</text>
+        <text x="700" y="162" text-anchor="middle" font-size="9" fill="#93c5fd">物理·3DGS</text>
+        <text x="700" y="178" text-anchor="middle" font-size="9" fill="#93c5fd">→ Isaac Lab</text>
+
+        <!-- Downstream -->
+        <rect x="810" y="110" width="130" height="80" rx="10" fill="#0d7c8c"/>
+        <text x="875" y="138" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">下游应用</text>
+        <text x="875" y="156" text-anchor="middle" font-size="9" fill="#cffafe">Real2Sim Eval</text>
+        <text x="875" y="172" text-anchor="middle" font-size="9" fill="#cffafe">Sim2Real 训练</text>
+
+        <!-- Arrows -->
+        <line x1="110" y1="150" x2="138" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="270" y1="150" x2="298" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="430" y1="150" x2="458" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="590" y1="150" x2="628" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="770" y1="150" x2="808" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="365" y1="190" x2="365" y2="228" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <line x1="500" y1="258" x2="680" y2="200" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      </svg>
+      <p class="caption">图 1 · SimFoundry 端到端 Pipeline 总览（实线为主链路，虚线为可选背景重建分支）</p>
+    </div>
+
+    <!-- Digital Twin vs Cousins 示意 -->
+    <h3>核心概念：Digital Twin 与 Digital Cousins</h3>
+    <div class="fig-grid">
+      <div class="fig-box">
+        <div class="fig-head input">输入：真实场景视频帧</div>
+        <div class="fig-body">
+          <svg viewBox="0 0 120 80" width="100" height="70">
+            <rect x="5" y="5" width="110" height="70" rx="4" fill="#f3f4f6" stroke="#9ca3af"/>
+            <rect x="20" y="40" width="80" height="8" fill="#d1d5db"/>
+            <circle cx="45" cy="30" r="10" fill="#fbbf24" opacity="0.8"/>
+            <rect x="65" y="22" width="14" height="18" rx="2" fill="#60a5fa" opacity="0.8"/>
+            <text x="60" y="75" text-anchor="middle" font-size="8" fill="#6b7280">真实桌面</text>
+          </svg>
+        </div>
+      </div>
+      <div class="fig-box">
+        <div class="fig-head twin">Digital Twin（数字孪生）</div>
+        <div class="fig-body">
+          <svg viewBox="0 0 120 80" width="100" height="70">
+            <rect x="5" y="5" width="110" height="70" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+            <rect x="20" y="40" width="80" height="8" fill="#93c5fd"/>
+            <circle cx="45" cy="30" r="10" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+            <rect x="65" y="22" width="14" height="18" rx="2" fill="#60a5fa" stroke="#1d4ed8" stroke-width="1"/>
+            <text x="60" y="72" text-anchor="middle" class="svg-label" font-size="7" fill="#1e40af">布局复刻</text>
+          </svg>
+        </div>
+      </div>
+      <div class="fig-box">
+        <div class="fig-head cousin">Digital Cousins（数字表亲）</div>
+        <div class="fig-body">
+          <svg viewBox="0 0 120 80" width="100" height="70">
+            <rect x="5" y="5" width="110" height="70" rx="4" fill="#d1fae5" stroke="#10b981"/>
+            <rect x="20" y="40" width="80" height="8" fill="#6ee7b7"/>
+            <ellipse cx="45" cy="30" rx="12" ry="8" fill="#f472b6" opacity="0.9"/>
+            <rect x="70" y="20" width="10" height="22" rx="1" fill="#a78bfa"/>
+            <text x="60" y="72" text-anchor="middle" class="svg-label" font-size="7" fill="#065f46">保功能·变体</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <p class="caption">图 2 · Twin 尽量还原真实场景；Cousins 在保持操作语义（affordance）前提下扩展训练多样性</p>
+  </section>
+
+  <!-- 阶段详解 -->
+  <section>
+    <h2>二、各阶段输入 / 处理 / 输出物</h2>
+
+    <!-- Stage 1 -->
+    <div class="stage-header">
+      <span class="stage-badge s1">1</span>
+      <span class="stage-title">Extraction（提取阶段）</span>
+    </div>
+    <p>将原始 RGB 视频转化为逐物体的感知数据，为后续 mesh 生成与位姿对齐做准备。</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:18%">维度</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="io-in">输入物</td>
+          <td>
+            <ul style="margin:0">
+              <li>原始 <strong>RGB 视频</strong>（默认取 frame 0 为代表帧）</li>
+              <li>相机内参 <code>K</code>（由深度模型估计或已知标定）</li>
+              <li>（可选）立体图像对 → 使用 FoundationStereo</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="io-tool">核心模型</td>
+          <td>
+            <div class="model-tags">
+              <code>V<sub>im2depth</sub> DepthAnything3</code>
+              <code>V<sub>seg</sub><sup>image</sup> SAM3</code>
+              <code>V<sub>scene</sub> Gemini-Pro-3</code>
+              <code>V<sub>inpaint</sub><sup>depth</sup> PriorDepthAnything</code>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>处理步骤</td>
+          <td>
+            <ol style="margin:0">
+              <li>选代表帧 → 估计深度图 <strong>D<sub>s</sub></strong> → 升维为场景点云 <strong>P<sub>s</sub></strong></li>
+              <li>SAM3 提取地面 → 对齐仿真世界坐标系</li>
+              <li>VLM 检测前景物体列表 {o₁…oₙ}</li>
+              <li><strong>迭代分解</strong>：分割物体 → 提取 mask + RGB-D crop → 图像/深度 inpainting 移除该物体 → 重复直至无前景物体</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="io-out">输出物</td>
+          <td>
+            <ul style="margin:0">
+              <li>场景代表帧 <strong>I<sub>s</sub></strong>、深度图 <strong>D<sub>s</sub></strong>、点云 <strong>P<sub>s</sub></strong></li>
+              <li>逐物体：<strong>分割 mask m<sub>i</sub></strong>、<strong>RGB crop p<sub>i</sub><sup>rgb</sup></strong>、<strong>深度 crop p<sub>i</sub><sup>depth</sup></strong></li>
+              <li>地面平面参数、仿真世界系对齐变换</li>
+              <li>（供背景分支）干净背景 RGB 帧序列（经视频 inpainting 后）</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Stage 2 -->
+    <div class="stage-header" style="margin-top:28px">
+      <span class="stage-badge s2">2</span>
+      <span class="stage-title">Generation（生成阶段）</span>
+    </div>
+    <p>从逐物体 crop 生成 sim-ready 3D 资产，标注物理属性，在 PyBullet 中完成穿透消除与稳定化，导出至下游仿真器。</p>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:18%">维度</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="io-in">输入物</td>
+          <td>
+            Extraction 阶段的逐物体 RGB crop、mask、深度；场景 RGB-D 与点云（用于位姿对齐）
+          </td>
+        </tr>
+        <tr>
+          <td class="io-tool">核心模型</td>
+          <td>
+            <div class="model-tags">
+              <code>V<sub>image</sub> Gemini Image</code>
+              <code>V<sub>mesh</sub> Hunyuan2.1 / TRELLIS.2</code>
+              <code>V<sub>pose</sub> FoundationPose</code>
+              <code>V<sub>articulation</sub> Gemini + Articulate Anything</code>
+              <code>V<sub>seg</sub><sup>mesh</sup> P3-SAM</code>
+              <code>CoACD 碰撞网格</code>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>处理步骤</td>
+          <td>
+            <ol style="margin:0">
+              <li>图像增强 → 2D-to-3D 生成视觉 mesh <strong>ℳ<sub>i</sub></strong></li>
+              <li>6-DoF 位姿估计与精化 → <strong>p<sub>i</sub></strong>（位置+朝向+尺度）</li>
+              <li>关节物体：VLM 识别可动部件 → mesh 分割 → 生成 URDF 关节参数 → Critic VLM 迭代验证</li>
+              <li>CoACD 生成碰撞几何；VLM 标注质量、摩擦系数等物理参数</li>
+              <li><strong>PyBullet 组装场景</strong> → 逐步仿真消除穿透 → 缓存稳定位姿</li>
+              <li>导出至 <strong>Isaac Lab</strong> 等下游仿真器</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="io-out">输出物</td>
+          <td>
+            <ul style="margin:0">
+              <li>逐物体 <strong>视觉 mesh</strong>（.obj/.glb 等）+ <strong>碰撞 mesh</strong></li>
+              <li>物体 <strong>6-DoF 位姿</strong>、<strong>尺度 s<sub>i</sub></strong></li>
+              <li>关节物体 <strong>URDF</strong>（revolute/prismatic 关节、质量、摩擦、阻尼）</li>
+              <li>物理属性表：质量、摩擦、碰撞参数</li>
+              <li><strong>Digital Twin 场景包</strong>：稳定化后的完整交互场景（前景物体）</li>
+              <li>平均耗时：约 <strong>5 分钟/物体</strong>；可选 3 分钟/物体人工微调</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Stage 3 -->
+    <div class="stage-header" style="margin-top:28px">
+      <span class="stage-badge s3">3</span>
+      <span class="stage-title">Augmentation（增强阶段）— Digital Cousins</span>
+    </div>
+    <p>在 Digital Twin 基础上沿三个轴自动生成变体，用于扩增训练数据与测试泛化。</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Digital Cousins">
+        <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+        <rect x="20" y="75" width="100" height="60" rx="8" fill="#dbeafe" stroke="#3b82f6"/>
+        <text x="70" y="110" text-anchor="middle" class="svg-label" font-size="11" font-weight="700" fill="#1e40af">Twin</text>
+
+        <line x1="120" y1="105" x2="155" y2="105" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+
+        <rect x="160" y="10" width="200" height="56" rx="8" fill="#fef3c7" stroke="#f59e0b"/>
+        <text x="260" y="32" text-anchor="middle" class="svg-label" font-size="11" font-weight="700" fill="#92400e">Object (+17%)</text>
+        <text x="260" y="48" text-anchor="middle" class="svg-label" font-size="9" fill="#b45309">VLM 分解 → 图像编辑</text>
+        <text x="260" y="60" text-anchor="middle" class="svg-label" font-size="9" fill="#b45309">重新 2D→3D</text>
+
+        <rect x="160" y="78" width="200" height="56" rx="8" fill="#d1fae5" stroke="#10b981"/>
+        <text x="260" y="100" text-anchor="middle" class="svg-label" font-size="11" font-weight="700" fill="#065f46">Scene (+21%)</text>
+        <text x="260" y="116" text-anchor="middle" class="svg-label" font-size="9" fill="#047857">空间谓词随机化</text>
+        <text x="260" y="128" text-anchor="middle" class="svg-label" font-size="9" fill="#047857">BEHAVIOR 干扰物</text>
+
+        <rect x="160" y="146" width="200" height="56" rx="8" fill="#ede9fe" stroke="#8b5cf6"/>
+        <text x="260" y="168" text-anchor="middle" class="svg-label" font-size="11" font-weight="700" fill="#5b21b6">Task (+40%)</text>
+        <text x="260" y="184" text-anchor="middle" class="svg-label" font-size="9" fill="#7c3aed">VLM 提议新任务</text>
+        <text x="260" y="196" text-anchor="middle" class="svg-label" font-size="9" fill="#7c3aed">编译目标谓词</text>
+
+        <line x1="360" y1="105" x2="410" y2="105" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+
+        <rect x="415" y="60" width="440" height="90" rx="10" fill="#1e3a5f"/>
+        <text x="635" y="92" text-anchor="middle" class="svg-label" font-size="12" font-weight="700" fill="#fff">N × 仿真场景 + 任务定义</text>
+        <text x="635" y="112" text-anchor="middle" class="svg-label" font-size="10" fill="#93c5fd">程序化 demo 采集（MimicGen 类）</text>
+        <text x="635" y="132" text-anchor="middle" class="svg-label" font-size="10" fill="#93c5fd">RL / BC / VLA 微调数据</text>
+      </svg>
+      <p class="caption">图 3 · Digital Cousins 三轴变体及下游数据生成</p>
+    </div>
+
+    <div class="table-wrap wide">
+    <table>
+      <thead>
+        <tr>
+          <th>Cousin 类型</th>
+          <th>输入</th>
+          <th>处理</th>
+          <th>输出物</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Object</strong></td>
+          <td>孤立物体透明底图、原场景图、物体名称</td>
+          <td>VLM 功能部件分解 → 按几何/拓扑/外观三维度提议变体 → 图像编辑模型合成 → VLM 合理性过滤 → 重新走 2D→3D</td>
+          <td>变体物体 mesh + 元数据（部件、变体维度、prompt、验证结果）</td>
+        </tr>
+        <tr>
+          <td><strong>Scene</strong></td>
+          <td>Digital Twin 场景、任务锚点物体</td>
+          <td>采样空间谓词 [LeftOf, RightOf, OnTopOf, Inside…] → 语义布局实例化 → 从 BEHAVIOR 数据集选干扰物</td>
+          <td>新布局场景（无碰撞、物理稳定）</td>
+        </tr>
+        <tr>
+          <td><strong>Task</strong></td>
+          <td>仿真场景截图、可交互物体列表、机器人约束</td>
+          <td>VLM 作为机器人专家提议 N 个可操作任务 → 编译为逻辑谓词目标条件</td>
+          <td>任务定义文件（目标状态、语义分组、demo 采集配置）</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 背景重建 -->
+  <section>
+    <h2>三、背景重建分支（可选）</h2>
+    <p>前景物体由 mesh 表示；背景通过 <strong>3D Gaussian Splatting (3DGS)</strong> 实现高保真视觉。提供自动与手动两条路线，输出结构相同。</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="背景重建">
+        <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+
+        <!-- Auto path -->
+        <text x="200" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">路线 A：自动（单视频）</text>
+        <rect x="10" y="30" width="90" height="40" rx="6" fill="#f3f4f6" stroke="#9ca3af"/>
+        <text x="55" y="55" text-anchor="middle" font-size="9" fill="#374151">原视频</text>
+        <line x1="100" y1="50" x2="115" y2="50" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="118" y="30" width="100" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+        <text x="168" y="48" text-anchor="middle" class="svg-label" font-size="8" fill="#92400e">SAM2 分割</text>
+        <text x="168" y="60" text-anchor="middle" class="svg-label" font-size="8" fill="#92400e">VOID inpaint</text>
+        <line x1="218" y1="50" x2="233" y2="50" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="236" y="30" width="90" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+        <text x="281" y="55" text-anchor="middle" font-size="8" fill="#92400e">DepthAnything3</text>
+        <line x1="326" y1="50" x2="341" y2="50" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="344" y="30" width="90" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+        <text x="389" y="55" text-anchor="middle" font-size="8" fill="#92400e">NerfStudio 3DGS</text>
+
+        <!-- Manual path -->
+        <text x="200" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#0d7c8c">路线 B：手动（双视频）</text>
+        <rect x="10" y="120" width="90" height="40" rx="6" fill="#f3f4f6" stroke="#9ca3af"/>
+        <text x="55" y="138" text-anchor="middle" font-size="8" fill="#374151">清空前景后</text>
+        <text x="55" y="150" text-anchor="middle" font-size="8" fill="#374151">重拍视频</text>
+        <line x1="100" y1="140" x2="115" y2="140" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="118" y="120" width="100" height="40" rx="6" fill="#cffafe" stroke="#0d7c8c"/>
+        <text x="168" y="145" text-anchor="middle" font-size="8" fill="#0e7490">COLMAP + NerfStudio</text>
+        <line x1="218" y1="140" x2="233" y2="140" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="236" y="120" width="120" height="40" rx="6" fill="#cffafe" stroke="#0d7c8c"/>
+        <text x="296" y="138" text-anchor="middle" class="svg-label" font-size="8" fill="#0e7490">Scene Editor</text>
+        <text x="296" y="150" text-anchor="middle" class="svg-label" font-size="8" fill="#0e7490">SE(3) 对齐</text>
+
+        <!-- Merge -->
+        <line x1="434" y1="50" x2="500" y2="100" stroke="#64748b" marker-end="url(#a3)"/>
+        <line x1="356" y1="140" x2="500" y2="110" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="505" y="75" width="160" height="60" rx="8" fill="#1e3a5f"/>
+        <text x="585" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">3DGS 背景资产</text>
+        <text x="585" y="118" text-anchor="middle" font-size="8" fill="#93c5fd">PLY + 刚体变换 M</text>
+
+        <line x1="665" y1="105" x2="700" y2="105" stroke="#64748b" marker-end="url(#a3)"/>
+        <rect x="705" y="75" width="140" height="60" rx="8" fill="#10b981"/>
+        <text x="775" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">混合场景</text>
+        <text x="775" y="118" text-anchor="middle" font-size="8" fill="#d1fae5">Mesh 前景 + 3DGS 背景</text>
+
+        <text x="450" y="198" text-anchor="middle" class="svg-label" font-size="9" fill="#64748b">自动路线 inpainting ≈90 min/场景 (RTX 3090)</text>
+        <text x="450" y="214" text-anchor="middle" class="svg-label" font-size="9" fill="#64748b">可与主 pipeline 多 GPU 并行</text>
+      </svg>
+      <p class="caption">图 4 · 背景重建双路线对比</p>
+    </div>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>路线</th><th>额外输入</th><th>输出物</th><th>优劣</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>自动</strong></td>
+          <td>仅 Extraction 同一视频</td>
+          <td>3DGS PLY + 刚体变换 <code>M<sub>src→og</sub></code>（自动桥接到仿真世界系）</td>
+          <td>零额外采集；视角几何精确；inpaint 可能幻觉；~90min GPU</td>
+        </tr>
+        <tr>
+          <td><strong>手动</strong></td>
+          <td>清空前景后的第二段视频</td>
+          <td>3DGS PLY + 手动 SE(3) 对齐变换（Scene Editor 序列化）</td>
+          <td>背景更锐利；需物理清空场景 + 人工对齐（~数分钟）</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 下游 -->
+  <section>
+    <h2>四、下游应用与最终交付物</h2>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="下游应用">
+        <defs><marker id="a4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+
+        <rect x="20" y="60" width="150" height="80" rx="10" fill="#1e3a5f"/>
+        <text x="95" y="90" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Sim-Ready 场景</text>
+        <text x="95" y="108" text-anchor="middle" font-size="9" fill="#93c5fd">Twin + Cousins</text>
+        <text x="95" y="124" text-anchor="middle" font-size="9" fill="#93c5fd">PyBullet → Isaac Lab</text>
+
+        <line x1="170" y1="100" x2="210" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#a4)"/>
+
+        <rect x="215" y="30" width="180" height="70" rx="8" fill="#3b82f6"/>
+        <text x="305" y="58" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Real2Sim Eval</text>
+        <text x="305" y="76" text-anchor="middle" class="svg-label" font-size="9" fill="#dbeafe">真机 policy</text>
+        <text x="305" y="90" text-anchor="middle" class="svg-label" font-size="9" fill="#dbeafe">→ 仿真评测</text>
+
+        <rect x="215" y="120" width="180" height="70" rx="8" fill="#10b981"/>
+        <text x="305" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Sim2Real 训练</text>
+        <text x="305" y="166" text-anchor="middle" class="svg-label" font-size="9" fill="#d1fae5">demo → BC/VLA</text>
+        <text x="305" y="180" text-anchor="middle" class="svg-label" font-size="9" fill="#d1fae5">零样本上真机</text>
+
+        <line x1="395" y1="65" x2="450" y2="65" stroke="#64748b" marker-end="url(#a4)"/>
+        <line x1="395" y1="155" x2="450" y2="155" stroke="#64748b" marker-end="url(#a4)"/>
+
+        <rect x="455" y="30" width="160" height="70" rx="8" fill="#f8fafc" stroke="#3b82f6"/>
+        <text x="535" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">评测交付物</text>
+        <text x="535" y="72" text-anchor="middle" font-size="9" fill="#64748b">per-policy 成功率</text>
+        <text x="535" y="86" text-anchor="middle" font-size="9" fill="#64748b">Pearson r / MMRV 报告</text>
+
+        <rect x="455" y="120" width="160" height="70" rx="8" fill="#f8fafc" stroke="#10b981"/>
+        <text x="535" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">训练交付物</text>
+        <text x="535" y="162" text-anchor="middle" font-size="9" fill="#64748b">仿真轨迹数据集</text>
+        <text x="535" y="176" text-anchor="middle" font-size="9" fill="#64748b">微调后 checkpoint</text>
+
+        <rect x="640" y="60" width="160" height="80" rx="10" fill="#0d7c8c"/>
+        <text x="720" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">真机部署验证</text>
+        <text x="720" y="115" text-anchor="middle" font-size="9" fill="#cffafe">DROID / YAM 等平台</text>
+        <text x="720" y="130" text-anchor="middle" font-size="9" fill="#cffafe">最高 96–100% 成功率</text>
+
+        <line x1="615" y1="65" x2="638" y2="95" stroke="#64748b" marker-end="url(#a4)"/>
+        <line x1="615" y1="155" x2="638" y2="125" stroke="#64748b" marker-end="url(#a4)"/>
+      </svg>
+      <p class="caption">图 5 · SimFoundry 下游两大应用路径</p>
+    </div>
+
+    <h3>实验平台与 Policy 类型</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>类别</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>机器人平台</td>
+          <td><strong>DROID</strong>（单臂桌面操作）、<strong>YAM</strong> workcell（含双臂协作任务）</td>
+        </tr>
+        <tr>
+          <td>评测 Policy</td>
+          <td>π₀、π₀.₅、GR00T N1.6/N1.7、DreamZero 等 generalist VLA（零样本 + 50 demo 微调）</td>
+        </tr>
+        <tr>
+          <td>训练 Policy</td>
+          <td>Flow-matching BC（YAM）、π₀.₅-DROID 微调、与少量真机数据 Co-train</td>
+        </tr>
+        <tr>
+          <td>任务复杂度</td>
+          <td>短程 pick-place、关节物体操作（抽屉/柜门）、多步语言跟随、双臂协作</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 技术栈 -->
+  <section>
+    <h2>五、技术栈关系：PyBullet · Isaac Sim · Isaac Lab</h2>
+
+    <h3>什么是 PyBullet？</h3>
+    <p>
+      <strong>PyBullet</strong> 是开源物理引擎 <strong>Bullet Physics</strong> 的 Python 接口，
+      用于刚体动力学仿真。在 SimFoundry 里它<strong>不是最终训练环境</strong>，而是 Generation 阶段的<strong>中间工具</strong>。
+    </p>
+    <div class="glossary-grid">
+      <div class="glossary-card">
+        <h4>PyBullet 是什么</h4>
+        <p style="margin:0;font-size:14px">轻量级开源物理引擎，<code>pip install pybullet</code> 即可用，支持加载 URDF/OBJ mesh、碰撞检测、重力仿真。</p>
+      </div>
+      <div class="glossary-card">
+        <h4>在 SimFoundry 里干什么</h4>
+        <p style="margin:0;font-size:14px">把重建的物体 mesh 放进场景 → 检测并消除<strong>物体穿透</strong> → 逐步仿真直到物体<strong>稳定落位</strong> → 缓存最终位姿。</p>
+      </div>
+      <div class="glossary-card">
+        <h4>和 MuJoCo / Isaac 的区别</h4>
+        <p style="margin:0;font-size:14px">MuJoCo 是你们 pickcup 用的引擎；Isaac Sim 是 NVIDIA 重型仿真平台。PyBullet 更轻、启动快，适合<strong>场景质检与稳定化</strong>，训机器人仍导出到 Isaac Lab。</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <strong>为什么不用直接在 PyBullet 里训机器人？</strong>
+      PyBullet 缺乏 GPU 大规模并行、光追相机、与 DROID/YAM 等现成机器人资产的深度集成。
+      SimFoundry 用它做「场景能不能用」的物理校验，正式训评交给 Isaac Lab。
+    </div>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="技术栈分层">
+        <defs><marker id="a5" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+
+        <rect x="260" y="10" width="200" height="44" rx="8" fill="#1e4d8c"/>
+        <text x="360" y="38" text-anchor="middle" class="svg-label" font-size="13" font-weight="700" fill="#fff">SimFoundry</text>
+
+        <line x1="360" y1="54" x2="360" y2="72" stroke="#64748b" stroke-width="2" marker-end="url(#a5)"/>
+
+        <rect x="240" y="74" width="240" height="52" rx="8" fill="#f59e0b"/>
+        <text x="360" y="96" text-anchor="middle" class="svg-label" font-size="12" font-weight="700" fill="#fff">PyBullet（中间层）</text>
+        <text x="360" y="114" text-anchor="middle" class="svg-label" font-size="9" fill="#fef3c7">组装 · 去穿透 · 稳定化</text>
+
+        <line x1="360" y1="126" x2="360" y2="148" stroke="#64748b" stroke-width="2" marker-end="url(#a5)"/>
+
+        <rect x="210" y="150" width="300" height="52" rx="8" fill="#8b5cf6"/>
+        <text x="360" y="172" text-anchor="middle" class="svg-label" font-size="12" font-weight="700" fill="#fff">Isaac Lab</text>
+        <text x="360" y="190" text-anchor="middle" class="svg-label" font-size="9" fill="#ede9fe">RL/IL · 并行环境 · Demo 采集</text>
+
+        <line x1="360" y1="202" x2="360" y2="222" stroke="#64748b" stroke-width="2" marker-end="url(#a5)"/>
+
+        <rect x="160" y="224" width="400" height="44" rx="6" fill="#334155"/>
+        <text x="360" y="244" text-anchor="middle" class="svg-label" font-size="10" font-weight="600" fill="#e2e8f0">Isaac Sim</text>
+        <text x="360" y="260" text-anchor="middle" class="svg-label" font-size="9" fill="#cbd5e1">PhysX GPU · RTX 渲染 · USD · 传感器</text>
+
+        <rect x="20" y="100" width="130" height="72" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <text x="85" y="124" text-anchor="middle" class="svg-label" font-size="10" font-weight="600" fill="#475569">FM 模型</text>
+        <text x="85" y="142" text-anchor="middle" class="svg-label" font-size="8" fill="#64748b">SAM3·Depth·VLM</text>
+        <text x="85" y="156" text-anchor="middle" class="svg-label" font-size="8" fill="#64748b">TRELLIS·Pose</text>
+
+        <rect x="570" y="100" width="130" height="72" rx="8" fill="#ecfdf5" stroke="#10b981"/>
+        <text x="635" y="124" text-anchor="middle" class="svg-label" font-size="10" font-weight="600" fill="#065f46">最终产物</text>
+        <text x="635" y="142" text-anchor="middle" class="svg-label" font-size="8" fill="#047857">Mesh/USD 场景</text>
+        <text x="635" y="156" text-anchor="middle" class="svg-label" font-size="8" fill="#047857">轨迹·Eval 报告</text>
+      </svg>
+      <p class="caption">图 6 · 技术栈分层（Isaac Lab 依赖 Isaac Sim；PyBullet 仅作场景稳定化中间步骤）</p>
+    </div>
+  </section>
+
+  <!-- 对比 -->
+  <section>
+    <h2>六、与相关系统对比</h2>
+    <div class="table-wrap wide">
+    <table>
+      <thead>
+        <tr>
+          <th>系统</th>
+          <th>输入</th>
+          <th>开源</th>
+          <th>Real2Sim Eval</th>
+          <th>Sim 训练</th>
+          <th>Cousins</th>
+          <th>关节物体</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#eff6ff">
+          <td><strong>SimFoundry</strong></td>
+          <td>单段 RGB 视频</td>
+          <td>❌ 未开源</td>
+          <td>✅ Pearson 0.911</td>
+          <td>✅ 零样本上真机</td>
+          <td>✅ Obj/Scene/Task</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td><a href="https://github.com/arhanjain/polaris">PolaRiS</a></td>
+          <td>短视频扫描</td>
+          <td>✅ MIT</td>
+          <td>✅（baseline）</td>
+          <td>部分（co-train）</td>
+          <td>❌</td>
+          <td>有限</td>
+        </tr>
+        <tr>
+          <td><a href="https://github.com/NVlabs/sage">SAGE</a></td>
+          <td>自然语言任务描述</td>
+          <td>✅ Apache 2.0</td>
+          <td>—</td>
+          <td>✅</td>
+          <td>场景级</td>
+          <td>部分</td>
+        </tr>
+        <tr>
+          <td>本项目 pickcup</td>
+          <td>手工 MuJoCo XML</td>
+          <td>✅ 自研</td>
+          <td>—</td>
+          <td>✅ ACT / PPO</td>
+          <td>手动域随机</td>
+          <td>❌</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 局限 -->
+  <section>
+    <h2>七、局限性、工程门槛与落地建议</h2>
+
+    <h3>主要局限（论文自述）</h3>
+    <ul>
+      <li>重度依赖 foundation models，继承各模型的失败模式（mesh 质量、尺度、遮挡）</li>
+      <li>当前假设<strong>桌面/台面</strong>单平面布局，不支持多层或非平面场景</li>
+      <li>自动背景 inpainting 在无纹理平面上可能产生幻觉</li>
+      <li>3DGS 近场裁剪问题 → 部分实验使用 mesh 背景替代</li>
+      <li><strong>代码未公开</strong>，无法直接复现完整 pipeline</li>
+    </ul>
+
+    <h3>工程门槛拆解</h3>
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>要求</th><th>对比 pickcup (MuJoCo)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>硬件</td><td>NVIDIA GPU（16GB+ VRAM），Linux 为主</td><td>Mac CPU 可训 ACT</td></tr>
+        <tr><td>软件栈</td><td>Isaac Sim + Isaac Lab + 10+ FM 服务</td><td>MuJoCo + LeRobot</td></tr>
+        <tr><td>采集</td><td>正面、少遮挡的单视频；手动路线需二次拍摄</td><td>无需真机视频</td></tr>
+        <tr><td>调试</td><td>重建错误难定位（感知链长）</td><td>Scripted 逻辑透明</td></tr>
+        <tr><td>机器人</td><td>需 DROID/YAM 等 Isaac 资产；换 G1 需自建 URDF</td><td>已集成 Unitree G1</td></tr>
+        <tr><td>耗时</td><td>~5 min/物体 + 可选 90 min 背景</td><td>手工 XML 一次性</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px">
+      <strong>对本项目的建议</strong>
+      当前 pickcup 阶段（MuJoCo scripted IL + ACT）是合理轻量路径。SimFoundry 更适合「已有真机场景视频、需快速批量造相似仿真变体」的场景。
+      若需体验 Real2Sim，可优先尝试开源的 <a href="https://github.com/arhanjain/polaris">PolaRiS</a>（评测向）或 <a href="https://github.com/NVlabs/sage">SAGE</a>（场景生成向）。
+    </div>
+  </section>
+
+  <!-- 参考 -->
+  <section>
+    <h2>八、参考资料</h2>
+    <ul>
+      <li>论文：<a href="https://arxiv.org/abs/2606.28276">SimFoundry: Modular and Automated Scene Generation for Policy Learning and Evaluation</a> (arXiv:2606.28276)</li>
+      <li>项目主页：<a href="https://research.nvidia.com/labs/gear/simfoundry/">NVIDIA GEAR SimFoundry</a></li>
+      <li>Isaac Lab 文档：<a href="https://isaac-sim.github.io/IsaacLab/">isaac-sim.github.io/IsaacLab</a></li>
+      <li>对比 baseline：<a href="https://polaris-evals.github.io/">PolaRiS</a> · <a href="https://research.nvidia.com/labs/dir/sage/">SAGE</a></li>
+    </ul>
+  </section>
+
+  <footer>
+  本报告基于 SimFoundry 论文 (arXiv:2606.28276, 2026-06) 及 NVIDIA GEAR 官方项目页整理 · 生成于 mujoco 项目目录 · 2026-07-07
+  </footer>
+
+</div>
+</body>
+</html>

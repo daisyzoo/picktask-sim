@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>机器人数据链路技术调研报告</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --paper: #ffffff;
+      --ink: #152033;
+      --muted: #5f6f86;
+      --line: #d8e1ec;
+      --blue: #1f5fae;
+      --blue2: #113a68;
+      --cyan: #0f8b9c;
+      --green: #138a5b;
+      --orange: #c97815;
+      --purple: #6f45b7;
+      --red: #b84040;
+      --soft-blue: #eaf2fc;
+      --soft-green: #e9f7ef;
+      --soft-orange: #fff3df;
+      --soft-purple: #f1ebff;
+      --shadow: 0 12px 32px rgba(30, 58, 95, 0.09);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, #e8f2ff 0, transparent 360px), var(--bg);
+      line-height: 1.65;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 24px 72px;
+    }
+    header.hero {
+      color: #fff;
+      padding: 48px 46px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(10, 32, 61, 0.96), rgba(31, 95, 174, 0.95) 55%, rgba(15, 139, 156, 0.92)),
+        radial-gradient(circle at 85% 10%, rgba(255,255,255,0.25), transparent 220px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    header.hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -120px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 52px solid rgba(255,255,255,0.08);
+    }
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.15);
+      color: #d9f7ff;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 16px 0 12px;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: rgba(255,255,255,0.86);
+      max-width: 760px;
+      margin: 0 0 24px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: rgba(255,255,255,0.8);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      padding-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-meta span { min-width: 210px; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 32px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+    h2 {
+      margin: 0 0 18px;
+      color: var(--blue2);
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(var(--blue), var(--cyan));
+    }
+    h3 {
+      margin: 24px 0 12px;
+      color: var(--ink);
+      font-size: 17px;
+    }
+    p { margin: 10px 0; }
+    .lead {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+    .card strong {
+      display: block;
+      color: var(--blue2);
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .card small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .metric {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.25;
+      margin: 6px 0 2px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      margin: 2px 4px 2px 0;
+      white-space: nowrap;
+    }
+    .pill.green { background: var(--soft-green); color: var(--green); }
+    .pill.orange { background: var(--soft-orange); color: var(--orange); }
+    .pill.purple { background: var(--soft-purple); color: var(--purple); }
+    .diagram {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fbff;
+      padding: 18px;
+      margin: 18px 0;
+      overflow-x: auto;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .caption {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 11px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #1f3f68;
+      color: #fff;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .table-wrap { overflow-x: auto; }
+    .table-wrap table { min-width: 820px; }
+    .paper {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      margin: 16px 0;
+      overflow: hidden;
+      background: #fff;
+    }
+    .paper-head {
+      display: grid;
+      grid-template-columns: 1.2fr 2fr;
+      gap: 16px;
+      padding: 18px;
+      background: linear-gradient(90deg, #eef6ff, #ffffff);
+      border-bottom: 1px solid var(--line);
+    }
+    .paper-title {
+      font-weight: 800;
+      color: var(--blue2);
+      font-size: 17px;
+    }
+    .paper-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      padding: 18px;
+    }
+    .deep-paper {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      margin: 26px 0;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(30, 58, 95, 0.07);
+    }
+    .deep-top {
+      display: grid;
+      grid-template-columns: 1.05fr 1.6fr;
+      gap: 18px;
+      padding: 22px;
+      background: linear-gradient(120deg, #eef6ff, #ffffff);
+      border-bottom: 1px solid var(--line);
+    }
+    .deep-title {
+      font-size: 20px;
+      font-weight: 850;
+      color: var(--blue2);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .deep-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .mini-metric {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .mini-metric b {
+      display: block;
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .mini-metric span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .deep-section {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .deep-section:last-child { border-bottom: 0; }
+    .deep-section h3 {
+      margin-top: 0;
+      color: var(--blue2);
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .info-list {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 8px 12px;
+      font-size: 14px;
+    }
+    .info-list dt {
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .info-list dd {
+      margin: 0;
+    }
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+    .box h4 {
+      margin: 0 0 8px;
+      color: var(--blue2);
+      font-size: 14px;
+    }
+    .box.warn {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+    .box.warn h4 { color: #9a4d08; }
+    .box.good {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .box.good h4 { color: #166534; }
+    .tech-svg {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fbff;
+      padding: 10px;
+      overflow-x: auto;
+      margin: 10px 0 14px;
+    }
+    .flow-code {
+      white-space: pre-wrap;
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      background: #0f172a;
+      color: #dbeafe;
+      border-radius: 12px;
+      padding: 14px;
+      overflow-x: auto;
+    }
+    .callout {
+      border-left: 4px solid var(--cyan);
+      background: #ecfeff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      color: #164e63;
+      margin: 14px 0;
+    }
+    .conclusion {
+      background: linear-gradient(135deg, #10243c, #1f5fae);
+      color: #fff;
+    }
+    .conclusion h2 { color: #fff; }
+    .conclusion h2::before { background: #77e5f3; }
+    .conclusion p, .conclusion li { color: rgba(255,255,255,0.9); }
+    .refs li { margin-bottom: 8px; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    @media (max-width: 820px) {
+      .page { padding: 20px 14px 48px; }
+      header.hero { padding: 34px 24px; }
+      h1 { font-size: 26px; }
+      section { padding: 22px 18px; }
+      .paper-head, .paper-body { grid-template-columns: 1fr; }
+      .deep-top, .two-col, .pros-cons { grid-template-columns: 1fr; }
+      .info-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <span class="tag">Robotics Data Pipeline · Technical Survey</span>
+      <h1>机器人数据链路技术调研报告</h1>
+      <p class="subtitle">从数据采集、标准化、质量控制到多源融合与失败回流：对标 RoboNet、BridgeData V2、Open X-Embodiment、DROID、ALOHA、MimicGen、OpenVLA 与 Real2Sim 系统。</p>
+      <div class="hero-meta">
+        <span><strong>报告定位：</strong>技术链路调研</span>
+        <span><strong>关注对象：</strong>机器人操作数据</span>
+        <span><strong>输出日期：</strong>2026-07-08</span>
+        <span><strong>关键词：</strong>采集 · Schema · 质检 · 融合 · 回流</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>0. 结论先行</h2>
+      <p class="lead">本报告不讨论“数据为什么重要”，而是直接回答：行业头部如何把机器人数据从原始采集转化为可训练、可复用、可迭代的数据资产。</p>
+      <div class="grid">
+        <div class="card">
+          <strong>结论 1：链路比单点采集更关键</strong>
+          机器人数据价值不只来自轨迹数量，而来自任务定义、同步、质检、标准化、融合与失败回流是否贯通。
+        </div>
+        <div class="card">
+          <strong>结论 2：跨机器人标准化已成主线</strong>
+          Open X-Embodiment 将 60 个数据集转成统一 RLDS，说明格式统一是跨 embodiment 学习的前置条件。
+        </div>
+        <div class="card">
+          <strong>结论 3：真实场景多样性在提升权重</strong>
+          DROID 的价值不只是 76k 轨迹，而是 564 场景、86 任务、多采集者、多地点带来的真实分布覆盖。
+        </div>
+        <div class="card">
+          <strong>结论 4：仿真与 Real2Sim 是补充链路</strong>
+          MimicGen、PolaRiS、SimFoundry 指向同一趋势：用可控生成补齐长尾，但不能简单替代真机数据。
+        </div>
+        <div class="card">
+          <strong>结论 5：Action 表示决定数据复用边界</strong>
+          joint、EEF、delta pose、tokenized action、flow action 的选择，会影响跨机器人复用和后续模型路线。
+        </div>
+        <div class="card">
+          <strong>结论 6：公司应优先建设数据底座</strong>
+          统一 schema、采集规范、自动质检、多源标记、版本管理和失败样本回流，应先于大规模模型路线选择。
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>1. 行业头部数据链路全景</h2>
+      <p class="lead">头部项目的差异不只是模型不同，更是数据来源、采集协议、标准化方式、混合策略和回流方式不同。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>项目 / 机构</th>
+              <th>数据来源</th>
+              <th>规模与覆盖</th>
+              <th>链路关键点</th>
+              <th>代表意义</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RoboNet</strong></td>
+              <td>多机器人视频交互</td>
+              <td>15M+ frames，7 robot platforms，113 camera viewpoints</td>
+              <td>跨机器人视觉经验池；视频预测与 inverse model 预训练</td>
+              <td>早期证明多机器人数据共享可减少新机器人数据需求</td>
+            </tr>
+            <tr>
+              <td><strong>BridgeData V2</strong></td>
+              <td>低成本 WidowX 真机遥操作 + scripted rollout</td>
+              <td>60,096 trajectories，24 environments，13 skills</td>
+              <td>VR teleop、自然语言指令、RLDS 兼容、多环境采集</td>
+              <td>低成本真实机器人数据可规模化复现</td>
+            </tr>
+            <tr>
+              <td><strong>Open X-Embodiment / RT-X</strong></td>
+              <td>多实验室历史数据聚合</td>
+              <td>1M+ trajectories，22 embodiments，527 skills，160k+ tasks</td>
+              <td>RLDS 标准化、data mixture、RT-1-X / RT-2-X 验证迁移</td>
+              <td>机器人数据标准化与跨 embodiment 学习标杆</td>
+            </tr>
+            <tr>
+              <td><strong>DROID</strong></td>
+              <td>分布式真实场景遥操作</td>
+              <td>76k trajectories，350h，564 scenes，86 tasks</td>
+              <td>Franka 统一硬件栈、三视角 RGB、depth、calibration、language</td>
+              <td>真实环境多样性与采集协议的代表</td>
+            </tr>
+            <tr>
+              <td><strong>ALOHA / ACT</strong></td>
+              <td>低成本双臂主从遥操作</td>
+              <td>小规模高质量双臂任务数据</td>
+              <td>多相机同步、高频连续动作、action chunk</td>
+              <td>精细双臂操作数据链路的典型范式</td>
+            </tr>
+            <tr>
+              <td><strong>MimicGen</strong></td>
+              <td>少量 demo + 仿真重组</td>
+              <td>从 seed demos 生成大量 synthetic demos</td>
+              <td>子任务切分、物体位姿扰动、轨迹拼接、自动 success predicate</td>
+              <td>展示“数据生成”可作为采集链路补充</td>
+            </tr>
+            <tr>
+              <td><strong>PolaRiS / SimFoundry</strong></td>
+              <td>真实视频 / 扫描到仿真</td>
+              <td>场景级 digital twin / cousins</td>
+              <td>3DGS、mesh、pose alignment、physics annotation、sim-ready export</td>
+              <td>Real2Sim 成为真实场景扩增与仿真评估补充路线</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="diagram">
+        <svg viewBox="0 0 980 310" role="img" aria-label="行业机器人数据链路路线图">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/>
+            </marker>
+          </defs>
+          <rect x="30" y="40" width="190" height="72" rx="14" fill="#eaf2fc" stroke="#1f5fae"/>
+          <text x="125" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#113a68">真机遥操作</text>
+          <text x="125" y="92" text-anchor="middle" font-size="12" fill="#51657b">DROID · ALOHA · Bridge</text>
+
+          <rect x="30" y="195" width="190" height="72" rx="14" fill="#e9f7ef" stroke="#138a5b"/>
+          <text x="125" y="225" text-anchor="middle" font-size="15" font-weight="700" fill="#0b5d3a">仿真 / 自动生成</text>
+          <text x="125" y="247" text-anchor="middle" font-size="12" fill="#51657b">MimicGen · SAGE</text>
+
+          <rect x="395" y="118" width="210" height="82" rx="16" fill="#1f3f68"/>
+          <text x="500" y="150" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">标准化数据池</text>
+          <text x="500" y="174" text-anchor="middle" font-size="12" fill="#cfe8ff">Schema · Metadata · Quality · Version</text>
+
+          <rect x="745" y="40" width="190" height="72" rx="14" fill="#f1ebff" stroke="#6f45b7"/>
+          <text x="840" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#4d2a86">跨机器人聚合</text>
+          <text x="840" y="92" text-anchor="middle" font-size="12" fill="#51657b">OXE · RT-X · Octo</text>
+
+          <rect x="745" y="195" width="190" height="72" rx="14" fill="#fff3df" stroke="#c97815"/>
+          <text x="840" y="225" text-anchor="middle" font-size="15" font-weight="700" fill="#864d0e">Real2Sim 补充</text>
+          <text x="840" y="247" text-anchor="middle" font-size="12" fill="#51657b">PolaRiS · SimFoundry</text>
+
+          <line x1="220" y1="76" x2="390" y2="140" stroke="#63758c" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="220" y1="231" x2="390" y2="178" stroke="#63758c" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="605" y1="140" x2="740" y2="76" stroke="#63758c" stroke-width="2" marker-end="url(#arr)"/>
+          <line x1="605" y1="178" x2="740" y2="231" stroke="#63758c" stroke-width="2" marker-end="url(#arr)"/>
+
+          <path d="M840 195 C840 160, 840 150, 840 112" fill="none" stroke="#c97815" stroke-dasharray="5 5" marker-end="url(#arr)"/>
+          <path d="M125 112 C125 150, 125 160, 125 195" fill="none" stroke="#138a5b" stroke-dasharray="5 5" marker-end="url(#arr)"/>
+        </svg>
+        <div class="caption">图 1：行业机器人数据链路不是单一路径，而是“真机、聚合、仿真、Real2Sim”多源进入统一数据层。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 机器人数据链路总览</h2>
+      <p class="lead">一条机器人数据从“任务意图”进入训练系统，要经历任务定义、采集、校验、标准化、融合、版本化和失败回流。模型训练只是数据消费端，不是本报告重点。</p>
+      <div class="diagram">
+        <svg viewBox="0 0 1040 260" role="img" aria-label="机器人数据链路">
+          <defs>
+            <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/>
+            </marker>
+          </defs>
+          <g font-size="13">
+            <rect x="20" y="92" width="115" height="64" rx="12" fill="#eaf2fc" stroke="#1f5fae"/>
+            <text x="77" y="120" text-anchor="middle" font-weight="700" fill="#113a68">任务定义</text>
+            <text x="77" y="140" text-anchor="middle" fill="#51657b">taxonomy</text>
+            <line x1="135" y1="124" x2="167" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="170" y="92" width="115" height="64" rx="12" fill="#e9f7ef" stroke="#138a5b"/>
+            <text x="227" y="120" text-anchor="middle" font-weight="700" fill="#0b5d3a">数据采集</text>
+            <text x="227" y="140" text-anchor="middle" fill="#51657b">teleop / sim</text>
+            <line x1="285" y1="124" x2="317" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="320" y="92" width="115" height="64" rx="12" fill="#fff3df" stroke="#c97815"/>
+            <text x="377" y="120" text-anchor="middle" font-weight="700" fill="#864d0e">同步质检</text>
+            <text x="377" y="140" text-anchor="middle" fill="#51657b">timestamp</text>
+            <line x1="435" y1="124" x2="467" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="470" y="92" width="115" height="64" rx="12" fill="#f1ebff" stroke="#6f45b7"/>
+            <text x="527" y="120" text-anchor="middle" font-weight="700" fill="#4d2a86">标准化</text>
+            <text x="527" y="140" text-anchor="middle" fill="#51657b">schema</text>
+            <line x1="585" y1="124" x2="617" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="620" y="92" width="115" height="64" rx="12" fill="#eaf2fc" stroke="#1f5fae"/>
+            <text x="677" y="120" text-anchor="middle" font-weight="700" fill="#113a68">多源融合</text>
+            <text x="677" y="140" text-anchor="middle" fill="#51657b">mixture</text>
+            <line x1="735" y1="124" x2="767" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="770" y="92" width="115" height="64" rx="12" fill="#e9f7ef" stroke="#138a5b"/>
+            <text x="827" y="120" text-anchor="middle" font-weight="700" fill="#0b5d3a">数据消费</text>
+            <text x="827" y="140" text-anchor="middle" fill="#51657b">train / eval</text>
+            <line x1="885" y1="124" x2="917" y2="124" stroke="#63758c" stroke-width="2" marker-end="url(#arr2)"/>
+
+            <rect x="920" y="92" width="100" height="64" rx="12" fill="#feecec" stroke="#b84040"/>
+            <text x="970" y="120" text-anchor="middle" font-weight="700" fill="#8a2727">失败回流</text>
+            <text x="970" y="140" text-anchor="middle" fill="#51657b">long-tail</text>
+
+            <path d="M970 92 C970 35, 77 35, 77 88" fill="none" stroke="#b84040" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr2)"/>
+          </g>
+        </svg>
+        <div class="caption">图 2：机器人数据链路闭环。回流不是模型失败后的附加动作，而是下一轮任务定义和补采的输入。</div>
+      </div>
+
+      <div class="grid">
+        <div class="card"><strong>任务定义层</strong>定义 task / object / scene / skill taxonomy，使数据不是散乱 episode，而是可组合、可统计、可回流的样本。</div>
+        <div class="card"><strong>采集层</strong>覆盖真机 teleop、scripted、仿真、人类视频和 Real2Sim，不同来源必须保留 source metadata。</div>
+        <div class="card"><strong>标准化层</strong>统一 observation、action、timestamp、language、success、robot metadata，决定后续能否混合使用。</div>
+        <div class="card"><strong>质量层</strong>做 schema、同步、动作、视觉、任务完成度和分布覆盖检查，防止低质数据污染训练集。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 数据采集链路</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>采集来源</th>
+              <th>链路</th>
+              <th>关键技术点</th>
+              <th>典型项目</th>
+              <th>适用边界</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>真机遥操作</strong></td>
+              <td>operator → teleop device → robot controller → synchronized logs</td>
+              <td>控制频率、相机-action 对齐、gripper 标准化、episode 切分、success label</td>
+              <td>DROID、ALOHA、BridgeData V2</td>
+              <td>真实物理最可靠，但成本高、速度慢</td>
+            </tr>
+            <tr>
+              <td><strong>Scripted / Planner</strong></td>
+              <td>task config → oracle policy → rollout → trajectory</td>
+              <td>任务参数化、自动 success predicate、失败过滤、轨迹平滑</td>
+              <td>LIBERO、RoboSuite、MimicGen seed demos</td>
+              <td>适合结构化任务，容易有 scripted bias</td>
+            </tr>
+            <tr>
+              <td><strong>仿真生成</strong></td>
+              <td>sim scene → randomized object/physics → oracle rollout</td>
+              <td>domain randomization、asset library、physics randomization、privileged state</td>
+              <td>MimicGen、Isaac Lab、SAGE</td>
+              <td>补长尾和预训练有效，但需处理 sim-real gap</td>
+            </tr>
+            <tr>
+              <td><strong>人类视频</strong></td>
+              <td>web / ego video → affordance / subgoal / contact prior</td>
+              <td>动作缺失、伪标签、时序分割、语言 grounding</td>
+              <td>Ego4D、R3M、VIP、video pretraining</td>
+              <td>适合学习语义和 affordance，不能直接替代 robot action</td>
+            </tr>
+            <tr>
+              <td><strong>Real2Sim</strong></td>
+              <td>real video → reconstruction → physics-ready sim scene</td>
+              <td>segmentation、depth、mesh、collision、pose alignment、mass/friction annotation</td>
+              <td>PolaRiS、SimFoundry</td>
+              <td>适合真实场景扩增和仿真评估，工程复杂</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 数据标准化链路</h2>
+      <p class="lead">机器人数据标准化的核心是把异构原始记录统一成可索引、可训练、可混合、可复现的 episode schema。</p>
+      <div class="flow-code">Episode {
+  episode_id
+  task: { task_id, language, success, success_predicate }
+  observation: {
+    images: { front, wrist, side, ... }
+    depth / point_cloud
+    state / proprio
+  }
+  action: { representation, vector, frequency, frame }
+  timestamp: { camera_ts, state_ts, action_ts }
+  metadata: {
+    robot_id, embodiment, camera_config, calibration,
+    scene_id, object_ids, operator_id, source, quality_score
+  }
+}</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>标准化对象</th>
+              <th>常见问题</th>
+              <th>工程处理</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>时间同步</td>
+              <td>图像滞后 action、控制频率高于相机、丢帧、episode 边界不一致</td>
+              <td>resampling、nearest timestamp、interpolation、action delay compensation、fixed FPS export</td>
+            </tr>
+            <tr>
+              <td>Action 表示</td>
+              <td>joint / EEF / delta pose / gripper / tokenized action 互不兼容</td>
+              <td>记录 action space definition、坐标系、控制频率、单位、robot-specific adapter</td>
+            </tr>
+            <tr>
+              <td>Observation 表示</td>
+              <td>相机数量、视角、分辨率、深度质量、外参不同</td>
+              <td>camera naming convention、calibration metadata、view embedding、统一图像编码</td>
+            </tr>
+            <tr>
+              <td>任务语言</td>
+              <td>粒度不一致、同义表达、目标对象不明确</td>
+              <td>language canonicalization、task_id、object tags、success predicate 绑定</td>
+            </tr>
+            <tr>
+              <td>Robot metadata</td>
+              <td>不同 embodiment 的 DOF、夹爪、底盘、控制器不同</td>
+              <td>embodiment token、URDF/kinematic metadata、action head / adapter 映射</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 数据质量链路</h2>
+      <p class="lead">数据质量控制应前置到入库之前。对机器人任务而言，低质量 episode 不只是噪声，还可能教会模型错误接触、错误时机和错误恢复。</p>
+      <div class="diagram">
+        <svg viewBox="0 0 980 230" role="img" aria-label="自动质检链路">
+          <defs><marker id="arr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+          <g font-size="13">
+            <rect x="25" y="80" width="120" height="58" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="85" y="113" text-anchor="middle" font-weight="700">Raw episode</text>
+            <line x1="145" y1="109" x2="175" y2="109" stroke="#63758c" marker-end="url(#arr3)"/>
+            <rect x="180" y="80" width="120" height="58" rx="12" fill="#fff3df" stroke="#c97815"/><text x="240" y="104" text-anchor="middle" font-weight="700">Schema</text><text x="240" y="122" text-anchor="middle" font-size="11">字段完整</text>
+            <line x1="300" y1="109" x2="330" y2="109" stroke="#63758c" marker-end="url(#arr3)"/>
+            <rect x="335" y="80" width="120" height="58" rx="12" fill="#fff3df" stroke="#c97815"/><text x="395" y="104" text-anchor="middle" font-weight="700">Timestamp</text><text x="395" y="122" text-anchor="middle" font-size="11">同步/丢帧</text>
+            <line x1="455" y1="109" x2="485" y2="109" stroke="#63758c" marker-end="url(#arr3)"/>
+            <rect x="490" y="80" width="120" height="58" rx="12" fill="#fff3df" stroke="#c97815"/><text x="550" y="104" text-anchor="middle" font-weight="700">Action</text><text x="550" y="122" text-anchor="middle" font-size="11">越界/抖动</text>
+            <line x1="610" y1="109" x2="640" y2="109" stroke="#63758c" marker-end="url(#arr3)"/>
+            <rect x="645" y="80" width="120" height="58" rx="12" fill="#fff3df" stroke="#c97815"/><text x="705" y="104" text-anchor="middle" font-weight="700">Visual</text><text x="705" y="122" text-anchor="middle" font-size="11">遮挡/黑屏</text>
+            <line x1="765" y1="109" x2="795" y2="109" stroke="#63758c" marker-end="url(#arr3)"/>
+            <rect x="800" y="80" width="150" height="58" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="875" y="104" text-anchor="middle" font-weight="700">Quality score</text><text x="875" y="122" text-anchor="middle" font-size="11">train / holdout / discard</text>
+          </g>
+        </svg>
+        <div class="caption">图 3：自动质检链路应覆盖字段、同步、动作、视觉、成功判定和分布覆盖。</div>
+      </div>
+      <div class="grid">
+        <div class="card"><strong>完整性</strong>缺帧、缺 action、缺 metadata、episode 中断。</div>
+        <div class="card"><strong>同步性</strong>camera/action/state timestamp 偏移，导致模型学到错误因果。</div>
+        <div class="card"><strong>动作质量</strong>joint 越界、gripper 抖动、jerk 过大、控制器饱和。</div>
+        <div class="card"><strong>任务质量</strong>成功/失败标注不一致，partial success 未区分。</div>
+        <div class="card"><strong>视觉质量</strong>黑屏、过曝、遮挡、模糊、相机外参漂移。</div>
+        <div class="card"><strong>分布质量</strong>任务、物体、场景、操作者集中度过高。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. 多源数据融合链路</h2>
+      <p class="lead">通用机器人数据不是简单 concat，而是带权重、带来源、带质量约束的 mixture。大数据集会淹没小而高质量的数据，仿真数据会改变动作分布，跨机器人数据会引入 action space 不一致。</p>
+      <div class="flow-code">P(sample) ∝ source_weight × task_weight × embodiment_weight × quality_score × long_tail_bonus</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>融合问题</th>
+              <th>具体表现</th>
+              <th>常用处理</th>
+              <th>代表项目</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>跨机器人 action 不一致</td>
+              <td>7DoF arm、6DoF arm、双臂、吸盘、夹爪动作维度不同</td>
+              <td>embodiment token、robot-specific action head、EEF frame abstraction</td>
+              <td>OXE、RT-X、Octo、OpenVLA</td>
+            </tr>
+            <tr>
+              <td>数据集规模差异</td>
+              <td>大数据集主导训练，小数据集技能被稀释</td>
+              <td>temperature sampling、task-balanced sampling、source cap</td>
+              <td>RT-X、Octo</td>
+            </tr>
+            <tr>
+              <td>真机/仿真混合</td>
+              <td>仿真量大但偏分布，真机少但物理真实</td>
+              <td>sim pretrain → real finetune、sim+real cotrain、failure-targeted sim augmentation</td>
+              <td>MimicGen、SimFoundry、PolaRiS</td>
+            </tr>
+            <tr>
+              <td>语言粒度不一致</td>
+              <td>“pick up cup” vs “move object” vs 细粒度步骤描述</td>
+              <td>task canonicalization、language paraphrase、task_id 绑定</td>
+              <td>DROID、BridgeData V2、OpenVLA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. 数据回流链路</h2>
+      <p class="lead">机器人数据链路必须把失败变成下一轮数据输入。失败回流关注的不是模型指标，而是定位“缺哪类数据”。</p>
+      <div class="diagram">
+        <svg viewBox="0 0 900 260" role="img" aria-label="失败回流链路">
+          <defs><marker id="arr4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+          <rect x="40" y="92" width="145" height="64" rx="13" fill="#feecec" stroke="#b84040"/>
+          <text x="112" y="119" text-anchor="middle" font-size="14" font-weight="700" fill="#8a2727">Failure rollout</text>
+          <text x="112" y="139" text-anchor="middle" font-size="11" fill="#6b7280">失败 episode</text>
+          <line x1="185" y1="124" x2="235" y2="124" stroke="#63758c" marker-end="url(#arr4)"/>
+          <rect x="240" y="92" width="145" height="64" rx="13" fill="#fff3df" stroke="#c97815"/>
+          <text x="312" y="119" text-anchor="middle" font-size="14" font-weight="700" fill="#864d0e">Failure tags</text>
+          <text x="312" y="139" text-anchor="middle" font-size="11" fill="#6b7280">抓空/碰撞/OOD</text>
+          <line x1="385" y1="124" x2="435" y2="124" stroke="#63758c" marker-end="url(#arr4)"/>
+          <rect x="440" y="92" width="145" height="64" rx="13" fill="#eaf2fc" stroke="#1f5fae"/>
+          <text x="512" y="119" text-anchor="middle" font-size="14" font-weight="700" fill="#113a68">Targeted data</text>
+          <text x="512" y="139" text-anchor="middle" font-size="11" fill="#6b7280">定向补采/增强</text>
+          <line x1="585" y1="124" x2="635" y2="124" stroke="#63758c" marker-end="url(#arr4)"/>
+          <rect x="640" y="92" width="145" height="64" rx="13" fill="#e9f7ef" stroke="#138a5b"/>
+          <text x="712" y="119" text-anchor="middle" font-size="14" font-weight="700" fill="#0b5d3a">Data version</text>
+          <text x="712" y="139" text-anchor="middle" font-size="11" fill="#6b7280">增量入库</text>
+          <path d="M712 92 C712 40, 112 40, 112 88" fill="none" stroke="#b84040" stroke-dasharray="6 5" marker-end="url(#arr4)"/>
+        </svg>
+        <div class="caption">图 4：失败样本回流链路。关键是给失败分类，而不是简单追加数据。</div>
+      </div>
+      <div class="grid">
+        <div class="card"><strong>感知失败</strong>目标物体未识别、遮挡、光照变化、相机视角偏移。</div>
+        <div class="card"><strong>抓取失败</strong>抓空、夹不稳、闭合时机错误、接触点偏移。</div>
+        <div class="card"><strong>控制失败</strong>碰撞、动作抖动、关节限位、长时序 drift。</div>
+        <div class="card"><strong>语义失败</strong>任务语言理解错误、目标对象歧义、顺序错误。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>8. 重点论文 / 系统深度解读</h2>
+      <p class="lead">本节按“每篇两页”的信息密度组织：先给数据画像和适用边界，再给技术链路、亮点、局限与复用建议。图均为基于论文内容重绘的链路示意，用于强调数据路径而非复刻原图。</p>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.1 RoboNet: Large-Scale Multi-Robot Learning</div>
+            <div class="deep-subtitle">定位：早期跨机器人经验共享数据集，关注多机器人视觉交互数据如何迁移到新平台。</div>
+            <span class="pill">CoRL 2019</span><span class="pill green">15M+ frames</span><span class="pill purple">7 robot platforms</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>15M+</b><span>video frames</span></div>
+            <div class="mini-metric"><b>7</b><span>robot platforms</span></div>
+            <div class="mini-metric"><b>113</b><span>camera viewpoints</span></div>
+            <div class="mini-metric"><b>4–20×</b><span>fine-tune data reduction claim</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>桌面物体交互，包含 pushing、grasp-like interaction、object manipulation，重点是跨物体/视角/机器人泛化。</dd>
+              <dt>数据类型</dt><dd>RGB 视频帧、机器人动作、相机视角、机器人平台 metadata；语言标注弱。</dd>
+              <dt>适用机器人</dt><dd>Kuka、Sawyer、WidowX 等多种机械臂平台；适合分析跨平台视觉经验迁移。</dd>
+              <dt>如何使用</dt><dd>用于 video prediction 与 inverse model 预训练，再在 held-out robot 上少量 fine-tuning。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>RoboNet 的核心不是把不同机器人动作空间完全统一，而是先把机器人-物体交互视频作为共享经验池，让视觉动力学模型学习“物体如何因机器人动作而变化”。</p>
+            <p>这条路线对现代 VLA 的启发是：跨机器人数据复用不一定从 action 对齐开始，也可以从视觉交互先验、场景变化和对象动力学开始。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 920 210">
+              <defs><marker id="rn" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="25" y="55" width="135" height="72" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="92" y="86" text-anchor="middle" font-weight="700">7 Robots</text><text x="92" y="108" text-anchor="middle" font-size="12">raw interaction</text>
+              <line x1="160" y1="91" x2="205" y2="91" stroke="#63758c" marker-end="url(#rn)"/>
+              <rect x="210" y="55" width="150" height="72" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="285" y="84" text-anchor="middle" font-weight="700">RoboNet Store</text><text x="285" y="106" text-anchor="middle" font-size="12">video + action + meta</text>
+              <line x1="360" y1="91" x2="405" y2="91" stroke="#63758c" marker-end="url(#rn)"/>
+              <rect x="410" y="25" width="155" height="62" rx="12" fill="#fff3df" stroke="#c97815"/><text x="487" y="54" text-anchor="middle" font-weight="700">Video Prediction</text><text x="487" y="73" text-anchor="middle" font-size="11">visual dynamics</text>
+              <rect x="410" y="105" width="155" height="62" rx="12" fill="#fff3df" stroke="#c97815"/><text x="487" y="134" text-anchor="middle" font-weight="700">Inverse Model</text><text x="487" y="153" text-anchor="middle" font-size="11">action inference</text>
+              <line x1="565" y1="91" x2="620" y2="91" stroke="#63758c" marker-end="url(#rn)"/>
+              <rect x="625" y="55" width="130" height="72" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="690" y="86" text-anchor="middle" font-weight="700">Pretrain</text><text x="690" y="108" text-anchor="middle" font-size="12">shared prior</text>
+              <line x1="755" y1="91" x2="805" y2="91" stroke="#63758c" marker-end="url(#rn)"/>
+              <rect x="810" y="55" width="90" height="72" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="855" y="84" text-anchor="middle" font-weight="700">Fine-tune</text><text x="855" y="106" text-anchor="middle" font-size="12">new robot</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>提出跨机器人共享经验库的早期工程范式。</li><li>强调 camera viewpoint、robot platform、object 的多样性。</li><li>证明 pretrain + 少量新机器人数据可优于纯新机器人数据。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>缺语言任务层，难直接服务现代 language-conditioned policy。</li><li>action space 统一弱，策略迁移不如视觉动力学迁移直接。</li><li>主要是桌面交互，离复杂长时序任务较远。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.2 BridgeData V2: A Dataset for Robot Learning at Scale</div>
+            <div class="deep-subtitle">定位：低成本真实机器人数据链路，强调多环境、多任务、语言条件和开源加载生态。</div>
+            <span class="pill">CoRL 2023</span><span class="pill green">60,096 trajectories</span><span class="pill orange">24 environments</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>60,096</b><span>trajectories</span></div>
+            <div class="mini-metric"><b>50,365</b><span>teleop demos</span></div>
+            <div class="mini-metric"><b>9,731</b><span>scripted rollouts</span></div>
+            <div class="mini-metric"><b>5Hz</b><span>control frequency</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>toy kitchen、tabletop、sink、stove、microwave、laundry 等 24 个环境，偏室内桌面操作。</dd>
+              <dt>数据类型</dt><dd>多视角 RGB/RGB-D、动作轨迹、自然语言 instruction；RLDS/TFDS 版本便于加载。</dd>
+              <dt>适用机器人</dt><dd>WidowX 250 6DoF 低成本机械臂，parallel gripper；适合低成本单臂平台参考。</dd>
+              <dt>如何使用</dt><dd>用于 goal-conditioned BC、language-conditioned BC、offline RL，也常被 Octo/RT-X 生态消费。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>BridgeData V2 的技术价值在于把低成本机器人采集流程标准化：固定硬件平台 + VR teleop + 多环境 + 语言标注 + RLDS 格式，使数据能被不同下游算法复用。</p>
+            <p>它也展示了 teleop 与 scripted rollout 可以共存：teleop 提供真实人类策略分布，scripted rollout 补基础 pick-place 覆盖。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 920 210">
+              <defs><marker id="bd" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="20" y="40" width="135" height="60" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="87" y="72" text-anchor="middle" font-weight="700">VR Teleop</text>
+              <rect x="20" y="118" width="135" height="60" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="87" y="150" text-anchor="middle" font-weight="700">Scripted</text>
+              <line x1="155" y1="70" x2="210" y2="100" stroke="#63758c" marker-end="url(#bd)"/><line x1="155" y1="148" x2="210" y2="118" stroke="#63758c" marker-end="url(#bd)"/>
+              <rect x="215" y="72" width="150" height="72" rx="12" fill="#fff3df" stroke="#c97815"/><text x="290" y="101" text-anchor="middle" font-weight="700">WidowX 250</text><text x="290" y="123" text-anchor="middle" font-size="12">5Hz control</text>
+              <line x1="365" y1="108" x2="410" y2="108" stroke="#63758c" marker-end="url(#bd)"/>
+              <rect x="415" y="72" width="150" height="72" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="490" y="98" text-anchor="middle" font-weight="700">Trajectory</text><text x="490" y="119" text-anchor="middle" font-size="12">images + action + language</text>
+              <line x1="565" y1="108" x2="610" y2="108" stroke="#63758c" marker-end="url(#bd)"/>
+              <rect x="615" y="72" width="130" height="72" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="680" y="100" text-anchor="middle" font-weight="700">RLDS/TFDS</text><text x="680" y="121" text-anchor="middle" font-size="12">standard loader</text>
+              <line x1="745" y1="108" x2="790" y2="108" stroke="#63758c" marker-end="url(#bd)"/>
+              <rect x="795" y="72" width="100" height="72" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="845" y="98" text-anchor="middle" font-weight="700">Policy</text><text x="845" y="120" text-anchor="middle" font-size="12">BC / offline RL</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>低成本硬件 + VR teleop，工程复现门槛相对低。</li><li>数据字段支持 language 与 goal image，消费方式灵活。</li><li>RLDS 兼容，能进入 OXE/Octo 类数据链路。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>单一 WidowX embodiment，跨机器人直接迁移有限。</li><li>5Hz 控制不适合高动态或接触频繁的精细任务。</li><li>场景虽多，但仍偏 toy kitchen 和桌面环境。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.3 Open X-Embodiment / RT-X</div>
+            <div class="deep-subtitle">定位：机器人数据标准化与跨 embodiment 数据混合的标杆，把异构历史数据转换为可共同训练的 RLDS 数据集。</div>
+            <span class="pill">2023/2024</span><span class="pill green">1M+ trajectories</span><span class="pill purple">22 embodiments</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>60</b><span>source datasets</span></div>
+            <div class="mini-metric"><b>22</b><span>robot embodiments</span></div>
+            <div class="mini-metric"><b>527</b><span>skills</span></div>
+            <div class="mini-metric"><b>160k+</b><span>tasks</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>多实验室机器人操作数据，主要是桌面 manipulation，覆盖 pick/place/push/open/close 等常见技能。</dd>
+              <dt>数据类型</dt><dd>RGB 图像、proprio/state、action、language/task、robot embodiment metadata；统一为 RLDS。</dd>
+              <dt>适用机器人</dt><dd>单臂、双臂、移动平台、四足等多 embodiment；但主体仍以机械臂操作为主。</dd>
+              <dt>如何使用</dt><dd>训练 RT-1-X、RT-2-X，也作为 Octo/OpenVLA 等开源策略的重要数据来源。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>OXE 的硬核点在 converter 和 data mixture：每个源数据集要把自己的 observation、action、language、robot metadata 映射到统一 RLDS episode schema，再通过混合采样进入训练。</p>
+            <p>这证明“历史异构数据”不是废料，只要转换器和 metadata 足够完整，就能成为跨机器人预训练资产。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 960 230">
+              <defs><marker id="oxe" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="20" y="30" width="150" height="62" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="95" y="58" text-anchor="middle" font-weight="700">Dataset A</text><text x="95" y="78" text-anchor="middle" font-size="12">robot/action schema A</text>
+              <rect x="20" y="112" width="150" height="62" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="95" y="140" text-anchor="middle" font-weight="700">Dataset B...</text><text x="95" y="160" text-anchor="middle" font-size="12">schema B...</text>
+              <line x1="170" y1="62" x2="230" y2="95" stroke="#63758c" marker-end="url(#oxe)"/><line x1="170" y1="143" x2="230" y2="120" stroke="#63758c" marker-end="url(#oxe)"/>
+              <rect x="235" y="70" width="160" height="78" rx="12" fill="#fff3df" stroke="#c97815"/><text x="315" y="100" text-anchor="middle" font-weight="700">Per-dataset Converter</text><text x="315" y="121" text-anchor="middle" font-size="12">obs/action/lang/meta</text>
+              <line x1="395" y1="109" x2="450" y2="109" stroke="#63758c" marker-end="url(#oxe)"/>
+              <rect x="455" y="70" width="135" height="78" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="522" y="99" text-anchor="middle" font-weight="700">RLDS Episode</text><text x="522" y="120" text-anchor="middle" font-size="12">unified format</text>
+              <line x1="590" y1="109" x2="645" y2="109" stroke="#63758c" marker-end="url(#oxe)"/>
+              <rect x="650" y="70" width="135" height="78" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="717" y="99" text-anchor="middle" font-weight="700">Mixture Sampler</text><text x="717" y="120" text-anchor="middle" font-size="12">dataset/task weights</text>
+              <line x1="785" y1="109" x2="835" y2="109" stroke="#63758c" marker-end="url(#oxe)"/>
+              <rect x="840" y="70" width="100" height="78" rx="12" fill="#1f3f68"/><text x="890" y="99" text-anchor="middle" fill="#fff" font-weight="700">RT-X</text><text x="890" y="120" text-anchor="middle" fill="#dbeafe" font-size="12">RT-1-X / RT-2-X</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>从数据工程上定义跨机器人学习的统一接口。</li><li>保留 embodiment 和 language，使模型能条件化到不同机器人/任务。</li><li>证明数据多样性能带来正迁移，而不仅是单域过拟合。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>源数据质量不均，低质数据混入会影响 mixture。</li><li>大多数仍是 tabletop/single-arm 数据，真实长尾不足。</li><li>action adapter 与采样权重是隐性关键，照搬 concat 不会得到同样效果。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.4 DROID: A Large-Scale In-the-Wild Robot Manipulation Dataset</div>
+            <div class="deep-subtitle">定位：真实环境分布式采集链路，用统一 Franka 硬件栈换取跨地点数据一致性。</div>
+            <span class="pill">RSS 2024</span><span class="pill green">76k trajectories</span><span class="pill orange">564 scenes</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>350h</b><span>interaction data</span></div>
+            <div class="mini-metric"><b>86</b><span>tasks</span></div>
+            <div class="mini-metric"><b>52</b><span>buildings</span></div>
+            <div class="mini-metric"><b>3</b><span>synchronized RGB views</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>家庭、办公室、实验室、厨房、卧室、走廊等真实 indoor scenes，强调 in-the-wild 分布。</dd>
+              <dt>数据类型</dt><dd>三路同步 RGB、depth、camera calibration、language annotations、Franka state/action。</dd>
+              <dt>适用机器人</dt><dd>Franka Panda 统一硬件栈；强在真实场景泛化，弱在跨 embodiment。</dd>
+              <dt>如何使用</dt><dd>用于训练或微调 robust manipulation policies，并作为真实场景泛化 benchmark。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>DROID 的关键不是“采了 76k”，而是把分布式采集协议工程化：统一 robot setup、统一相机和标定、统一语言标注，使不同地点的数据仍能合并。</p>
+            <p>它把数据分布从实验台扩展到真实生活/办公环境，对公司自建数据链路最可借鉴的是硬件标准、calibration 入库和采集者协议。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 940 220">
+              <defs><marker id="dr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="25" y="65" width="140" height="70" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="95" y="94" text-anchor="middle" font-weight="700">13 Institutions</text><text x="95" y="115" text-anchor="middle" font-size="12">50 collectors</text>
+              <line x1="165" y1="100" x2="215" y2="100" stroke="#63758c" marker-end="url(#dr)"/>
+              <rect x="220" y="65" width="150" height="70" rx="12" fill="#fff3df" stroke="#c97815"/><text x="295" y="94" text-anchor="middle" font-weight="700">Standard Franka</text><text x="295" y="115" text-anchor="middle" font-size="12">shared hardware stack</text>
+              <line x1="370" y1="100" x2="420" y2="100" stroke="#63758c" marker-end="url(#dr)"/>
+              <rect x="425" y="45" width="150" height="110" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="500" y="74" text-anchor="middle" font-weight="700">Episode Record</text><text x="500" y="96" text-anchor="middle" font-size="12">3 RGB views</text><text x="500" y="115" text-anchor="middle" font-size="12">depth + calibration</text><text x="500" y="134" text-anchor="middle" font-size="12">language + action</text>
+              <line x1="575" y1="100" x2="625" y2="100" stroke="#63758c" marker-end="url(#dr)"/>
+              <rect x="630" y="65" width="130" height="70" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="695" y="94" text-anchor="middle" font-weight="700">Validation</text><text x="695" y="115" text-anchor="middle" font-size="12">quality + labels</text>
+              <line x1="760" y1="100" x2="810" y2="100" stroke="#63758c" marker-end="url(#dr)"/>
+              <rect x="815" y="65" width="100" height="70" rx="12" fill="#1f3f68"/><text x="865" y="94" text-anchor="middle" fill="#fff" font-weight="700">DROID</text><text x="865" y="115" text-anchor="middle" fill="#dbeafe" font-size="12">public dataset</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>真实场景/建筑/操作者多样性强，覆盖实验室外分布。</li><li>三视角、depth、calibration 同时入库，可复用性高。</li><li>统一硬件栈降低分布式采集带来的系统性差异。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>Franka 单 embodiment，跨机器人要另做 adapter。</li><li>分布式采集需要严格协议，否则 label、calibration、operator bias 会变脏。</li><li>长尾任务分布不均，训练时需要 task/source balancing。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.5 ALOHA / ACT: 低成本双臂遥操作与 Action Chunk 数据</div>
+            <div class="deep-subtitle">定位：高质量双臂精细操作数据链路，关键在主从遥操作、多相机同步、高频连续动作和夹爪接触时机。</div>
+            <span class="pill">2023</span><span class="pill purple">Bimanual teleop</span><span class="pill orange">Action chunking</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>双臂</b><span>leader-follower teleop</span></div>
+            <div class="mini-metric"><b>多相机</b><span>外部 + wrist views</span></div>
+            <div class="mini-metric"><b>连续动作</b><span>joint/gripper stream</span></div>
+            <div class="mini-metric"><b>ACT</b><span>chunk-level action data</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>双臂桌面精细操作，如插拔、抓取、整理、折叠、开合、厨房类操作；强调接触和时序。</dd>
+              <dt>数据类型</dt><dd>多相机 RGB、双臂 joint state、双夹爪状态、连续 action sequence；通常是高质量成功示教。</dd>
+              <dt>适用机器人</dt><dd>ALOHA 低成本双臂、Mobile ALOHA 移动双臂；可迁移到类似主从遥操作双臂平台。</dd>
+              <dt>如何使用</dt><dd>作为 imitation learning 数据，ACT 一次预测 action chunk，Diffusion/BC 也可消费类似时序数据。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>ALOHA/ACT 的数据链路把“人类手上操作”映射成机器人双臂同步动作流。这里的硬核点不是轨迹数量，而是轨迹质量：多视角、连续动作、夹爪闭合时机和接触阶段都必须同步准确。</p>
+            <p>ACT 的 action chunk 把单帧监督变成一段未来动作监督，提升长时序动作平滑性，但也反向要求图像、proprio 和 action 的时间对齐非常干净。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 940 220">
+              <defs><marker id="aloha" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="25" y="65" width="135" height="70" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="92" y="94" text-anchor="middle" font-weight="700">Human Operator</text><text x="92" y="115" text-anchor="middle" font-size="12">leader arms</text>
+              <line x1="160" y1="100" x2="210" y2="100" stroke="#63758c" marker-end="url(#aloha)"/>
+              <rect x="215" y="65" width="135" height="70" rx="12" fill="#fff3df" stroke="#c97815"/><text x="282" y="94" text-anchor="middle" font-weight="700">Follower Robot</text><text x="282" y="115" text-anchor="middle" font-size="12">bimanual action</text>
+              <line x1="350" y1="100" x2="400" y2="100" stroke="#63758c" marker-end="url(#aloha)"/>
+              <rect x="405" y="45" width="150" height="110" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="480" y="74" text-anchor="middle" font-weight="700">Synchronized Log</text><text x="480" y="96" text-anchor="middle" font-size="12">multi-camera RGB</text><text x="480" y="115" text-anchor="middle" font-size="12">joint + gripper</text><text x="480" y="134" text-anchor="middle" font-size="12">timestamps</text>
+              <line x1="555" y1="100" x2="605" y2="100" stroke="#63758c" marker-end="url(#aloha)"/>
+              <rect x="610" y="65" width="135" height="70" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="677" y="94" text-anchor="middle" font-weight="700">Action Chunk</text><text x="677" y="115" text-anchor="middle" font-size="12">future sequence</text>
+              <line x1="745" y1="100" x2="795" y2="100" stroke="#63758c" marker-end="url(#aloha)"/>
+              <rect x="800" y="65" width="110" height="70" rx="12" fill="#1f3f68"/><text x="855" y="94" text-anchor="middle" fill="#fff" font-weight="700">Policy Data</text><text x="855" y="115" text-anchor="middle" fill="#dbeafe" font-size="12">IL training</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>低成本双臂硬件也能采高质量精细操作数据。</li><li>多相机 + joint/gripper 同步，适合接触丰富任务。</li><li>action chunk 让示教数据表达未来短时动作计划。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>对硬件形态依赖强，跨 embodiment 复用要重做 action adapter。</li><li>时间同步误差会被 chunk policy 放大，导致闭环接触失败。</li><li>人工遥操作成本仍高，复杂任务需要大量高质量成功示教。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.6 MimicGen: 用少量示教生成大量仿真演示</div>
+            <div class="deep-subtitle">定位：数据生成链路代表，把少量 human demonstrations 分解、变换、拼接成新的 synthetic demonstrations。</div>
+            <span class="pill">CoRL 2023</span><span class="pill green">Synthetic demos</span><span class="pill orange">Subtask stitching</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>Seed</b><span>source demos</span></div>
+            <div class="mini-metric"><b>Object</b><span>pose perturbation</span></div>
+            <div class="mini-metric"><b>Subtask</b><span>segmentation</span></div>
+            <div class="mini-metric"><b>Auto</b><span>rollout validation</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>仿真机械臂 manipulation，适合 pick-place、assembly、object rearrangement 等结构化任务。</dd>
+              <dt>数据类型</dt><dd>source demos、object poses、subtask boundaries、state/action trajectories、success predicates。</dd>
+              <dt>适用机器人</dt><dd>主要依赖 RoboSuite 等仿真机械臂环境；适合有 oracle state 和可重放控制器的机器人任务。</dd>
+              <dt>如何使用</dt><dd>用少量真实/人工 seed demos 生成大量仿真 demos，再用于 BC 或其他离线策略训练。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>MimicGen 的关键思想是 object-centric subtask reuse：把示教分成接近、抓取、移动、释放等子任务，再根据新物体位姿做轨迹变换和拼接。</p>
+            <p>它适合“结构清楚、目标可由物体位姿定义”的任务；对于柔性物体、复杂接触和强动力学任务，自动拼接质量会下降。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 940 220">
+              <defs><marker id="mg" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="25" y="65" width="125" height="70" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="87" y="94" text-anchor="middle" font-weight="700">Source Demos</text><text x="87" y="115" text-anchor="middle" font-size="12">few examples</text>
+              <line x1="150" y1="100" x2="200" y2="100" stroke="#63758c" marker-end="url(#mg)"/>
+              <rect x="205" y="65" width="140" height="70" rx="12" fill="#fff3df" stroke="#c97815"/><text x="275" y="94" text-anchor="middle" font-weight="700">Subtask Split</text><text x="275" y="115" text-anchor="middle" font-size="12">object-centric phases</text>
+              <line x1="345" y1="100" x2="395" y2="100" stroke="#63758c" marker-end="url(#mg)"/>
+              <rect x="400" y="65" width="140" height="70" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="470" y="94" text-anchor="middle" font-weight="700">Pose Perturb</text><text x="470" y="115" text-anchor="middle" font-size="12">new object layout</text>
+              <line x1="540" y1="100" x2="590" y2="100" stroke="#63758c" marker-end="url(#mg)"/>
+              <rect x="595" y="65" width="135" height="70" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="662" y="94" text-anchor="middle" font-weight="700">Warp & Stitch</text><text x="662" y="115" text-anchor="middle" font-size="12">new trajectory</text>
+              <line x1="730" y1="100" x2="780" y2="100" stroke="#63758c" marker-end="url(#mg)"/>
+              <rect x="785" y="65" width="125" height="70" rx="12" fill="#1f3f68"/><text x="847" y="94" text-anchor="middle" fill="#fff" font-weight="700">Validate</text><text x="847" y="115" text-anchor="middle" fill="#dbeafe" font-size="12">success predicate</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>把少量高质量示教扩展为大量可训练仿真轨迹。</li><li>子任务级复用比整条轨迹复制更能覆盖位姿变化。</li><li>自动 success predicate 可用于大规模过滤失败生成。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>依赖仿真和 privileged state，真机直接复用难。</li><li>任务必须可分解且几何结构稳定。</li><li>生成数据仍可能有 sim-real gap，需要真机数据校准。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.7 Octo / OpenVLA: 通用策略对数据链路的反向约束</div>
+            <div class="deep-subtitle">定位：从开源通用机器人策略看数据如何被消费，重点是 language、embodiment、action representation 和 loader 兼容性。</div>
+            <span class="pill">2024</span><span class="pill purple">Generalist policy</span><span class="pill green">OXE mixture</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>OXE</b><span>primary data source</span></div>
+            <div class="mini-metric"><b>RGB</b><span>visual input</span></div>
+            <div class="mini-metric"><b>Lang</b><span>task conditioning</span></div>
+            <div class="mini-metric"><b>Action</b><span>token/head dependent</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>继承 OXE/Bridge/RT 等多源 manipulation 数据，偏桌面操作和多任务语言条件控制。</dd>
+              <dt>数据类型</dt><dd>RGB 图像、语言指令、action、robot metadata；对 task language 和 action normalization 要求高。</dd>
+              <dt>适用机器人</dt><dd>取决于训练混合数据中覆盖的 embodiment；常见于 WidowX、Franka、Google RT 平台等。</dd>
+              <dt>如何使用</dt><dd>作为 foundation policy 预训练或下游 fine-tuning 入口，要求自有数据能映射到其 loader/schema。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>Octo/OpenVLA 的意义在于反向定义了公司数据应保留哪些字段：不仅要有图像和动作，还要有高质量语言、robot embodiment、相机视角、action representation。</p>
+            <p>如果数据只记录裸 action 和图像，后续很难接入 VLA 或通用策略生态；如果保留完整 metadata，就能更低成本 fine-tune 或做 cross-model benchmark。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 940 220">
+              <defs><marker id="vla" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="25" y="65" width="130" height="70" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="90" y="94" text-anchor="middle" font-weight="700">OXE / Bridge</text><text x="90" y="115" text-anchor="middle" font-size="12">standard episodes</text>
+              <line x1="155" y1="100" x2="205" y2="100" stroke="#63758c" marker-end="url(#vla)"/>
+              <rect x="210" y="45" width="145" height="110" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="282" y="74" text-anchor="middle" font-weight="700">Data Loader</text><text x="282" y="96" text-anchor="middle" font-size="12">image</text><text x="282" y="115" text-anchor="middle" font-size="12">language</text><text x="282" y="134" text-anchor="middle" font-size="12">action/meta</text>
+              <line x1="355" y1="100" x2="405" y2="100" stroke="#63758c" marker-end="url(#vla)"/>
+              <rect x="410" y="45" width="145" height="110" rx="12" fill="#fff3df" stroke="#c97815"/><text x="482" y="74" text-anchor="middle" font-weight="700">Encoders</text><text x="482" y="96" text-anchor="middle" font-size="12">vision encoder</text><text x="482" y="115" text-anchor="middle" font-size="12">language tokenizer</text><text x="482" y="134" text-anchor="middle" font-size="12">embodiment token</text>
+              <line x1="555" y1="100" x2="605" y2="100" stroke="#63758c" marker-end="url(#vla)"/>
+              <rect x="610" y="65" width="135" height="70" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="677" y="94" text-anchor="middle" font-weight="700">Action Head</text><text x="677" y="115" text-anchor="middle" font-size="12">tokens / continuous</text>
+              <line x1="745" y1="100" x2="795" y2="100" stroke="#63758c" marker-end="url(#vla)"/>
+              <rect x="800" y="65" width="110" height="70" rx="12" fill="#1f3f68"/><text x="855" y="94" text-anchor="middle" fill="#fff" font-weight="700">Fine-tune</text><text x="855" y="115" text-anchor="middle" fill="#dbeafe" font-size="12">target robot</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>开源生态降低通用策略微调门槛。</li><li>把语言字段、embodiment metadata 和 action schema 提升为一等数据字段。</li><li>适合作为公司数据格式兼容性的反向验收标准。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>泛化不是无条件成立，未覆盖 embodiment 仍需大量适配数据。</li><li>action token/continuous head 对精度、频率和归一化非常敏感。</li><li>推理频率和真实控制器延迟可能成为落地瓶颈。</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-paper">
+        <div class="deep-top">
+          <div>
+            <div class="deep-title">8.8 PolaRiS / SimFoundry: Real2Sim 数据补充链路</div>
+            <div class="deep-subtitle">定位：从真实视频或扫描恢复可交互仿真场景，用于真实场景评估、长尾扩增和 synthetic data 生成。</div>
+            <span class="pill">2025/2026</span><span class="pill orange">Real2Sim</span><span class="pill green">Digital twins/cousins</span>
+          </div>
+          <div class="metric-grid">
+            <div class="mini-metric"><b>Video</b><span>real scene input</span></div>
+            <div class="mini-metric"><b>Mesh/3DGS</b><span>scene assets</span></div>
+            <div class="mini-metric"><b>Physics</b><span>collision/mass/friction</span></div>
+            <div class="mini-metric"><b>Sim</b><span>eval / generation</span></div>
+          </div>
+        </div>
+        <div class="deep-section two-col">
+          <div>
+            <h3>数据画像与适用边界</h3>
+            <dl class="info-list">
+              <dt>数据场景</dt><dd>真实桌面/室内操作场景，通过视频或扫描恢复为仿真场景；SimFoundry 偏 digital twin + cousins。</dd>
+              <dt>数据类型</dt><dd>RGB video、segmentation mask、depth/point cloud、mesh、3DGS、object pose、physics metadata、sim scene。</dd>
+              <dt>适用机器人</dt><dd>取决于下游 simulator 和 robot assets；论文中常见 DROID/YAM/Isaac Lab 生态。</dd>
+              <dt>如何使用</dt><dd>用于 sim-based policy evaluation、sim data generation、object/scene/task variation。</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>实现了什么</h3>
+            <p>Real2Sim 的硬核点不是“重建好看”，而是把真实场景转成 physics-ready：物体 mesh、碰撞体、位姿、质量、摩擦、稳定化后才能进入机器人数据链路。</p>
+            <p>SimFoundry 进一步把重建场景扩展为 digital cousins：保留 affordance，同时变化物体、布局和任务，形成数据扩增链路。</p>
+          </div>
+        </div>
+        <div class="deep-section">
+          <h3>技术链路图</h3>
+          <div class="tech-svg">
+            <svg viewBox="0 0 980 240">
+              <defs><marker id="r2s" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#63758c"/></marker></defs>
+              <rect x="20" y="75" width="115" height="70" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="77" y="104" text-anchor="middle" font-weight="700">Real Video</text><text x="77" y="125" text-anchor="middle" font-size="12">RGB / scan</text>
+              <line x1="135" y1="110" x2="180" y2="110" stroke="#63758c" marker-end="url(#r2s)"/>
+              <rect x="185" y="75" width="130" height="70" rx="12" fill="#fff3df" stroke="#c97815"/><text x="250" y="99" text-anchor="middle" font-weight="700">Perception</text><text x="250" y="119" text-anchor="middle" font-size="12">seg + depth + pose</text>
+              <line x1="315" y1="110" x2="360" y2="110" stroke="#63758c" marker-end="url(#r2s)"/>
+              <rect x="365" y="75" width="130" height="70" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="430" y="99" text-anchor="middle" font-weight="700">Asset Gen</text><text x="430" y="119" text-anchor="middle" font-size="12">mesh / 3DGS</text>
+              <line x1="495" y1="110" x2="540" y2="110" stroke="#63758c" marker-end="url(#r2s)"/>
+              <rect x="545" y="55" width="140" height="110" rx="12" fill="#f8fafc" stroke="#94a3b8"/><text x="615" y="84" text-anchor="middle" font-weight="700">Physics-ready</text><text x="615" y="105" text-anchor="middle" font-size="12">collision mesh</text><text x="615" y="124" text-anchor="middle" font-size="12">mass/friction</text><text x="615" y="143" text-anchor="middle" font-size="12">depenetration</text>
+              <line x1="685" y1="110" x2="730" y2="110" stroke="#63758c" marker-end="url(#r2s)"/>
+              <rect x="735" y="75" width="115" height="70" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="792" y="104" text-anchor="middle" font-weight="700">Sim Scene</text><text x="792" y="125" text-anchor="middle" font-size="12">Isaac/PyBullet</text>
+              <line x1="850" y1="110" x2="895" y2="110" stroke="#63758c" marker-end="url(#r2s)"/>
+              <rect x="900" y="75" width="60" height="70" rx="12" fill="#1f3f68"/><text x="930" y="103" text-anchor="middle" fill="#fff" font-weight="700">Eval</text><text x="930" y="124" text-anchor="middle" fill="#dbeafe" font-size="12">Data</text>
+              <path d="M792 165 C792 205, 430 205, 430 148" fill="none" stroke="#138a5b" stroke-dasharray="5 5" marker-end="url(#r2s)"/>
+              <text x="610" y="220" text-anchor="middle" font-size="12" fill="#138a5b">digital cousins: object / scene / task variation</text>
+            </svg>
+          </div>
+          <div class="pros-cons">
+            <div class="box good"><h4>亮点</h4><ul><li>把真实场景引入仿真链路，可用于真实分布下的仿真评估。</li><li>digital cousins 能系统扩展 object、scene、task 维度。</li><li>可为长尾场景和高风险真机测试提供补充数据。</li></ul></div>
+            <div class="box warn"><h4>局限 / 坑</h4><ul><li>链路长，依赖 segmentation、depth、2D-to-3D、VLM、physics 多模块。</li><li>物理参数近似会影响 contact-rich manipulation 可信度。</li><li>工程门槛高，短期更适合作补充而非主采集链路。</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>9. 对公司机器人数据体系的启示</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>1. 先统一数据 schema</strong>
+          Episode、task、observation、action、timestamp、metadata、success、quality_score 必须有稳定定义。
+        </div>
+        <div class="card">
+          <strong>2. 采集规范先于模型扩张</strong>
+          任务模板、起止标准、成功标准、相机命名、action space 定义应先固定。
+        </div>
+        <div class="card">
+          <strong>3. 自动质检前置</strong>
+          每条数据入库前做 schema、timestamp、video、action、success、distribution 检查。
+        </div>
+        <div class="card">
+          <strong>4. 保留 source 与 embodiment 标记</strong>
+          未来数据会来自真机、仿真、开源集、Real2Sim、人类视频，必须从第一天可追踪来源。
+        </div>
+        <div class="card">
+          <strong>5. 数据 mixture 要可配置</strong>
+          按任务、场景、机器人、质量、来源和长尾程度采样，避免简单拼接。
+        </div>
+        <div class="card">
+          <strong>6. 建立失败样本回流</strong>
+          失败 episode 应进入 failure taxonomy，驱动定向补采或仿真增强。
+        </div>
+      </div>
+    </section>
+
+    <section class="conclusion">
+      <h2>10. 总结</h2>
+      <p>机器人数据链路的核心，不是单次采集多少数据，而是能否把任务定义、采集、标准化、质检、多源融合和失败回流串成稳定闭环。</p>
+      <p>从 RoboNet 到 Open X-Embodiment，再到 DROID、MimicGen 和 SimFoundry，行业趋势已经很清晰：机器人数据正在从单机器人、单任务、单场景，走向跨机器人、多场景、多来源的标准化数据链路。</p>
+      <p>公司如果要长期建设机器人能力，应优先完成统一数据 schema、采集规范、质检系统、多源融合策略和失败样本回流机制。这些能力比短期选择某一个模型算法更底层，也更长期。</p>
+    </section>
+
+    <section>
+      <h2>参考资料</h2>
+      <ul class="refs">
+        <li>RoboNet: Large-Scale Multi-Robot Learning, CoRL 2019. <a href="https://www.robonet.wiki/">Project</a></li>
+        <li>BridgeData V2: A Dataset for Robot Learning at Scale, CoRL 2023. <a href="https://rail-berkeley.github.io/bridgedata/">Project</a></li>
+        <li>Open X-Embodiment: Robotic Learning Datasets and RT-X Models, 2023/2024. <a href="https://robotics-transformer-x.github.io/">Project</a></li>
+        <li>DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset, RSS 2024. <a href="https://droid-dataset.github.io/">Project</a></li>
+        <li>Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware / ACT / ALOHA, 2023.</li>
+        <li>MimicGen: A Data Generation System for Scalable Robot Learning using Human Demonstrations, CoRL 2023.</li>
+        <li>Octo: An Open-Source Generalist Robot Policy, 2024.</li>
+        <li>OpenVLA: An Open-Source Vision-Language-Action Model, 2024.</li>
+        <li>PolaRiS: Scalable Real-to-Sim Evaluations for Generalist Robot Policies, 2025.</li>
+        <li>SimFoundry: Modular and Automated Scene Generation for Policy Learning and Evaluation, 2026.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

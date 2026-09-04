@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>机器人数据链路与重要数据集深度调研报告</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --paper: #ffffff;
+      --ink: #142033;
+      --muted: #5d6c80;
+      --line: #d9e2ee;
+      --blue: #1f5fae;
+      --navy: #123a63;
+      --cyan: #0c8796;
+      --green: #138a5b;
+      --orange: #c97815;
+      --purple: #6947b5;
+      --red: #b84545;
+      --soft-blue: #eaf2fc;
+      --soft-green: #eaf7ef;
+      --soft-orange: #fff3df;
+      --soft-purple: #f2ecff;
+      --soft-red: #fff0f0;
+      --shadow: 0 12px 32px rgba(25, 55, 95, 0.09);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 0 0, #e5f0ff 0, transparent 340px), var(--bg);
+      color: var(--ink);
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      line-height: 1.62;
+    }
+    .page { max-width: 1220px; margin: 0 auto; padding: 34px 24px 70px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      padding: 48px 46px;
+      color: #fff;
+      background: linear-gradient(135deg, #0c2038, #1f5fae 58%, #0c8796);
+      box-shadow: var(--shadow);
+    }
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      bottom: -140px;
+      width: 390px;
+      height: 390px;
+      border-radius: 50%;
+      border: 58px solid rgba(255,255,255,.08);
+    }
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.15);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      color: #dff9ff;
+    }
+    h1 {
+      font-size: 35px;
+      line-height: 1.2;
+      margin: 16px 0 12px;
+      letter-spacing: -0.02em;
+      max-width: 900px;
+    }
+    .subtitle { font-size: 17px; color: rgba(255,255,255,.86); max-width: 900px; margin: 0 0 22px; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-top: 1px solid rgba(255,255,255,.18);
+      padding-top: 18px;
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      position: relative;
+      z-index: 1;
+    }
+    .meta span { min-width: 220px; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px 32px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+    h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; color: var(--navy); font-size: 22px; }
+    h2:before {
+      content: "";
+      width: 7px;
+      height: 24px;
+      border-radius: 999px;
+      background: linear-gradient(var(--blue), var(--cyan));
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+    h3 { margin: 22px 0 12px; color: var(--navy); font-size: 17px; }
+    h4 { margin: 0 0 8px; color: var(--navy); font-size: 14px; }
+    p { margin: 9px 0; }
+    .lead { color: var(--muted); font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .card { border: 1px solid var(--line); border-radius: 14px; background: #fbfdff; padding: 16px; }
+    .card strong { display: block; color: var(--navy); margin-bottom: 6px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap: 10px; }
+    .metric { border: 1px solid var(--line); border-radius: 12px; padding: 11px; background: rgba(255,255,255,.82); }
+    .metric b { display: block; color: var(--blue); font-size: 20px; line-height: 1.2; word-break: break-word; }
+    .metric span { font-size: 11px; color: var(--muted); }
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      margin: 2px 4px 2px 0;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .pill.green { background: var(--soft-green); color: var(--green); }
+    .pill.orange { background: var(--soft-orange); color: var(--orange); }
+    .pill.purple { background: var(--soft-purple); color: var(--purple); }
+    .pill.red { background: var(--soft-red); color: var(--red); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+    .table-wrap table { min-width: 920px; }
+    th, td { border: 1px solid var(--line); padding: 10px 12px; vertical-align: top; text-align: left; }
+    th { background: #1f3f68; color: #fff; white-space: nowrap; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .flow {
+      white-space: pre-wrap;
+      background: #0f172a;
+      color: #dbeafe;
+      border-radius: 13px;
+      padding: 14px;
+      font: 12px/1.55 "SF Mono", Consolas, monospace;
+      overflow-x: auto;
+    }
+    .diagram { border: 1px solid var(--line); border-radius: 14px; background: #f8fbff; padding: 12px; margin: 14px 0; overflow-x: auto; }
+    svg { display: block; width: 100%; height: auto; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .caption { text-align: center; color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .deep { border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin: 28px 0; background: #fff; box-shadow: 0 8px 22px rgba(30,58,95,.07); }
+    .deep-top { display: grid; grid-template-columns: 1.05fr 1.55fr; gap: 18px; padding: 22px; background: linear-gradient(120deg, #eef6ff, #fff); border-bottom: 1px solid var(--line); }
+    .deep-title { font-size: 21px; font-weight: 900; color: var(--navy); line-height: 1.28; margin-bottom: 9px; }
+    .deep-subtitle { font-size: 14px; color: var(--muted); }
+    .deep-section { padding: 20px 22px; border-bottom: 1px solid var(--line); }
+    .deep-section:last-child { border-bottom: 0; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .info { display: grid; grid-template-columns: 145px 1fr; gap: 8px 12px; font-size: 14px; }
+    .info dt { font-weight: 800; color: var(--muted); }
+    .info dd { margin: 0; }
+    .box { border: 1px solid var(--line); border-radius: 13px; background: #fbfdff; padding: 14px; }
+    .box.good { background: #f0fdf4; border-color: #bbf7d0; }
+    .box.good h4 { color: #166534; }
+    .box.warn { background: #fff7ed; border-color: #fed7aa; }
+    .box.warn h4 { color: #9a4d08; }
+    .box.note { background: #eff6ff; border-color: #bfdbfe; }
+    .box.note h4 { color: #1d4ed8; }
+    .compact-list li { margin-bottom: 5px; }
+    .schema {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      overflow-x: auto;
+      font: 12px/1.55 "SF Mono", Consolas, monospace;
+    }
+    .conclusion { background: linear-gradient(135deg, #10243c, #1f5fae); color: #fff; }
+    .conclusion h2 { color: #fff; }
+    .conclusion h2:before { background: #79e3f1; }
+    .conclusion p, .conclusion li { color: rgba(255,255,255,.9); }
+    @media(max-width:850px){
+      .page{padding:18px 12px 42px}.hero{padding:32px 24px}h1{font-size:26px}section{padding:22px 16px}
+      .deep-top,.two,.three{grid-template-columns:1fr}.info{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <span class="tag">Robotics Data Pipeline · Datasets · Technical Deep Dive</span>
+    <h1>机器人数据链路与重要数据集深度调研报告</h1>
+    <p class="subtitle">先抽象机器人数据链路方法论，再用代表性论文和数据集说明这些链路如何实现、产出什么数据资产，以及公司如何搭建自己的数据闭环。</p>
+    <div class="meta">
+      <span><strong>主线：</strong>方法论 → 案例 → 落地</span>
+      <span><strong>深讲：</strong>8 个方法论主案例</span>
+      <span><strong>补充：</strong>4 个链路/生态案例</span>
+      <span><strong>输出日期：</strong>2026-07-08</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>0. 结论先行</h2>
+    <p class="lead">本报告调研范围：机器人 manipulation 数据链路（采集 → 同步 → 标准化 → 质检 → 融合 → 回流），以 8 个代表性论文/系统为主案例，覆盖国际（DROID、OXE、BridgeData V2、LIBERO、MimicGen）与国内（RH20T、AgiBot World、RoboMIND）路线；<strong>不涉及模型训练与部署细节，但会说明模型在数据链路搭建（扩增 / Real2Sim / 质检）中的作用边界</strong>。</p>
+
+    <div class="grid">
+      <div class="card"><strong>结论 1：行业竞争焦点已从“采数规模”转向“链路能力”</strong>头部差异不在 raw trajectory 数量，而在 schema 统一、质检闭环、多源融合权重和失败回流机制。没有链路设计的数据集，规模越大清洗和复用成本越高。</div>
+      <div class="card"><strong>结论 2：数据链路可抽象为 7 个环节，缺任何一环都会卡住规模化</strong>任务定义 → 采集协议 → 多模态同步 → 标准化 → 质量控制 → 融合扩增 → 失败回流。公司应先回答这 7 个问题，再决定采多少数据、买什么硬件。</div>
+      <div class="card"><strong>结论 3：8 个主案例分别解决链路中的不同瓶颈</strong>
+        <ul class="compact-list" style="margin:8px 0 0;padding-left:18px">
+          <li><strong>DROID</strong> — 分布式真机采集协议</li>
+          <li><strong>OXE</strong> — 跨机器人标准化与 data mixture</li>
+          <li><strong>RH20T</strong> — 多模态同步与接触丰富数据</li>
+          <li><strong>BridgeData V2</strong> — 低成本单臂快速起步</li>
+          <li><strong>AgiBot World</strong> — 双臂/人形大规模真实任务</li>
+          <li><strong>RoboMIND</strong> — 多 embodiment 统一协议 + 失败示范</li>
+          <li><strong>LIBERO</strong> — 任务体系与 benchmark 设计</li>
+          <li><strong>MimicGen</strong> — 仿真数据扩增与 subtask 复用</li>
+        </ul>
+      </div>
+      <div class="card"><strong>结论 4：多源融合与失败回流是成熟链路的两个“分水岭”</strong>跨机器人、真机、仿真数据不能简单 concat，必须带 source / embodiment / quality / task 权重；失败 rollout 应转为 failure taxonomy 和 targeted recollection，而非仅统计平均成功率。</div>
+      <div class="card"><strong>结论 5：当前主流仍是“人采真机 + 工程化链路”，模型尚未替代 teleop</strong>8 个主案例中，DROID / RH20T / BridgeData / AgiBot / RoboMIND 的真机轨迹仍以 <strong>human teleop</strong> 为主；模型更多出现在 <strong>融合扩增</strong>（MimicGen：几何 + 仿真 subtask stitching）和 <strong>Real2Sim</strong>（SimFoundry：视觉重建 + 场景/asset 生成），而非端到端替代人工采轨迹。若目标是少采真机数据：结构化 manipulation 优先看 MimicGen，场景多样性优先看 SimFoundry；<strong>真机 action 轨迹本身，目前仍离不开 teleop</strong>。</div>
+      <div class="card"><strong>结论 6：建议优先级 — 先建链路，再扩规模</strong>
+        <ul class="compact-list" style="margin:8px 0 0;padding-left:18px">
+          <li><strong>Phase 1（立即）</strong>：统一 episode schema、action 表示、converter 模板 — 对标 OXE / LeRobot</li>
+          <li><strong>Phase 2（短期）</strong>：单站 teleop 采集 + 回放 + 基础质检 — 对标 BridgeData V2 / DROID 协议</li>
+          <li><strong>Phase 3（中期）</strong>：质量评分、版本管理、失败数据入库 — 对标 RoboMIND / AgiBot</li>
+        </ul>
+        不建议一开始追求 million-scale；schema 和质检未就绪时，数据越多技术债越重。
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px">路线选择速查</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>公司阶段</th><th>优先对标</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>从 0 到 1，预算有限</td><td>BridgeData V2 / LeRobot</td><td>低成本、schema 清晰、社区生态成熟</td></tr>
+          <tr><td>单站真机验证、需真实泛化</td><td>DROID 采集协议</td><td>分布式采集规范、标定与 metadata 设计成熟</td></tr>
+          <tr><td>接触/力控/多模态任务</td><td>RH20T</td><td>FT / tactile / audio 同步与标定参考</td></tr>
+          <tr><td>跨机器人预训练</td><td>OXE / RoboMIND</td><td>converter + mixture 或多 embodiment 统一协议</td></tr>
+          <tr><td>双臂/人形规模化</td><td>AgiBot World</td><td>国内最接近的大规模真实任务数据路线</td></tr>
+          <tr><td>算法 benchmark / 任务回归</td><td>LIBERO</td><td>可控 task suite，适合评估而非采数</td></tr>
+          <tr><td>补长尾、降采集成本</td><td>MimicGen / Real2Sim</td><td>结构化任务的仿真扩增，作真机数据补充</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>1. 行业头部数据链路全景</h2>
+    <p class="lead">这一节回答“对标谁、对标什么链路”。不同厂商和机构并不是在做同一件事，而是沿着不同数据链路方向积累能力。</p>
+    <div class="diagram">
+      <svg viewBox="0 0 1080 360" role="img" aria-label="行业链路地图">
+        <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+        <rect x="40" y="42" width="235" height="88" rx="16" fill="#e9f7ef" stroke="#138a5b"/><text x="157" y="75" text-anchor="middle" font-size="15" font-weight="800" fill="#0b5d3a">真实场景采集链路</text><text x="157" y="99" text-anchor="middle" font-size="12">DROID · RH20T · ALOHA</text>
+        <rect x="40" y="228" width="235" height="88" rx="16" fill="#fff3df" stroke="#c97815"/><text x="157" y="261" text-anchor="middle" font-size="15" font-weight="800" fill="#864d0e">双臂/人形大规模链路</text><text x="157" y="285" text-anchor="middle" font-size="12">AgiBot · RoboMIND</text>
+        <rect x="415" y="135" width="250" height="92" rx="18" fill="#1f3f68"/><text x="540" y="170" text-anchor="middle" font-size="17" font-weight="800" fill="#fff">统一数据链路能力</text><text x="540" y="197" text-anchor="middle" font-size="12" fill="#dbeafe">schema · quality · mixture · version · replay</text>
+        <rect x="805" y="42" width="235" height="88" rx="16" fill="#f1ebff" stroke="#6f45b7"/><text x="922" y="75" text-anchor="middle" font-size="15" font-weight="800" fill="#4d2a86">跨机器人标准化链路</text><text x="922" y="99" text-anchor="middle" font-size="12">Open X-Embodiment · RoboNet</text>
+        <rect x="805" y="228" width="235" height="88" rx="16" fill="#eaf2fc" stroke="#1f5fae"/><text x="922" y="261" text-anchor="middle" font-size="15" font-weight="800" fill="#113a68">仿真/Real2Sim 链路</text><text x="922" y="285" text-anchor="middle" font-size="12">LIBERO · MimicGen · SimFoundry</text>
+        <line x1="275" y1="86" x2="410" y2="155" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="275" y1="272" x2="410" y2="205" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="665" y1="155" x2="800" y2="86" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="665" y1="205" x2="800" y2="272" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+      </svg>
+      <div class="caption">图 1：行业头部项目对应的数据链路能力，而不是单纯数据集大小排序。</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>机构/厂商</th><th>代表工作</th><th>对标链路</th><th>关键特征</th></tr></thead>
+        <tbody>
+          <tr><td>Google DeepMind + 多实验室</td><td>Open X-Embodiment / RT-X</td><td>跨机器人标准化与 data mixture</td><td>1M+ 轨迹、22 embodiments、RLDS、RT-1-X/RT-2-X</td></tr>
+          <tr><td>Stanford / Berkeley / TRI / Google DeepMind 等</td><td>DROID</td><td>真实场景分布式遥操作采集</td><td>Franka 统一硬件栈、564 场景、三视角+深度+标定</td></tr>
+          <tr><td>清华等</td><td>RH20T</td><td>多模态同步与接触丰富数据</td><td>RGBD、IR、FT、audio、tactile、haptic teleoperation</td></tr>
+          <tr><td>Stanford</td><td>ALOHA / Mobile ALOHA / ACT</td><td>双臂高质量遥操作与 action chunk 数据</td><td>低成本双臂、多相机、高频连续动作</td></tr>
+          <tr><td>UC Berkeley / RAIL</td><td>BridgeData V2 / Octo</td><td>低成本单臂真机采集 + VLA 消费</td><td>WidowX 250、VR teleop、RLDS、60k trajectories</td></tr>
+          <tr><td>AgiBot / OpenDriveLab 等</td><td>AgiBot World / Colosseo</td><td>双臂/人形大规模真实任务数据</td><td>AgiBot G1、灵巧手、视觉触觉、1M+ 轨迹</td></tr>
+          <tr><td>X-Humanoid / RoboMIND 团队</td><td>RoboMIND</td><td>多 embodiment 统一协议与失败示范</td><td>4 embodiments、107k 轨迹、failure demos、Isaac Sim 支持</td></tr>
+          <tr><td>UT Austin / Stanford 等</td><td>LIBERO</td><td>任务体系与 lifelong benchmark</td><td>130 language-conditioned 仿真任务、knowledge transfer suite</td></tr>
+          <tr><td>NVIDIA / Stanford / UT Austin 等</td><td>MimicGen / SimFoundry</td><td>仿真数据扩增与 Real2Sim</td><td>subtask stitching、digital twin/cousins、physics-ready scenes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 机器人数据链路技术框架</h2>
+    <p class="lead">后文所有论文都映射到这个方法论框架。每篇论文的价值，不在于“又多一个数据集”，而在于它解决了链路中的某个关键难题。</p>
+    <div class="diagram">
+      <svg viewBox="0 0 1060 280" role="img" aria-label="数据链路技术框架">
+        <defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+        <g font-size="13">
+          <rect x="18" y="100" width="120" height="62" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="78" y="126" text-anchor="middle" font-weight="800">任务定义</text><text x="78" y="146" text-anchor="middle">taxonomy</text>
+          <line x1="138" y1="131" x2="168" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="173" y="100" width="120" height="62" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="233" y="126" text-anchor="middle" font-weight="800">采集协议</text><text x="233" y="146" text-anchor="middle">teleop/sim</text>
+          <line x1="293" y1="131" x2="323" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="328" y="100" width="120" height="62" rx="12" fill="#fff3df" stroke="#c97815"/><text x="388" y="126" text-anchor="middle" font-weight="800">多模态同步</text><text x="388" y="146" text-anchor="middle">time/calib</text>
+          <line x1="448" y1="131" x2="478" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="483" y="100" width="120" height="62" rx="12" fill="#f1ebff" stroke="#6f45b7"/><text x="543" y="126" text-anchor="middle" font-weight="800">标准化</text><text x="543" y="146" text-anchor="middle">schema</text>
+          <line x1="603" y1="131" x2="633" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="638" y="100" width="120" height="62" rx="12" fill="#fff0f0" stroke="#b84545"/><text x="698" y="126" text-anchor="middle" font-weight="800">质量控制</text><text x="698" y="146" text-anchor="middle">quality</text>
+          <line x1="758" y1="131" x2="788" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="793" y="100" width="120" height="62" rx="12" fill="#eaf2fc" stroke="#1f5fae"/><text x="853" y="126" text-anchor="middle" font-weight="800">融合扩增</text><text x="853" y="146" text-anchor="middle">mixture</text>
+          <line x1="913" y1="131" x2="943" y2="131" stroke="#64748b" marker-end="url(#arr2)"/>
+          <rect x="948" y="100" width="90" height="62" rx="12" fill="#e9f7ef" stroke="#138a5b"/><text x="993" y="126" text-anchor="middle" font-weight="800">失败回流</text><text x="993" y="146" text-anchor="middle">replay</text>
+          <path d="M993 100 C993 40, 78 40, 78 96" fill="none" stroke="#b84545" stroke-dasharray="6 5" marker-end="url(#arr2)"/>
+        </g>
+      </svg>
+      <div class="caption">图 2：机器人数据链路技术框架。后续主案例分别承载其中一个或多个技术环节。</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>链路环节</th><th>技术问题</th><th>代表论文/系统</th><th>可迁移方法论</th></tr></thead>
+        <tbody>
+          <tr><td>任务定义</td><td>如何组织 task/object/scene/skill/success predicate</td><td>LIBERO、DROID、AgiBot、SimFoundry</td><td>先建 taxonomy，再采集数据</td></tr>
+          <tr><td>采集协议</td><td>teleop、scripted、haptic、dual-arm、distributed collection</td><td>DROID、BridgeData V2、RH20T、AgiBot</td><td>采集协议比单次数据规模更重要</td></tr>
+          <tr><td>多模态同步</td><td>RGBD、wrist camera、FT、audio、tactile、proprio/action timestamp</td><td>RH20T、DROID、ALOHA</td><td>所有传感器必须可对齐、可重放</td></tr>
+          <tr><td>标准化</td><td>episode schema、action schema、language、metadata、embodiment</td><td>Open X-Embodiment、RoboMIND、BridgeData</td><td>converter + schema 是规模化前提</td></tr>
+          <tr><td>质量控制</td><td>success/failure label、human verification、trajectory filtering</td><td>AgiBot、RoboMIND、MimicGen、DROID</td><td>质量评分应进入数据版本</td></tr>
+          <tr><td>融合扩增</td><td>data mixture、sim+real、subtask stitching、digital cousins</td><td>OXE、MimicGen、SimFoundry、SAGE</td><td>不是 concat，而是带权重的数据组合</td></tr>
+          <tr><td>失败回流</td><td>failure taxonomy、targeted recollection、仿真评估</td><td>RoboMIND、DROID、PolaRiS、SimFoundry</td><td>失败样本是下一轮数据输入</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:28px">2.1 模型在链路各环节的参与方式</h3>
+    <p class="lead">区分三类角色：<strong>造数据/搭链路</strong>（本表）、<strong>规则/算法自动化</strong>（MimicGen、LIBERO 程序化）、<strong>数据消费者</strong>（RT/Octo/OpenVLA，只吃数据不造数据）。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>链路环节</th><th>主流做法</th><th>模型/自动化参与</th><th>代表系统</th></tr></thead>
+        <tbody>
+          <tr><td>任务定义</td><td>人工 taxonomy / BDDL 程序化</td><td>弱：LIBERO 程序化生成；SimFoundry 可用 VLM 辅助场景理解</td><td>LIBERO、SimFoundry</td></tr>
+          <tr><td>采集协议</td><td>human teleop / haptic teleop</td><td><strong>无</strong>：真机轨迹主来源仍是人操作</td><td>DROID、RH20T、AgiBot、RoboMIND</td></tr>
+          <tr><td>多模态同步</td><td>硬件 timestamp + 标定</td><td>无：工程链路为主</td><td>RH20T、DROID</td></tr>
+          <tr><td>标准化</td><td>converter + RLDS schema</td><td>无：规则映射，非生成模型</td><td>Open X-Embodiment</td></tr>
+          <tr><td>质量控制</td><td>human verification + predicate</td><td>弱（可选）：vision 模型辅助视频质检，非主路径</td><td>AgiBot、RoboMIND</td></tr>
+          <tr><td>融合扩增</td><td>data mixture / 仿真 rollout</td><td><strong>中</strong>：MimicGen 几何变换 + subtask stitching + sim 验证</td><td>MimicGen、OXE mixture</td></tr>
+          <tr><td>场景/asset 生成</td><td>手工搭仿真场景</td><td><strong>强</strong>：分割/深度/NeRF/3DGS → sim-ready mesh + digital cousins</td><td>SimFoundry、PolaRiS</td></tr>
+          <tr><td>策略训练</td><td>—</td><td>消费端：RT-1-X、Octo、OpenVLA、GO-1 <strong>不参与造数据</strong></td><td>补充案例</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption" style="text-align:left;margin-top:10px">图注：模型在数据链路中的价值当前集中在“少采真机”的<strong>扩增</strong>和<strong>场景生成</strong>两环，而非替代 teleop 成为轨迹主来源。</p>
+  </section>
+
+  <section>
+    <h2>3. 方法论主案例深讲</h2>
+    <p class="lead">以下 8 个案例不是按“谁最有名”排序，而是按它们承载的数据链路技术选择。</p>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div>
+          <div class="deep-title">3.1 DROID：真实场景分布式采集链路</div>
+          <div class="deep-subtitle">机构/厂商：Stanford、UC Berkeley、TRI、Google DeepMind 等。它回答“多人、多地点、真实场景真机数据如何采得一致”。</div>
+          <span class="pill">RSS 2024</span><span class="pill green">76k trajectories</span><span class="pill orange">564 scenes</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><b>350h</b><span>interaction data</span></div><div class="metric"><b>86</b><span>tasks</span></div><div class="metric"><b>52</b><span>buildings</span></div><div class="metric"><b>3 RGB</b><span>synchronized views</span></div>
+        </div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>家庭、办公室、实验室、厨房、卧室、走廊等真实 indoor scenes，强调 in-the-wild 分布。</dd><dt>数据类型</dt><dd>三路 RGB、depth、camera calibration、language annotations、Franka state/action。</dd><dt>机器人</dt><dd>Franka Panda 统一硬件栈。</dd><dt>数据产物</dt><dd>可用于训练和评估真实场景泛化的 manipulation trajectories。</dd><dt>模型参与</dt><dd><span class="pill red">无</span> human teleop + 分布式采集协议；轨迹不由模型生成。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>DROID 的重点不是“76k”本身，而是把分布式采集协议标准化：统一机器人硬件、相机配置、标定、语言标注和采集流程，使不同机构的数据进入同一个训练集。</p><p>对公司启示：如果未来要多地点采集，必须先统一硬件/相机/标定/任务规范，否则后续清洗成本会指数上升。</p></div>
+      </div>
+      <div class="deep-section">
+        <h3>链路阶段 I/O</h3>
+        <div class="table-wrap"><table><thead><tr><th>阶段</th><th>输入</th><th>输出</th><th>关键参数</th></tr></thead><tbody>
+          <tr><td>硬件统一</td><td>Franka Panda + 3 RGB + depth</td><td>标准采集站配置文档</td><td>固定相机 mount、标定流程</td></tr>
+          <tr><td>分布式采集</td><td>teleop operator + task script</td><td>raw episode（76k trajectories）</td><td>564 scenes / 52 buildings</td></tr>
+          <tr><td>标注</td><td>video + task list</td><td>language instruction + metadata</td><td>86 tasks taxonomy</td></tr>
+          <tr><td>质检入库</td><td>raw trajectories</td><td>validated dataset + calib files</td><td>camera intrinsics/extrinsics</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">standardized Franka setup
+  → distributed teleoperation across labs/buildings
+  → 3 RGB views + depth + camera calibration
+  → language annotation + task metadata
+  → validation / quality control
+  → in-the-wild manipulation dataset</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>真实环境分布丰富。</li><li>统一硬件栈降低采集噪声。</li><li>calibration 入库，可复用性高。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>Franka 单 embodiment。</li><li>分布式标注一致性难。</li><li>长尾任务采样不均。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>学习其采集协议和 metadata。</li><li>多地点前先统一硬件基线。</li><li>场景/任务要做分布监控。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.2 Open X-Embodiment / RT-X：跨机器人标准化与 Data Mixture</div><div class="deep-subtitle">机构/厂商：Google DeepMind + 33 个学术实验室。它回答“历史异构机器人数据如何变成统一训练资产”。</div><span class="pill">2023/2024</span><span class="pill green">1M+ trajectories</span><span class="pill purple">22 embodiments</span></div>
+        <div class="metric-grid"><div class="metric"><b>60</b><span>source datasets</span></div><div class="metric"><b>527</b><span>skills</span></div><div class="metric"><b>160k+</b><span>tasks</span></div><div class="metric"><b>RLDS</b><span>format</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>多实验室桌面 manipulation，包含 pick/place/push/open/close 等常见技能。</dd><dt>数据类型</dt><dd>RGB、state/proprio、action、language/task、robot embodiment metadata。</dd><dt>机器人</dt><dd>22 个 embodiment，含单臂、双臂、移动平台、四足等。</dd><dt>数据产物</dt><dd>Open X-Embodiment 数据集与 RT-1-X / RT-2-X 模型。</dd><dt>模型参与</dt><dd><span class="pill red">无（聚合）</span> per-dataset converter 为规则映射；RT-1-X/RT-2-X 是<strong>数据消费者</strong>，不参与造数据。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>OXE 的方法论是 converter + schema + mixture。每个源数据集先通过 converter 映射到 RLDS，再通过 data mixture sampler 控制不同机器人、任务和数据集的采样比例。</p><p>对公司启示：内部数据格式不要绑定单机器人，应从第一天保留 embodiment、action definition 和 source metadata。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">60 source datasets
+  → per-dataset converter
+  → RLDS episode schema
+  → observation/action/language normalization
+  → robotics data mixture
+  → RT-1-X / RT-2-X training
+  → cross-robot evaluation</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>跨机器人数据标准化标杆。</li><li>证明多源数据正迁移。</li><li>开放了数据消费生态。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>源数据质量不均。</li><li>action adapter 难。</li><li>mixture 权重是隐性关键。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>内部建立 converter 层。</li><li>采用 dataset/source 权重。</li><li>不要简单拼接数据。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.3 RH20T：多模态同步与接触丰富数据链路</div><div class="deep-subtitle">机构/厂商：清华等。它回答“接触丰富任务中视觉、力、触觉、音频和动作如何同步记录”。</div><span class="pill">CoRL/RSS 2023</span><span class="pill green">110k+ sequences</span><span class="pill orange">20TB</span></div>
+        <div class="metric-grid"><div class="metric"><b>150</b><span>skills approx.</span></div><div class="metric"><b>50M+</b><span>frames</span></div><div class="metric"><b>8–10</b><span>global RGBD cams</span></div><div class="metric"><b>FT/Tactile</b><span>contact sensing</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>真实接触丰富 manipulation，多技能、多上下文、多机器人配置和多视角。</dd><dt>数据类型</dt><dd>RGB、depth、binocular IR、joint angle/torque、EEF pose、gripper、6DoF FT、audio、部分 fingertip tactile。</dd><dt>机器人</dt><dd>多种机械臂/夹爪/传感器配置。</dd><dt>数据产物</dt><dd>面向 one-shot imitation 和 multi-sensory manipulation 的真实序列。</dd><dt>模型参与</dt><dd><span class="pill red">无</span> haptic teleop + 多传感器同步标定；价值在工程链路，不在生成式模型。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>RH20T 的价值在于多传感器同步和标定，而不是只提供 RGB/action。接触任务往往需要力/触觉/音频等信号，纯视觉数据很难覆盖。</p><p>对公司启示：一旦要做接触丰富操作，数据链路必须提前设计传感器同步、标定和高吞吐存储。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">haptic teleoperation
+  → robot + force/torque sensor + gripper
+  → 8–10 global RGBD + in-hand cameras
+  → audio + tactile + proprio/action
+  → multi-sensor calibration
+  → synchronized contact-rich sequences</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>多模态最丰富。</li><li>适合接触/力控/触觉研究。</li><li>含 human demo video 和语言描述。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>标定和同步复杂。</li><li>数据体量大，加载成本高。</li><li>不同配置 schema 统一难。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>先定义多模态 timestamp 标准。</li><li>力/触觉单独版本化。</li><li>建立传感器健康检查。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.4 BridgeData V2：低成本单臂真机采集链路</div><div class="deep-subtitle">机构/厂商：UC Berkeley / RAIL。它回答“预算有限时，如何用统一低成本硬件栈稳定产出可训练真机数据”。</div><span class="pill">CoRL 2023</span><span class="pill green">60,096 trajectories</span><span class="pill orange">WidowX 250</span></div>
+        <div class="metric-grid"><div class="metric"><b>24</b><span>environments</span></div><div class="metric"><b>13</b><span>skills</span></div><div class="metric"><b>VR</b><span>teleop + scripted</span></div><div class="metric"><b>RLDS</b><span>TFDS export</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>桌面 manipulation，含 pick/place/push/stack/open drawer 等常见技能，覆盖多物体、多背景。</dd><dt>数据类型</dt><dd>RGB（第三人称 + 腕部）、proprio、EEF delta pose action、language instruction、success label。</dd><dt>机器人</dt><dd>低成本 WidowX 250 单臂，与 RT-1 / Octo 生态高度绑定。</dd><dt>数据产物</dt><dd>BridgeData V2 数据集，可直接进入 RLDS / Octo / OpenVLA 训练链路。</dd><dt>模型参与</dt><dd><span class="pill orange">弱</span> VR teleop 为主；scripted rollout 多为<strong>规则控制器</strong>（非 VLA 生成）；Octo/OpenVLA 为消费端。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>BridgeData V2 的核心不是规模，而是<strong>低成本可复现采集栈</strong>：固定 WidowX 硬件、VR 遥操作 + scripted rollout 混合采集、统一 action 表示（EEF delta）和 RLDS 导出。它证明了“小团队也能跑通真机数据链路”。</p><p>对公司启示：早期不必追求 DROID 级分布式规模，先把单臂/单站采集协议、action schema 和 converter 跑通。</p></div>
+      </div>
+      <div class="deep-section">
+        <h3>链路阶段 I/O</h3>
+        <div class="table-wrap"><table><thead><tr><th>阶段</th><th>输入</th><th>输出</th><th>关键参数</th></tr></thead><tbody>
+          <tr><td>任务定义</td><td>skill list + object set</td><td>13 skills × 24 envs taxonomy</td><td>language instruction 模板</td></tr>
+          <tr><td>采集</td><td>VR teleop / scripted policy</td><td>raw trajectories + RGB</td><td>WidowX 250, ~5–10 Hz control</td></tr>
+          <tr><td>标准化</td><td>raw logs</td><td>RLDS episode（obs/action/lang）</td><td>EEF delta pose action</td></tr>
+          <tr><td>质检</td><td>rollout trajectories</td><td>success-filtered demos</td><td>task success predicate</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">WidowX 250 + VR teleop station
+  → human demo OR scripted rollout
+  → third-person + wrist RGB
+  → EEF delta pose + proprio
+  → RLDS / TFDS export
+  → Octo / OpenVLA / RT-style training</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>低成本、可复现、社区广泛使用。</li><li>与 VLA 训练生态天然兼容。</li><li>VR + scripted 混合降低采集门槛。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>单臂、桌面场景为主。</li><li>与 Franka/人形 action 空间不同。</li><li>早期版本与 V2 schema 需区分。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>早期对标其 action 表示和 RLDS schema。</li><li>可用作 pretrain 数据，真机 fine-tune 仍要自有数据。</li><li>采集前先固定 camera mount 和 control rate。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.5 AgiBot World：双臂/人形大规模真实任务数据</div><div class="deep-subtitle">机构/厂商：AgiBot / OpenDriveLab 等。它回答“面向双臂、人形、灵巧手的真实任务数据如何规模化”。</div><span class="pill">2025</span><span class="pill green">1M+ trajectories</span><span class="pill purple">AgiBot G1</span></div>
+        <div class="metric-grid"><div class="metric"><b>1,001,552</b><span>trajectories</span></div><div class="metric"><b>2976.4h</b><span>duration</span></div><div class="metric"><b>217</b><span>tasks</span></div><div class="metric"><b>3000+</b><span>objects</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>五类部署场景，含细粒度操作、工具使用、多机器人协作、长时序任务。</dd><dt>数据类型</dt><dd>RGBD、visuo-tactile、双臂/灵巧手 action、语言/任务、对象和场景 metadata。</dd><dt>机器人</dt><dd>AgiBot G1，移动双臂、人形结构、6-DoF dexterous hands、视觉触觉传感器。</dd><dt>数据产物</dt><dd>AgiBot World Alpha/Beta/Colosseo 数据、GO-1/ViLLA 等策略实验。</dd><dt>模型参与</dt><dd><span class="pill orange">弱</span> 采集阶段以 human teleop + 人审为主；GO-1 <strong>latent action</strong> 属训练侧动作表示，非采集侧生成轨迹。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>AgiBot World 的方法论是同质机器人集群 + 标准化采集 + human-in-the-loop verification，面向双臂/人形/灵巧操作构建大规模真实任务数据。</p><p>需要注意：Alpha/Beta/Colosseo 有不同版本口径，报告引用时应标注版本和公开可得性。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">AgiBot G1 robot fleet
+  → standardized collection pipeline
+  → human-in-the-loop verification
+  → RGBD + visuo-tactile + dexterous action
+  → task / skill / object taxonomy
+  → GO-1 latent-action policy training</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>国内大规模标杆。</li><li>面向双臂/人形/灵巧手。</li><li>任务、对象、场景覆盖较广。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>版本口径需区分。</li><li>完整数据可得性需核实。</li><li>硬件同质性强，跨平台仍需适配。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>对标任务/技能 taxonomy。</li><li>引入 human verification。</li><li>长时序任务单独标注阶段。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.6 RoboMIND：多 Embodiment 统一协议与失败示范</div><div class="deep-subtitle">机构/厂商：X-Humanoid / RoboMIND 团队。它回答“多机器人数据如何在相对统一标准下采集，并纳入失败案例”。</div><span class="pill">RSS 2025</span><span class="pill green">107k trajectories</span><span class="pill purple">4 embodiments</span></div>
+        <div class="metric-grid"><div class="metric"><b>479</b><span>tasks</span></div><div class="metric"><b>96</b><span>object classes</span></div><div class="metric"><b>38</b><span>skills</span></div><div class="metric"><b>5k</b><span>failure demos</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>真实机器人 manipulation，多任务、多物体、多机器人，含 Isaac Sim digital twin 支持。</dd><dt>数据类型</dt><dd>teleoperation trajectories、language descriptions、failure demonstrations、sim trajectories。</dd><dt>机器人</dt><dd>Franka Emika Panda、UR5e、AgileX Cobot Magic 双臂、X-Humanoid Tien Kung。</dd><dt>数据产物</dt><dd>面向 multi-embodiment manipulation 的数据集和 benchmark。</dd><dt>模型参与</dt><dd><span class="pill orange">弱</span> 真机 demo 与 failure 均为人采；Isaac Sim digital twin 为仿真资产绑定，非端到端模型生成轨迹。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>RoboMIND 与 OXE 的差异是：OXE 更偏历史异构数据聚合，RoboMIND 更强调统一协议采集多 embodiment 数据，并额外纳入 failure demonstrations。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">4 robot embodiments
+  → unified teleoperation protocol
+  → real-world demonstrations + failure demos
+  → language / task / object taxonomy
+  → Isaac Sim digital twin support
+  → multi-embodiment benchmark</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>多 embodiment 且协议较统一。</li><li>包含失败示范。</li><li>真机 + 仿真支持 benchmark。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>多机器人 action 统一难。</li><li>55k/107k 等版本口径需区分。</li><li>digital twin 物理可信度需验证。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>失败数据要单独入库。</li><li>多机器人从统一协议开始。</li><li>仿真资产和真机数据要绑定。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.7 LIBERO：任务体系与 Lifelong Benchmark</div><div class="deep-subtitle">机构/厂商：UT Austin / Stanford 等。它回答“机器人任务如何系统性定义、拆分、评估知识迁移”。</div><span class="pill">NeurIPS 2023</span><span class="pill green">130 tasks</span><span class="pill purple">4 suites</span></div>
+        <div class="metric-grid"><div class="metric"><b>Spatial</b><span>spatial transfer</span></div><div class="metric"><b>Object</b><span>object transfer</span></div><div class="metric"><b>Goal</b><span>goal transfer</span></div><div class="metric"><b>100</b><span>mixed tasks</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>仿真桌面 manipulation，按 spatial/object/goal/combined shifts 组织。</dd><dt>数据类型</dt><dd>仿真 observation、state/image、action、language-conditioned task、高质量 teleop demos。</dd><dt>机器人</dt><dd>Panda/Franka 类仿真机械臂。</dd><dt>数据产物</dt><dd>LIBERO-Spatial、Object、Goal、100 等任务套件和演示数据。</dd><dt>模型参与</dt><dd><span class="pill orange">弱</span> BDDL <strong>程序化任务/场景生成</strong> + 人在仿真中 teleop；demo 仍来自人工，非神经网络生成。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>LIBERO 的方法论不是“大数据”，而是任务定义：用程序化任务生成和固定 suite 研究 declarative/procedural knowledge transfer。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">procedural task generation
+  → LIBERO-Spatial / Object / Goal / 100
+  → human teleop demonstrations
+  → lifelong train/eval split
+  → transfer / ordering / pretraining evaluation</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>任务体系清晰。</li><li>可控分布偏移。</li><li>适合评估 lifelong learning。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>仿真场景有限。</li><li>不代表真实采集链路。</li><li>sim-real gap 明显。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>公司内部也应先建任务 suite。</li><li>把 task/object/goal 分层。</li><li>用于算法回归测试。</li></ul></div></div></div>
+    </div>
+
+    <div class="deep">
+      <div class="deep-top">
+        <div><div class="deep-title">3.8 MimicGen：从少量示教到仿真数据扩增</div><div class="deep-subtitle">机构/厂商：NVIDIA / Stanford / UT Austin 等。它回答“采集贵时，如何用少量示教生成更多训练轨迹”。</div><span class="pill">CoRL 2023</span><span class="pill green">Synthetic demos</span><span class="pill orange">Subtask stitching</span></div>
+        <div class="metric-grid"><div class="metric"><b>Seed</b><span>source demos</span></div><div class="metric"><b>Object</b><span>pose perturb</span></div><div class="metric"><b>Subtask</b><span>segmentation</span></div><div class="metric"><b>Auto</b><span>validation</span></div></div>
+      </div>
+      <div class="deep-section two">
+        <div><h3>数据画像</h3><dl class="info"><dt>数据场景</dt><dd>仿真机械臂 manipulation，适合 pick-place、assembly、object rearrangement 等结构化任务。</dd><dt>数据类型</dt><dd>source demos、object poses、subtask boundaries、state/action trajectories、success predicates。</dd><dt>机器人</dt><dd>主要依赖 RoboSuite 等仿真机械臂环境。</dd><dt>数据产物</dt><dd>由少量 seed demos 扩增出的 synthetic demonstrations。</dd><dt>模型参与</dt><dd><span class="pill green">中</span> <strong>算法扩增</strong>：subtask segmentation → object-centric SE(3) transform → trajectory stitching → sim success predicate；非 LLM/VLA 端到端生成，但可显著少采 seed demo。</dd></dl></div>
+        <div><h3>技术方法论</h3><p>MimicGen 的方法论是 object-centric subtask reuse：把示教拆成子任务，再根据新物体位姿做变换、拼接和验证。</p></div>
+      </div>
+      <div class="deep-section"><h3>技术链路</h3><div class="flow">source demonstrations
+  → subtask segmentation
+  → object-centric transform
+  → trajectory warping / stitching
+  → rollout validation
+  → synthetic dataset</div><div class="three"><div class="box good"><h4>亮点</h4><ul><li>少量示教扩增大量轨迹。</li><li>适合长尾位姿补充。</li><li>自动 success predicate 筛选。</li></ul></div><div class="box warn"><h4>局限/坑</h4><ul><li>依赖仿真和 privileged state。</li><li>任务必须可分解。</li><li>仍有 sim-real gap。</li></ul></div><div class="box note"><h4>复用建议</h4><ul><li>作为真机数据补充。</li><li>先定义可验证 predicate。</li><li>适合结构化任务。</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 补充案例</h2>
+    <div class="grid">
+      <div class="card"><strong>ALOHA / ACT</strong><p>Stanford。低成本 leader-follower 双臂遥操作 + action chunk 监督。<span class="pill red">模型参与：无</span> 数据来自人工 teleop；ACT/CVAE 是训练方法，不参与采集。</p><span class="pill purple">Bimanual Teleop</span></div>
+      <div class="card"><strong>RoboNet</strong><p>Berkeley/Stanford 等。15M+ frames、7 robot platforms，早期多机器人视觉经验池。<span class="pill red">模型参与：无</span> 历史人采数据；不宜作为现代 VLA 格式样板。</p><span class="pill purple">Multi-robot History</span></div>
+      <div class="card"><strong>SimFoundry / PolaRiS</strong><p>NVIDIA GEAR / Stanford 等。<span class="pill green">模型参与：强</span> Real2Sim 链路代表：真实 RGB 视频 → 分割/检测（SAM 类）→ 深度/位姿估计 → 3D 重建（mesh / NeRF / 3DGS）→ PyBullet 物理稳定 → digital twin + digital cousins → 导出 sim-ready 场景。<strong>产出是场景/asset，不是 teleop 轨迹</strong>；后续可接 scripted/RL 产数据。</p><span class="pill orange">Real2Sim</span></div>
+      <div class="card"><strong>Octo / OpenVLA</strong><p>Berkeley/Stanford 等。<span class="pill red">模型参与：无（消费端）</span> 不是数据集，是 VLA 训练/推理接口；反向要求数据保留 language、embodiment、camera metadata 和 action definition。<strong>不参与造数据</strong>。</p><span class="pill">Data Consumer</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 数据格式与 Action 落地建议</h2>
+    <p class="lead">建议公司内部先定义统一 episode schema 和 action 表示规范，保证未来真机、仿真、开源、Real2Sim 数据都能转换进入同一训练/评估链路。</p>
+
+    <h3>5.1 Action 表示对照（落地关键）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>数据集</th><th>Action 类型</th><th>坐标系</th><th>维度</th><th>训练消费端</th></tr></thead>
+        <tbody>
+          <tr><td>DROID</td><td>joint position + gripper</td><td>joint space</td><td>7+1</td><td>自定义 IL / VLA adapter</td></tr>
+          <tr><td>BridgeData V2</td><td>EEF delta pose + gripper</td><td>end-effector</td><td>6+1</td><td>Octo / OpenVLA / RT-1</td></tr>
+          <tr><td>OXE (混合)</td><td>per-dataset normalized</td><td>各异 → RLDS 统一</td><td>可变</td><td>RT-1-X / RT-2-X / Octo</td></tr>
+          <tr><td>RH20T</td><td>joint + EEF + gripper + FT</td><td>mixed</td><td>多维</td><td>多模态 IL 研究</td></tr>
+          <tr><td>AgiBot World</td><td>dexterous hand + arm joints</td><td>joint / EEF</td><td>高维</td><td>GO-1 / ViLLA</td></tr>
+          <tr><td>RoboMIND</td><td>per-embodiment teleop action</td><td>各异</td><td>可变</td><td>multi-embodiment benchmark</td></tr>
+          <tr><td>LIBERO</td><td>sim EEF delta / joint</td><td>sim frame</td><td>7</td><td>lifelong IL benchmark</td></tr>
+          <tr><td>MimicGen</td><td>sim state/action trajectory</td><td>sim privileged</td><td>环境相关</td><td>RoboSuite IL</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.2 Episode Schema 模板</h3>
+    <div class="schema">{
+  "episode_id": "uuid",
+  "dataset_version": "v1.0",
+  "source": "teleop | sim | real2sim | public",
+  "robot": {
+    "robot_id": "...",
+    "embodiment": "single_arm | dual_arm | humanoid | mobile_manipulator",
+    "dof": 7,
+    "end_effector": "parallel_gripper | dexterous_hand | suction",
+    "urdf": "...",
+    "control_frequency": 30
+  },
+  "task": {
+    "task_id": "...",
+    "language": "...",
+    "skill_tags": ["pick", "place"],
+    "success_predicate": "..."
+  },
+  "observation": {
+    "images": {"front": "...", "wrist": "..."},
+    "depth": "...",
+    "state": "...",
+    "force_torque": "...",
+    "tactile": "..."
+  },
+  "action": {
+    "type": "joint_position | eef_delta | token | latent",
+    "values": "...",
+    "coordinate_frame": "joint | base | end_effector"
+  },
+  "timestamps": {"camera": "...", "state": "...", "action": "..."},
+  "labels": {"success": true, "failure_type": null, "quality_score": 0.93},
+  "metadata": {"scene_id": "...", "object_ids": ["..."], "operator_id": "...", "calibration_id": "..."}
+}</div>
+  </section>
+
+  <section>
+    <h2>6. 数据质量评分体系</h2>
+    <div class="flow">Quality Score =
+  completeness_score
+  + sync_score
+  + visual_score
+  + action_score
+  + task_success_score
+  + diversity_score</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>检查项</th><th>典型风险</th><th>建议动作</th></tr></thead>
+        <tbody>
+          <tr><td>完整性</td><td>图像、state、action、metadata 是否缺失</td><td>训练样本不可重放</td><td>入库前 schema validation</td></tr>
+          <tr><td>同步</td><td>camera/state/action/FT/tactile timestamp</td><td>模型学到错误因果</td><td>记录原始 timestamp + 对齐误差</td></tr>
+          <tr><td>视觉</td><td>黑屏、模糊、遮挡、过曝、外参漂移</td><td>感知鲁棒性下降</td><td>自动视频健康检查</td></tr>
+          <tr><td>动作</td><td>越界、抖动、jerk、夹爪异常</td><td>策略学到危险控制</td><td>action range/jerk check</td></tr>
+          <tr><td>任务</td><td>success、partial success、failure type</td><td>成功标签噪声</td><td>human verification + predicate</td></tr>
+          <tr><td>分布</td><td>任务、物体、场景、操作者、机器人覆盖</td><td>数据长尾缺失</td><td>distribution dashboard</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. 公司阶段路线图</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>阶段</th><th>建设内容</th><th>对标案例</th><th>交付物</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1</td><td>统一 schema、task taxonomy、action representation、metadata 字段</td><td>Open X-Embodiment / LeRobot</td><td>数据协议 v1、converter 模板</td></tr>
+          <tr><td>Phase 2</td><td>搭建真机遥操作与仿真采集链路</td><td>DROID / BridgeData V2 / ALOHA</td><td>采集工具、回放工具、基础数据集</td></tr>
+          <tr><td>Phase 3</td><td>自动质检、质量评分、数据版本管理</td><td>RH20T / AgiBot / DROID</td><td>quality dashboard、dataset registry</td></tr>
+          <tr><td>Phase 4</td><td>多源融合、采样权重、训练集构建</td><td>OXE / RT-X</td><td>data mixture config、baseline training set</td></tr>
+          <tr><td>Phase 5</td><td>失败回流、长尾补采、仿真/Real2Sim 扩增</td><td>RoboMIND / MimicGen / SimFoundry</td><td>failure dataset、targeted recollection loop</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>8. 横向对比表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>对象</th><th>链路定位</th><th>真机/仿真</th><th>机器人</th><th>模态</th><th>语言</th><th>跨 embodiment</th><th>失败数据</th><th>模型参与建链路</th><th>主要坑</th></tr></thead>
+        <tbody>
+          <tr><td>DROID</td><td>真实场景采集</td><td>真机</td><td>Franka</td><td>RGB/depth/calib/action</td><td>有</td><td>否</td><td>少</td><td><span class="pill red">无</span></td><td>单 embodiment</td></tr>
+          <tr><td>OXE</td><td>标准化聚合</td><td>真机聚合</td><td>22 embodiments</td><td>RGB/state/action/lang</td><td>有</td><td>是</td><td>不统一</td><td><span class="pill red">无</span></td><td>质量不均/action adapter</td></tr>
+          <tr><td>RH20T</td><td>多模态同步</td><td>真机</td><td>多配置</td><td>RGBD/IR/FT/audio/tactile/action</td><td>有</td><td>部分</td><td>少</td><td><span class="pill red">无</span></td><td>标定和加载复杂</td></tr>
+          <tr><td>BridgeData V2</td><td>低成本单臂采集</td><td>真机</td><td>WidowX 250</td><td>RGB/wrist/proprio/EEF delta</td><td>有</td><td>否</td><td>少</td><td><span class="pill orange">弱</span></td><td>单臂桌面、action 空间差异</td></tr>
+          <tr><td>AgiBot</td><td>人形/双臂规模化</td><td>真机</td><td>AgiBot G1</td><td>RGBD/tactile/dexterous action</td><td>有</td><td>同质集群</td><td>未明</td><td><span class="pill orange">弱</span></td><td>版本口径和可得性</td></tr>
+          <tr><td>RoboMIND</td><td>多 embodiment + failure</td><td>真机+仿真</td><td>4 embodiments</td><td>action/lang/sim/failure</td><td>有</td><td>是</td><td>有</td><td><span class="pill orange">弱</span></td><td>action 统一难</td></tr>
+          <tr><td>LIBERO</td><td>任务体系 benchmark</td><td>仿真</td><td>Panda 类</td><td>sim image/state/action/task</td><td>有</td><td>否</td><td>否</td><td><span class="pill orange">弱</span></td><td>sim-real gap</td></tr>
+          <tr><td>MimicGen</td><td>仿真数据扩增</td><td>仿真</td><td>RoboSuite 类</td><td>state/action/demo</td><td>弱</td><td>否</td><td>自动过滤</td><td><span class="pill green">中</span></td><td>任务需可分解</td></tr>
+          <tr><td>SimFoundry</td><td>Real2Sim 场景生成</td><td>仿真资产</td><td>通用</td><td>mesh/3DGS/physics meta</td><td>可选</td><td>—</td><td>—</td><td><span class="pill green">强</span></td><td>sim-real 待验证；见第 4 章</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">表注：模型参与建链路指<strong>造数据/搭链路</strong>，不含 RT/Octo/OpenVLA 等训练消费端。</p>
+  </section>
+
+  <section class="conclusion">
+    <h2>9. 总结</h2>
+    <p>本报告的核心判断是：<strong>机器人数据集是数据链路的产物，而不是起点。</strong>头部工作的价值不在于各自产出了多少 trajectories，而在于它们分别验证了链路中某一环节的可规模化做法。读完 8 个主案例和落地章节后，可以归纳出以下差异化洞察与行动方向。</p>
+
+    <h3 style="color:rgba(255,255,255,.95);margin-top:20px">关键洞察（来自横向对比）</h3>
+    <div class="grid" style="margin-top:12px">
+      <div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92)">
+        <strong style="color:#fff">洞察 1：标准化能力 &gt; 同质规模</strong>
+        OXE 用 60 个异构源数据集 + RLDS converter 证明了跨机器人正迁移；RoboMIND 则用统一协议采集 4 种 embodiment。两者说明：<strong>converter 层和 metadata 设计是预训练数据的核心资产</strong>，而非单纯堆同构数据。
+      </div>
+      <div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92)">
+        <strong style="color:#fff">洞察 2：DROID vs BridgeData = 两种真机起步路径</strong>
+        DROID 走分布式、统一 Franka 栈、强调 in-the-wild 泛化；BridgeData V2 走低成本 WidowX、VR teleop、快速 RLDS 导出。早期团队应二选一：<strong>要泛化选 DROID 协议，要速度选 BridgeData 协议</strong>，不要混用 action 空间。
+      </div>
+      <div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92)">
+        <strong style="color:#fff">洞察 3：失败数据正在进入主流设计</strong>
+        RoboMIND 显式纳入 5k failure demos；AgiBot 引入 human-in-the-loop verification。行业趋势是从“只采成功 demo”转向<strong>成功 + 失败 + 质检评分</strong>的闭环数据资产。
+      </div>
+      <div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92)">
+        <strong style="color:#fff">洞察 4：仿真/扩增是补充，不是替代</strong>
+        LIBERO 和 MimicGen 解决了任务体系和长尾扩增，但 sim-real gap 客观存在。正确用法是：<strong>真机数据定 action 空间和成功标准，仿真数据补分布和长尾</strong>，两者通过 schema 和 version 绑定。
+      </div>
+      <div class="card" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.92)">
+        <strong style="color:#fff">洞察 5：模型在数据链路里的真实位置</strong>
+        当前行业主流仍是 <strong>“人采真机 + 工程化链路”</strong>；模型尚未替代 teleop 成为真机轨迹主来源。模型更多出现在：<strong>扩增</strong>（MimicGen：少量 seed demo → 几何 + 仿真扩增）和 <strong>Real2Sim</strong>（SimFoundry：视频 → sim-ready 场景/asset）。若关心“模型能否帮我们少采数据”：结构化 manipulation 优先看 MimicGen，场景多样性优先看 SimFoundry；<strong>真机 action 轨迹仍建议以 teleop 为基线</strong>，模型生成数据作补充而非替代。
+      </div>
+    </div>
+
+    <h3 style="color:rgba(255,255,255,.95);margin-top:24px">公司建设建议（收束第 5–7 章）</h3>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>优先级</th><th>建设项</th><th>交付物</th><th>对标</th></tr></thead>
+        <tbody>
+          <tr><td>P0</td><td>episode schema + action 规范 + converter 模板</td><td>数据协议 v1、字段文档、转换脚本</td><td>OXE / LeRobot</td></tr>
+          <tr><td>P1</td><td>单站 teleop 采集 + 回放工具 + 入库质检</td><td>首版数据集（100–500 条）、回放验证</td><td>BridgeData V2 / DROID</td></tr>
+          <tr><td>P2</td><td>质量评分 + 版本管理 + 分布监控</td><td>quality dashboard、dataset registry</td><td>AgiBot / RH20T</td></tr>
+          <tr><td>P3</td><td>失败数据入库 + 多源 mixture + 仿真扩增</td><td>failure taxonomy、mixture config</td><td>RoboMIND / MimicGen</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="color:rgba(255,255,255,.95);margin-top:24px">仍需跟踪的开放问题</h3>
+    <ul style="margin:10px 0 0;padding-left:20px;color:rgba(255,255,255,.9)">
+      <li><strong>Action 空间统一</strong>：joint position、EEF delta、dexterous hand 高维 action 之间尚无 industry-standard adapter，跨源训练仍需自定义映射层。</li>
+      <li><strong>版本与可得性</strong>：AgiBot Alpha/Beta/Colosseo、RoboMIND 55k/107k 等口径不一，引用和商用前需逐版本核实 license 与公开范围。</li>
+      <li><strong>Real2Sim 可信度</strong>：SimFoundry / PolaRiS 等 Real2Sim 链路尚处研究阶段，physics metadata 和 sim-real 相关性仍需 case-by-case 验证，不宜作为早期唯一数据来源。</li>
+    </ul>
+
+    <p style="margin-top:20px">综上，公司建设机器人数据体系应<strong>从链路设计出发，而非从采数 KPI 出发</strong>。先把 schema、质检和 converter 跑通，再选对标路线扩规模；数据链路清楚，数据集才有长期复用和跨项目迁移的价值。</p>
+  </section>
+
+  <section>
+    <h2>10. 参考资料</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>对象</th><th>机构</th><th>论文/主页</th><th>链路定位</th></tr></thead>
+        <tbody>
+          <tr><td>DROID</td><td>Stanford / Berkeley / TRI / Google DeepMind 等</td><td>khazatsky.github.io/droid</td><td>分布式真机采集</td></tr>
+          <tr><td>Open X-Embodiment</td><td>Google DeepMind + 33 labs</td><td>robotics-transformer-x.github.io</td><td>跨机器人标准化</td></tr>
+          <tr><td>RH20T</td><td>清华等</td><td>rh20t.github.io</td><td>多模态同步</td></tr>
+          <tr><td>BridgeData V2</td><td>UC Berkeley / RAIL</td><td>rail-berkeley.github.io/bridgedata</td><td>低成本单臂采集</td></tr>
+          <tr><td>AgiBot World</td><td>AgiBot / OpenDriveLab 等</td><td>agibot-world.com</td><td>人形/双臂规模化</td></tr>
+          <tr><td>RoboMIND</td><td>X-Humanoid 等</td><td>robomind.net</td><td>多 embodiment + failure</td></tr>
+          <tr><td>LIBERO</td><td>UT Austin / Stanford 等</td><td>libero-project.github.io</td><td>任务体系 benchmark</td></tr>
+          <tr><td>MimicGen</td><td>NVIDIA / Stanford / UT Austin 等</td><td>mimicgen.github.io</td><td>仿真数据扩增</td></tr>
+          <tr><td>SimFoundry</td><td>NVIDIA GEAR / Stanford 等</td><td>research.nvidia.com/labs/gear/simfoundry</td><td>Real2Sim 场景生成</td></tr>
+          <tr><td>LeRobot</td><td>HuggingFace</td><td>github.com/huggingface/lerobot</td><td>现代 episode schema 参考</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵初智能 Psi-W0 &amp; Psi-R2 技术调研报告</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --paper: #ffffff;
+      --border: #d8e0ea;
+      --text: #1a2332;
+      --muted: #5c6b7f;
+      --accent: #1e4d8c;
+      --accent2: #0d7c8c;
+      --accent-light: #e8f1fb;
+      --r2: #1e4d8c;
+      --w0: #0d7c8c;
+      --warn: #b45309;
+      --shadow: 0 2px 12px rgba(15, 35, 70, 0.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "PingFang SC", "Segoe UI", "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+      overflow-x: hidden;
+    }
+
+    .cover {
+      background: linear-gradient(135deg, #0f2744 0%, #1e4d8c 55%, #0d7c8c 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 48px 44px 40px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .cover .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      padding: 5px 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .cover h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .cover .subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 720px;
+      margin-bottom: 24px;
+    }
+
+    .cover .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      font-size: 13px;
+      opacity: 0.85;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 20px;
+    }
+
+    .cover .meta span {
+      flex: 1 1 220px;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .cover .meta strong { opacity: 1; font-weight: 600; }
+
+    section {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 10px;
+    }
+
+    h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 14px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    p { margin-bottom: 12px; color: var(--text); }
+    p:last-child { margin-bottom: 0; }
+
+    .lead {
+      font-size: 16px;
+      color: var(--muted);
+      border-left: 4px solid var(--accent2);
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+
+    ul, ol { margin: 0 0 14px 20px; }
+    li { margin-bottom: 6px; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .card.r2 { border-left: 4px solid var(--r2); }
+    .card.w0 { border-left: 4px solid var(--w0); background: #e8f7f8; }
+
+    .card .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .card .value {
+      font-size: clamp(15px, 3.5vw, 20px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .card .desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 12px 0 16px;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .table-wrap table { min-width: 560px; }
+    .table-wrap.wide table { min-width: 720px; }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #1e3a5f;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    .io-in { color: #1d4ed8; font-weight: 600; }
+    .io-out { color: #047857; font-weight: 600; }
+
+    .callout {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .callout strong { color: var(--warn); }
+
+    .flow {
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      color: #0f172a;
+    }
+
+    .toc ol {
+      margin-left: 22px;
+    }
+
+    .toc li { margin-bottom: 4px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 4px;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .pill.teal {
+      background: #e8f7f8;
+      color: var(--w0);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .cover { padding: 32px 22px 28px; }
+      .cover h1 { font-size: 24px; }
+      section { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="cover">
+      <div class="tag">技术调研报告 · Embodied AI</div>
+      <h1>灵初智能 Psi-W0 &amp; Psi-R2<br />双模型技术调研报告</h1>
+      <p class="subtitle">
+        围绕「策略模型 Psi-R2 + 动作条件世界模型 Psi-W0」的架构、数据、训练闭环与工程落地，
+        梳理灵初（Psi Intelligence / PsiBot）如何用约 10 万小时人类操作数据突破真机数据瓶颈。
+      </p>
+      <div class="meta">
+        <span><strong>主题</strong>：人类数据驱动的具身预训练</span>
+        <span><strong>核心模型</strong>：Psi-R2（WAM/VLA）· Psi-W0（AC-WM）</span>
+        <span><strong>骨干</strong>：Wan2.2-IT2V-5B-480P</span>
+        <span><strong>日期</strong>：2026-07-29</span>
+      </div>
+    </header>
+
+    <section class="toc">
+      <h2>目录</h2>
+      <ol>
+        <li>执行摘要</li>
+        <li>问题背景：真机数据稀缺与人类数据鸿沟</li>
+        <li>总体架构：双模型分工与闭环</li>
+        <li>模型架构细节（Psi-R2 / Psi-W0）</li>
+        <li>Psi-R2：策略 / 世界行动模型</li>
+        <li>Psi-W0：动作条件世界模型</li>
+        <li>数据体系与信噪比原则</li>
+        <li>论文与开源情况</li>
+        <li>与主流 VLA 路线对比</li>
+        <li>工程优化与落地启示</li>
+        <li>结论与开放问题</li>
+        <li>参考资料</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>1. 执行摘要</h2>
+      <p class="lead">
+        灵初提出的不是「更大的单一 VLA」，而是 <strong>Psi-R2（执行）+ Psi-W0（评估/迁移/飞轮）</strong>
+        的互补架构，用大规模人类操作数据补齐具身智能的数据供给。
+      </p>
+
+      <div class="card-grid">
+        <div class="card r2">
+          <div class="label">Psi-R2</div>
+          <div class="value">策略执行器</div>
+          <div class="desc">图像 + 语言 → 未来视频 + 机器人动作；WAM / VLA 双属性</div>
+        </div>
+        <div class="card w0">
+          <div class="label">Psi-W0</div>
+          <div class="value">世界模型评估器</div>
+          <div class="desc">图像 + 语言 + 动作 → 未来视频；支持反事实与世界内 RL</div>
+        </div>
+        <div class="card">
+          <div class="label">人类数据规模</div>
+          <div class="value">≈ 95,472 h</div>
+          <div class="desc">外骨骼手套 + 裸手；294 场景 / 4821 任务 / 1382 物体</div>
+        </div>
+        <div class="card">
+          <div class="label">真机数据</div>
+          <div class="value">≈ 5,417 h</div>
+          <div class="desc">Psi-MobiDex；预训练后可用 &lt;100 条真机轨迹微调</div>
+        </div>
+      </div>
+
+      <h3>核心判断</h3>
+      <ul>
+        <li><strong>瓶颈在数据而非再堆一层网络</strong>：人类数据规模化 + 信噪比治理，比复杂手工对齐更关键。</li>
+        <li><strong>R2 学成功怎么做，W0 学失败会怎样</strong>：后者补上策略学习与 RL 必需的反事实能力。</li>
+        <li><strong>用 AC-WM 替代传统仿真器</strong>：做人类动力学 → 机器人动力学迁移，绕开部分 Sim2Real / 可变形体重建难题。</li>
+        <li><strong>目标是单本体商业落地</strong>：优先「人类数据赋能特定机器人」，而非先做跨本体万能模型。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. 问题背景：真机数据稀缺与人类数据鸿沟</h2>
+      <p>
+        自动驾驶与大语言模型可依赖海量存量数据；具身智能则同时缺「历史公开库」与「商业化自然回流数据」。
+        人类双手在产线、零售、日常生活中持续产生高灵巧操作，本应是最自然的数据燃料，但长期卡在两点：
+      </p>
+      <ol>
+        <li><strong>Embodiment Gap</strong>：人手与机械臂在运动学、动力学、执行器上不一致，直接复用会失真。</li>
+        <li><strong>规模与质量不足</strong>：网络第一人称视频或小规模开源集，精度与覆盖远不够支撑预训练。</li>
+      </ol>
+      <p>
+        灵初的回应是：建设可规模采集的人类数据管线（含外骨骼手套、触觉等），并训练
+        <strong>Psi-R2 / Psi-W0</strong>，把人类经验转成机器人可执行、可评估、可迭代的策略。
+      </p>
+      <div class="callout">
+        <strong>定位澄清：</strong>
+        公开材料将 Psi-R2 + Psi-W0 描述为业内首个约 <strong>10 万小时量级人类数据预训练</strong> 的具身模型套件；
+        下文以灵初技术博客《From Human Skill to Robotic Mastery》为主依据，数字与表述以公开版本为准。
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 总体架构：双模型分工与闭环</h2>
+
+      <div class="pill-row">
+        <span class="pill">Psi-R2 = 执行器</span>
+        <span class="pill teal">Psi-W0 = 模拟器 / 评估器</span>
+        <span class="pill">共享骨干 Wan2.2</span>
+      </div>
+
+      <div class="flow">人类/真机大数据
+        │
+        ├──────────────────► Psi-R2 预训练（成功轨迹为主）
+        │                         │
+        │                         ├── 少样本真机 FT ──► 真机执行
+        │                         │
+        │                         └── 轨迹 / 动作序列 ──┐
+        │                                              ▼
+        └──── 失败样本（约 30%）──────────────► Psi-W0（AC-WM）
+                                                      │
+                          ┌───────────────────────────┼───────────────────────────┐
+                          ▼                           ▼                           ▼
+                     策略评估                   世界内 RL / 人→机迁移              数据飞轮
+                   （是否学到人类技能）         （替代部分物理仿真）         （优质轨迹回流 R2/W0）</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>Psi-R2</th>
+              <th>Psi-W0</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>角色</td>
+              <td>策略 / 执行</td>
+              <td>世界模型 / 评估 / 迁移</td>
+            </tr>
+            <tr>
+              <td><span class="io-in">输入</span></td>
+              <td>图像 + 语言指令</td>
+              <td>图像 + 语言 + <strong>动作轨迹</strong></td>
+            </tr>
+            <tr>
+              <td><span class="io-out">输出</span></td>
+              <td>未来视频 + 可执行动作</td>
+              <td>条件于动作的未来视频</td>
+            </tr>
+            <tr>
+              <td>技术归类</td>
+              <td>WAM（兼具 VLA 形态）</td>
+              <td>AC-WM（Action-Conditioned World Model）</td>
+            </tr>
+            <tr>
+              <td>训练数据侧重</td>
+              <td>成功、有目标轨迹</td>
+              <td>成功 + <strong>~30% 失败/反事实</strong></td>
+            </tr>
+            <tr>
+              <td>是否直接控机</td>
+              <td>是</td>
+              <td>否（服务评估与优化）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>为何 R2 有视频预测仍不够？</h3>
+      <p>
+        R2 主要在「成功示范」上学习，难以可靠生成失败后果。
+        而强化学习、策略诊断、人→机动力学纠偏都依赖<strong>反事实</strong>（「若这样动会怎样」）。
+        W0 把动作当作生成条件，并混入失败样本，专门补这一能力。
+      </p>
+    </section>
+
+    <section>
+      <h2>4. 模型架构细节（Psi-R2 / Psi-W0）</h2>
+      <p class="lead">
+        公开材料未给出完整层数/注意力配置的论文级蓝图；可还原的核心是：
+        <strong>共享 Wan2.2 视频生成骨干 + 不同条件注入与输出头</strong>。
+        下列细节综合自灵初技术博客与阿里 Wan2.2 开源说明。
+      </p>
+
+      <h3>4.1 共享视频骨干：Wan2.2-IT2V-5B-480P</h3>
+      <p>
+        Psi-R2 与 Psi-W0 均以开源视频模型
+        <code>Wan2.2-IT2V-5B-480P</code>（对应 Wan 系列的 Image/Text→Video 5B 路线；社区常写作 TI2V-5B）
+        为初始化骨干，再在人类/真机操作数据上继续预训练。
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>组件</th>
+              <th>公开可知的作用</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>文本编码器</td>
+              <td>UMT5 将语言指令编码为条件向量</td>
+              <td>Wan2.2 标准组件</td>
+            </tr>
+            <tr>
+              <td>3D VAE</td>
+              <td>把视频编到潜空间；高压缩设计约 <code>T×H×W = 4×16×16</code>（整体压缩约 64）</td>
+              <td>5B 路线强调部署效率</td>
+            </tr>
+            <tr>
+              <td>去噪主干</td>
+              <td>Dense DiT（Diffusion / Flow Matching Transformer），约 5B 参数</td>
+              <td>与 Wan2.2-A14B 的双专家 MoE 不同；5B 为 dense</td>
+            </tr>
+            <tr>
+              <td>生成范式</td>
+              <td>在噪声潜变量上迭代去噪 / flow matching，再经 VAE 解码为视频帧</td>
+              <td>具身任务在此上叠加动作目标</td>
+            </tr>
+            <tr>
+              <td>分辨率设定</td>
+              <td>博客标明 <strong>480P</strong> 变体</td>
+              <td>相对 720P 更偏训练/推理成本权衡</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <strong>注意命名：</strong>
+        灵初写作 <code>Wan2.2-IT2V-5B-480P</code>；阿里官方仓库常写作 <code>Wan2.2-TI2V-5B</code>。
+        二者均指「文本/图像条件视频生成」的 5B dense 模型族，具体 checkpoint 以灵初内部微调权重为准（未公开）。
+      </div>
+
+      <h3>4.2 Psi-R2 结构逻辑：视频生成 + 动作联合预测</h3>
+      <div class="flow">[图像观测 I_t] ──► 3D VAE / 视觉 token
+[语言指令 L]  ──► UMT5 条件
+        │
+        ▼
+   Wan2.2 DiT（流匹配 / 去噪）
+        │
+        ├──► 未来视频帧序列  V_{t+1:t+H}   （世界建模支路）
+        └──► 机器人动作序列  A_{t:t+H}     （策略 / 控制支路）
+
+训练目标（公开表述）：joint prediction of future frames + robot actions
+人机对齐：仅做运动学维度映射；图像 raw in；无复杂共享潜空间手工对齐</div>
+      <ul>
+        <li><strong>WAM 属性</strong>：同一骨干同时「想象未来」与「给出可执行动作」。</li>
+        <li><strong>VLA 属性</strong>：对外仍是视觉-语言 → 动作接口，可直接控机。</li>
+        <li><strong>未公开细节</strong>：动作头是独立 MLP/Transformer、与视频 token 共享到哪一层、动作是绝对关节 / 增量 / 末端位姿等，官方博客未给出方程级说明。</li>
+      </ul>
+
+      <h3>4.3 Psi-W0 结构逻辑：动作作为生成条件</h3>
+      <div class="flow">[图像观测 I_t] ──► 视觉 token
+[语言指令 L]  ──► 文本条件
+[动作轨迹 A]  ──► 动作条件（条件注入 / 交叉注意力 / 拼接，具体层未公开）
+        │
+        ▼
+   Wan2.2 DiT（同一族骨干）
+        │
+        └──► 条件于 A 的未来视频  V̂_{t+1:t+H}
+
+与 R2 的关键分叉：动作从「输出」变为「输入条件」→ 可对任意候选动作做反事实推演</div>
+      <ul>
+        <li>训练时额外混入约 <strong>30%</strong> 失败轨迹，使预测分布覆盖失败后果。</li>
+        <li>触觉采用 <strong>Mask Training</strong>：真机无触觉时掩蔽触觉通道；触觉可作为预测标签而非观测。</li>
+        <li>推理侧不直接输出控制指令，而是给 R2 / RL 提供「世界内 rollout」。</li>
+      </ul>
+
+      <h3>4.4 双模型对照（架构视角）</h3>
+      <div class="table-wrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>Psi-R2</th>
+              <th>Psi-W0</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>骨干</td>
+              <td colspan="2" style="text-align:center;">Wan2.2-IT2V-5B-480P（DiT + 3D VAE + UMT5）</td>
+            </tr>
+            <tr>
+              <td>条件</td>
+              <td>图像 + 语言</td>
+              <td>图像 + 语言 + <strong>动作</strong></td>
+            </tr>
+            <tr>
+              <td>主输出</td>
+              <td>未来视频 + <strong>动作</strong></td>
+              <td>未来视频（动作条件）</td>
+            </tr>
+            <tr>
+              <td>学习信号侧重</td>
+              <td>成功示范上的联合模仿</td>
+              <td>成功 + 失败上的条件视频预测</td>
+            </tr>
+            <tr>
+              <td>部署角色</td>
+              <td>在线策略（需低延迟）</td>
+              <td>离线/侧路评估、人→机 RL、数据飞轮</td>
+            </tr>
+            <tr>
+              <td>延迟优化</td>
+              <td>DiT 缓存、Torch Compile、量化：~2.2s → &lt;100ms</td>
+              <td>同族工程手段；通常不要求控制环实时</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.5 与前序「快慢脑 / 层级」产品线的关系</h3>
+      <p>
+        灵初早期公开材料（如 Psi-R1）强调 S1 快脑执行 + S2 慢脑推理、Action Tokenizer 闭环等
+        <strong>层级 VLA</strong> 叙事；Psi-R2 / Psi-W0 则转向
+        <strong>视频生成式 WAM + AC-WM</strong> 双模型。二者同属公司技术演进，
+        但不应把 R1 的快慢脑结构直接等同于 R2/W0 的内部实现——公开文档未声明 R2 内部仍拆 S1/S2。
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Psi-R2：策略 / 世界行动模型</h2>
+
+      <h3>5.1 定义与 I/O</h3>
+      <p>
+        Psi-R2 基于预训练<strong>视频生成模型</strong>构建：输入当前视觉与自然语言指令，
+        <strong>联合预测未来视频帧与机器人控制动作</strong>。
+      </p>
+      <ul>
+        <li>从「预测未来世界 + 输出动作」看，属于 <strong>World Action Model（WAM）</strong>。</li>
+        <li>从「视觉-语言 → 动作」看，也具备 <strong>VLA</strong> 形态。</li>
+        <li>二者不冲突：视频生成骨干同时承担世界建模与动作头。</li>
+      </ul>
+
+      <h3>5.2 骨干与训练目标</h3>
+      <ul>
+        <li><strong>骨干</strong>：开源 <code>Wan2.2-IT2V-5B-480P</code></li>
+        <li><strong>目标</strong>：未来视频帧 + 机器人动作联合预测</li>
+        <li><strong>预训练混合</strong>：真机 Psi-MobiDex（~5417 h）+ 人类数据（~95472 h）</li>
+        <li><strong>后训练</strong>：可用少于 100 条真机轨迹微调，覆盖手机装配、工业包装、纸盒折叠等长时序精细任务</li>
+      </ul>
+
+      <h3>5.3 人机数据融合：Raw Data In, Raw Data Out</h3>
+      <p>
+        融合方案刻意极简：人类关节经<strong>运动学映射</strong>对齐机器人维度；图像几乎不预处理，直接作为观测与标签。
+        研究重点是<strong>用人类数据强化单一目标本体</strong>，而非先做跨本体通用策略。
+      </p>
+      <p>
+        团队曾尝试图像修复、关键点辅助损失、人机共享潜空间对齐等，最终更认同 Bitter Lesson：
+        数据规模足够后，复杂手工模块常成瓶颈。强行抹平人/机分布差异，对 pick-place 等简单任务或有帮助，
+        却伤害长时序精细操作——因为动力学本就不该被模糊掉。
+      </p>
+
+      <h3>5.4 性能真正依赖什么</h3>
+      <p>
+        公开论述强调：相对「再改一层结构」，更决定上限的是人类数据全链路治理——
+        配比、调度、课程学习、检索与评估。其中<strong>评估</strong>高度依赖 Psi-W0：
+        不能验证「是否真学到人类可迁移技能」，就无法闭环迭代。
+      </p>
+
+      <h3>5.5 工程：把 WAM 推理压到可用</h3>
+      <p>
+        WAM 常见痛点是推理慢。灵初通过 DiT 缓存、Torch Compile、量化等，
+        将单次推理从约 <strong>2.2 s</strong> 压到 <strong>&lt;100 ms</strong>，以支撑流畅操作。
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Psi-W0：动作条件世界模型</h2>
+
+      <h3>6.1 定义与 I/O</h3>
+      <p>
+        Psi-W0 同样基于 Wan2.2 视频骨干；与 R2 的关键差异是：
+        <strong>动作轨迹作为条件输入</strong>，直接调控未来视频生成。
+        因此定义为 <strong>Action-Conditioned World Model（AC-WM）</strong>。
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>字段</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="io-in">输入</span></td>
+              <td>图像观测 + 语言指令 + 机器人动作序列</td>
+            </tr>
+            <tr>
+              <td><span class="io-out">输出</span></td>
+              <td>在该动作条件下的未来场景视频</td>
+            </tr>
+            <tr>
+              <td>额外数据</td>
+              <td>在 R2 同类数据上，再混约 <strong>30%</strong> 失败轨迹（专项采集或日常采集/推理产生）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.2 两大职能</h3>
+      <ol>
+        <li>
+          <strong>策略评估</strong>：在人类数据场景中对 R2 轨迹做推演，检验是否真正吸收人类操作知识。
+        </li>
+        <li>
+          <strong>人类 → 机器人转换（更核心）</strong>：运动学重定向后仍有动力学偏差；
+          传统做法是重建物体进仿真再 RL，成本高且难处理可变形体。
+          灵初用 <strong>AC-WM 替代仿真器</strong>：R2 从人类示范推出轨迹 → 送入 W0 rollout →
+          切换到机器人视觉/动力学模式 → 在世界模型内 RL 微调，使轨迹在机器人约束下可完成任务。
+        </li>
+      </ol>
+
+      <div class="flow">单条人类示范
+  → Psi-R2 推断动作
+  → Psi-W0 条件视频推演（机器人域）
+  → 世界内 RL 纠偏动力学
+  → 得到可执行机器人轨迹
+  → 过滤优质样本回流训练（飞轮）
+  → 亦可扰动 W0 合成新场景/新数据</div>
+
+      <h3>6.3 定位边界</h3>
+      <p>
+        W0 <strong>不是</strong>第二个任务执行策略。它服务评估、优化与人→机数据转化；
+        因此必须同时见过成功与失败分布，否则无法支撑世界内 RL。
+      </p>
+    </section>
+
+    <section>
+      <h2>7. 数据体系与信噪比原则</h2>
+
+      <h3>7.1 信噪比优先于「什么设备炫」</h3>
+      <p>
+        历经多轮实验，公开结论是：在该管线中，<strong>数据信噪比（SNR）</strong>决定人类数据是增益还是伤害；
+        低 SNR 数据会主动损害训练。
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>优先级（公开表述）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>数据集构成</td>
+              <td><strong>任务多样性</strong> &gt; 物体多样性 ≫ 场景多样性</td>
+            </tr>
+            <tr>
+              <td>感知模态</td>
+              <td><strong>精准 3D 位姿</strong> ≫ 触觉 ≫ 2D 图像特征（关键点/分割等）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        场景多样性最低，因视频预训练骨干已贡献大量跨背景泛化；
+        操作是 object-centric，「任务类型覆盖」才是预训练质量核心。
+      </p>
+
+      <h3>7.2 两类人类数据</h3>
+      <ul>
+        <li>
+          <strong>高精度可回放</strong>：轨迹建在机器人空间，处理后可近似等价真机、可回放；
+          手套在严格条件下采集的数据是代表，有望在后训练阶段替代部分真机数据。
+        </li>
+        <li>
+          <strong>高泛化可扩缩</strong>：精度让位于规模，不适合直接后训练，但能快速撑起预训练泛化。
+        </li>
+      </ul>
+
+      <h3>7.3 采集与 3D 轨迹管线（摘要）</h3>
+      <ul>
+        <li>第一人称视频：时空融合的人手检测 → MANO 参数与相机系位姿。</li>
+        <li>相机内外参与深度：DPVO + Any4D；短暂出画用平滑插值（弃用误差较大的 Infiller）。</li>
+        <li>纯视频恢复可达毫米级误差；外骨骼手套可压到<strong>亚毫米</strong>，并配合遥操作校准与漂移修正。</li>
+        <li>质检：自动标注为主，人工终审；W0 的可视化预测参与质量打分。</li>
+      </ul>
+
+      <h3>7.4 为何坚持「人类数据」而非只赌遥操作</h3>
+      <p>
+        商业落地看重<strong>作业节拍（takt）</strong>与真实 SOP。工人佩戴手套边干活边采数，
+        成本低且贴合产线；节拍可接近机械臂物理上限，而遥操作常因人在环观测而偏慢。
+        因此「高质量人类数据 → 世界模型转换 → 机器人可用轨迹」被视为商业化关键能力，
+        类比早期 Sim2Real：用零样本 Human2Robot 验证人类数据有效性。
+      </p>
+
+      <h3>7.5 触觉：跨本体接触桥梁</h3>
+      <p>
+        真机触觉贵、不稳、格式不统一；人类侧采集成本可低于真机约一个数量级。
+        接触信号在人/机之间相对更可迁移。手套集成触觉后，对真机输入采用
+        <strong>掩码训练</strong>：屏蔽触觉观测通道，同时把触觉当作可预测标签，
+        以提升世界模型对接触/碰撞的建模，并增强交互预判。
+      </p>
+    </section>
+
+    <section>
+      <h2>8. 论文与开源情况</h2>
+      <p class="lead">
+        截至本报告撰写时（2026-07）：<strong>Psi-R2 / Psi-W0 权重与训练代码均未开源</strong>；
+        亦未检索到以二者为主标题的独立 arXiv 论文。公开信息以技术博客与数据集发布为主。
+      </p>
+
+      <h3>8.1 论文 / 正式出版物</h3>
+      <div class="table-wrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>条目</th>
+              <th>状态</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Psi-R2 / Psi-W0 专文</td>
+              <td><strong>未见独立 arXiv / 会议论文</strong></td>
+              <td>主叙述见技术博客
+                <a href="https://cypypccpy.github.io/tech-blog.github.io/" target="_blank" rel="noopener">From Human Skill to Robotic Mastery</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Object-Centric Dexterous Manipulation from Human Motion Data</td>
+              <td>CoRL 2024 · arXiv:2411.04005</td>
+              <td>博客自引前序工作：人类运动 → 物体中心层级策略 + RL 弥合动力学；
+                项目页 <a href="https://cypypccpy.github.io/obj-dex.github.io/" target="_blank" rel="noopener">obj-dex</a>
+              </td>
+            </tr>
+            <tr>
+              <td>DexGraspVLA</td>
+              <td>AAAI'26 Oral · 代码已开源</td>
+              <td>灵初相关灵巧抓取 VLA，<strong>不是</strong> Psi-R2/W0 本体；
+                <a href="https://github.com/Psi-Robot/DexGraspVLA" target="_blank" rel="noopener">GitHub</a>
+              </td>
+            </tr>
+            <tr>
+              <td>A Survey on Vision-Language-Action Models…</td>
+              <td>综述 + 论文列表仓</td>
+              <td>
+                <a href="https://github.com/Psi-Robot/Awesome-VLA-Papers" target="_blank" rel="noopener">Awesome-VLA-Papers</a>
+              </td>
+            </tr>
+            <tr>
+              <td>易混淆：Ψ₀ / Psi-Zero (arXiv:2603.12263)</td>
+              <td>有论文、宣称开源生态</td>
+              <td><strong>另一条人形 loco-manipulation 工作</strong>，与灵初 Psi-R2/W0 不是同一产品线，勿混用</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.2 模型权重与训练代码</h3>
+      <div class="table-wrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>资产</th>
+              <th>开源状态</th>
+              <th>链接 / 备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Psi-R2 权重</td>
+              <td><strong>未开源</strong></td>
+              <td>Hugging Face <code>PsiBotAI</code> 组织下公开 models = 0</td>
+            </tr>
+            <tr>
+              <td>Psi-W0 权重</td>
+              <td><strong>未开源</strong></td>
+              <td>同上</td>
+            </tr>
+            <tr>
+              <td>Psi-R2 / W0 训练与推理代码</td>
+              <td><strong>未开源</strong></td>
+              <td>
+                <a href="https://github.com/Psi-Robot" target="_blank" rel="noopener">github.com/Psi-Robot</a>
+                无对应仓库
+              </td>
+            </tr>
+            <tr>
+              <td>视频骨干 Wan2.2</td>
+              <td><strong>已开源</strong>（第三方）</td>
+              <td>
+                <a href="https://github.com/Wan-Video/Wan2.2" target="_blank" rel="noopener">Wan-Video/Wan2.2</a>；
+                可复现视频 DiT 骨干，无法复现灵初具身微调配方
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.3 已开源：数据与周边</h3>
+      <div class="table-wrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>资产</th>
+              <th>开源状态</th>
+              <th>要点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SynData 人类手部操作数据集</td>
+              <td><strong>已开源</strong>（首批约 1000 小时量级公开子集；总储备官方称约 10 万小时）</td>
+              <td>
+                <a href="https://huggingface.co/datasets/PsiBotAI/SynData" target="_blank" rel="noopener">PsiBotAI/SynData</a>；
+                CC BY 4.0；Zarr 多模态（ego / glove / tactile 等）
+              </td>
+            </tr>
+            <tr>
+              <td>Psi SynHand 描述文件</td>
+              <td>已开源</td>
+              <td>
+                <a href="https://github.com/Psi-Robot/synhand-description" target="_blank" rel="noopener">synhand-description</a>
+              </td>
+            </tr>
+            <tr>
+              <td>DexGraspVLA</td>
+              <td>代码开源</td>
+              <td>相关灵巧抓取研究，非 R2/W0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>复现建议：</strong>
+        目前可复用的公开资产主要是 <strong>SynData + Wan2.2 骨干</strong>；
+        完整 Psi-R2/W0 闭环（动作头设计、失败样本配比、世界内 RL、DiT 缓存推理栈）仍属闭源。
+        合作接口：<a href="mailto:market@psirobot.ai">market@psirobot.ai</a>。
+      </div>
+    </section>
+
+    <section>
+      <h2>9. 与主流 VLA 路线对比</h2>
+      <div class="table-wrap wide">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>OpenVLA 等</th>
+              <th>π₀ / π₀.₅</th>
+              <th>灵初 Psi-R2 + Psi-W0</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>核心形态</td>
+              <td>单策略 VLA（离散动作 token）</td>
+              <td>VLM + 连续动作专家（flow 等）</td>
+              <td><strong>策略 WAM + 世界模型 AC-WM</strong></td>
+            </tr>
+            <tr>
+              <td>骨干偏好</td>
+              <td>LLM / Prismatic</td>
+              <td>PaliGemma + action expert</td>
+              <td><strong>视频生成（Wan）</strong></td>
+            </tr>
+            <tr>
+              <td>数据侧重</td>
+              <td>OXE 等开源机器人混合</td>
+              <td>多源机器人 + 网页/语义等</td>
+              <td><strong>~10 万小时人类 + 真机</strong></td>
+            </tr>
+            <tr>
+              <td>失败/试错</td>
+              <td>通常不在内部世界模型做 RL</td>
+              <td>层级语义 + KI 等</td>
+              <td><strong>W0 专做反事实与世界内 RL</strong></td>
+            </tr>
+            <tr>
+              <td>跨本体目标</td>
+              <td>强（多机器人 OXE）</td>
+              <td>强（开放世界叙事）</td>
+              <td>公开材料更强调<strong>单本体落地</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        若用一句话对比：OpenVLA / π 系列主要回答「如何用统一策略网络吃多样机器人数据」；
+        灵初双模型更直接回答「如何把海量人类操作变成可评估、可纠偏的机器人策略」。
+      </p>
+    </section>
+
+    <section>
+      <h2>10. 工程优化与落地启示</h2>
+      <h3>对研发的启示</h3>
+      <ul>
+        <li>把预算优先投在<strong>可规模、高 SNR 的人类数据采集</strong>与 3D 轨迹精度，而不是无限叠加手工对齐模块。</li>
+        <li>策略与世界模型<strong>分工</strong>：执行模型吃成功分布；世界模型必须见失败。</li>
+        <li>评估要可度量：没有 W0 类评估器，人类数据「看起来学了」无法证伪。</li>
+        <li>WAM 要上真机，推理延迟必须工程化（缓存 / 编译 / 量化），否则理论能力无法变成节拍。</li>
+      </ul>
+      <h3>与本仓库 picktask 的对照（便于落地理解）</h3>
+      <ul>
+        <li>本仓库主线是 <strong>LeRobot + ACT</strong> 的仿真抓杯：小规模脚本/示教数据、绝对关节动作、无世界模型飞轮。</li>
+        <li>灵初路线是<strong>视频骨干 WAM + AC-WM</strong>，数据差两个数量级，问题从「单任务模仿」升级到「人类大数据 → 机器人策略」。</li>
+        <li>若借鉴：可先在仿真建立「策略 + 可学习动态模型/世界模型」的评估闭环，再谈人类数据迁移——而不是直接照搬 5B 视频模型。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>11. 结论与开放问题</h2>
+      <h3>结论</h3>
+      <ol>
+        <li><strong>Psi-R2</strong> 是可直接控机的 WAM/VLA 策略，吃成功人类/真机数据，少样本真机可适配精细长时序任务。</li>
+        <li><strong>Psi-W0</strong> 是 AC-WM，用动作条件视频预测做评估、反事实与人→机动力学迁移，并驱动数据飞轮。</li>
+        <li>双模型共享 Wan 视频骨干，但<strong>输入输出语义与数据配比刻意不同</strong>，避免「只会成功不会失败」。</li>
+        <li>公开叙事的竞争力来自<strong>人类数据规模 × SNR 治理 × 世界模型闭环</strong>，而非单独某个 Transformer 变体。</li>
+      </ol>
+      <h3>仍开放 / 需谨慎的点</h3>
+      <ul>
+        <li>内部实验称：转换人类数据替代真机后训练，简单抓取效果好，高精细装配成功率仍有提升空间。</li>
+        <li>多数训练数据、手套硬件与完整训练配方<strong>未完全开源</strong>；复现门槛高。</li>
+        <li>「纯人类数据零样本 Human2Robot」被定位为必经之路，但仍属持续攻关方向。</li>
+        <li>榜单与演示成绩（如公开媒体提及的 MolmoSpaces 等）需以官方最新披露为准，本报告不做未经核验的排名断言。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>12. 参考资料</h2>
+      <ul>
+        <li>
+          灵初技术博客：
+          <a href="https://cypypccpy.github.io/tech-blog.github.io/" target="_blank" rel="noopener">
+            From Human Skill to Robotic Mastery
+          </a>
+          （Psi-R2 / Psi-W0 主公开叙述）
+        </li>
+        <li>
+          前序论文：
+          <a href="https://arxiv.org/abs/2411.04005" target="_blank" rel="noopener">
+            Object-Centric Dexterous Manipulation from Human Motion Data
+          </a>
+          （CoRL 2024, arXiv:2411.04005）
+        </li>
+        <li>
+          开源数据集：
+          <a href="https://huggingface.co/datasets/PsiBotAI/SynData" target="_blank" rel="noopener">PsiBotAI/SynData</a>
+        </li>
+        <li>
+          视频骨干：
+          <a href="https://github.com/Wan-Video/Wan2.2" target="_blank" rel="noopener">Wan-Video/Wan2.2</a>
+        </li>
+        <li>
+          组织仓库：
+          <a href="https://github.com/Psi-Robot" target="_blank" rel="noopener">github.com/Psi-Robot</a>
+          （DexGraspVLA / Awesome-VLA-Papers / synhand-description；无 R2/W0 权重仓）
+        </li>
+        <li>
+          联系：
+          <a href="mailto:market@psirobot.ai">market@psirobot.ai</a>
+        </li>
+        <li>
+          对照阅读（本仓库）：
+          <code>report/机器人数据链路与重要数据集深度调研报告.html</code>、
+          OpenVLA / π₀.₅ 相关讨论与 <code>vla_sim_eval/</code>
+        </li>
+      </ul>
+      <div class="callout">
+        <strong>免责声明：</strong>
+        本报告为基于公开博客与二手报道的技术调研整理，用于内部学习与路线对比；
+        不代表灵初官方文档，具体参数、数据集与产品能力以官方最新发布为准。
+      </div>
+    </section>
+
+    <footer>
+      灵初智能 Psi-W0 &amp; Psi-R2 技术调研报告 · 存放于 <code>report/</code> · 2026-07-29
+    </footer>
+  </div>
+</body>
+</html>

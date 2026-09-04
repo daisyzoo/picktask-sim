@@ -1,0 +1,45 @@
+# --- 大数据 / 外部依赖（不进本仓）---
+qk_data/
+unitree_ros/
+lerobot/
+openpi/
+outputs/
+robocasa_ws/
+demo1/
+vla_sim_eval/
+vla_sim_eval_backup.tar.gz
+*.tar.gz
+*.zip
+
+# --- Python / IDE ---
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.env
+.idea/
+.vscode/
+.cursor/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# --- 运行产物 / 缓存 ---
+**/MUJOCO_LOG.TXT
+**/*.log
+**/caffeinate_train.log
+picktask/assets/cache/
+picktask/pickcupdata/
+picktask/liftbagdata/
+home_scene/data/
+home_scene/assets/cache/
+home_scene/assets/robocasa/external/
+**/sessions/
+**/.DS_Store
+
+# --- 临时 / 本机 ---
+*.swp
+*.swo
+.ipynb_checkpoints/

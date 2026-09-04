@@ -1,0 +1,15 @@
+闪电黄 304 不锈钢随行杯（参考图 1.jpg / 2.jpg / 3.jpg）
+
+尺寸（见 3.jpg 标注）:
+  口部外径 8.3 cm
+  底部外径 5.5 cm
+  高度     10 cm
+  容量     300 ml
+
+外观:
+  外色 闪电黄
+  内壁 / 口沿 不锈钢银白
+
+仿真接入:
+  picktask 默认杯子变体为 yellow（分段圆柱几何近似）
+  切换红杯: --cup red 或 PICKCUP_CUP_VARIANT=red

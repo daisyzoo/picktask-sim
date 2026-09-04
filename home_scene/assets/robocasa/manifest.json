@@ -1,0 +1,2507 @@
+{
+  "root": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa",
+  "count": 3137,
+  "assets": [
+    {
+      "id": "robocasa.asset.empty_kitchen_arena",
+      "category": "robocasa",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/arenas/empty_kitchen_arena.xml"
+    },
+    {
+      "id": "robocasa.fixture.model",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/accessories/light_switches/white_wide_switch/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8596",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/accessories/outlets/simple_white/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6323",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender001/Blender001_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1258",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7579",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender002/Blender002_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5709",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9067",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender003/Blender003_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1777",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1119",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender004/Blender004_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6885",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3945",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender006/Blender006_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8268",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2645",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender008/Blender008_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9554",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4072",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender009/Blender009_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7621",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5864",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender010/Blender010_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5256",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1473",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender011/Blender011_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3072",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3232",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender012/Blender012_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7425",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender012/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3607",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender013/Blender013_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9329",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0458",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender014/Blender014_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0037",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2263",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender015/Blender015_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4968",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2813",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender016/Blender016_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6371",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender016/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7522",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender018/Blender018_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3941",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender018/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7492",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender019/Blender019_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1597",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7267",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender020/Blender020_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9258",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender020/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3096",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender021/Blender021_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5584",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5885",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender022/Blender022_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5411",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7660",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender023/Blender023_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9779",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6273",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender026/Blender026_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5865",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8909",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender027/Blender027_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9372",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8748",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender028/Blender028_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6504",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6927",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender029/Blender029_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4474",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender029/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8502",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender030/Blender030_Lid/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1467",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/blenders/Blender030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.cabinet_hinge",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_hinge.xml"
+    },
+    {
+      "id": "robocasa.fixture.cabinet_housing",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_housing.xml"
+    },
+    {
+      "id": "robocasa.fixture.cabinet_open",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_open.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1802",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7556",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2623",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3820",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6549",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel005/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1855",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2780",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8077",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6410",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1793",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1214",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4074",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel012/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9102",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5241",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5957",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7767",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel016/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4095",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0114",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel018/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2285",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0478",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel020/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9399",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8600",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1156",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4822",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0545",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0465",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9227",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4333",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6002",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel029/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3385",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7866",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1610",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8362",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel033/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3817",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel034/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9287",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel035/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8006",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7108",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3802",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5035",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3416",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0999",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2625",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8374",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6521",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8142",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8304",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0301",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5235",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2782",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9414",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/CabinetDoorPanel051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.divided_window",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/divided_window.xml"
+    },
+    {
+      "id": "robocasa.fixture.divided_window_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/divided_window_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.full_window",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/full_window.xml"
+    },
+    {
+      "id": "robocasa.fixture.full_window_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/full_window_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.raised",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/raised.xml"
+    },
+    {
+      "id": "robocasa.fixture.raised_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/raised_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.shaker",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/shaker.xml"
+    },
+    {
+      "id": "robocasa.fixture.shaker_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/shaker_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.shelf",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/shelf.xml"
+    },
+    {
+      "id": "robocasa.fixture.shelf_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/shelf_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.slab",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/slab.xml"
+    },
+    {
+      "id": "robocasa.fixture.slab_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_panels/slab_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.cabinet_single",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/cabinet_single.xml"
+    },
+    {
+      "id": "robocasa.fixture.drawer",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/drawer.xml"
+    },
+    {
+      "id": "robocasa.fixture.panel",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/cabinets/panel.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4767",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1890",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8862",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5816",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3777",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4741",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3270",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8608",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0990",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6506",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2122",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3198",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2814",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2963",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine053/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6068",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine057/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6054",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine059/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6681",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine060/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9501",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine063/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7083",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine064/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0987",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine065/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3629",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine067/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1560",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine070/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2854",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine073/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0918",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine074/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8815",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine075/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6038",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine076/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5164",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine077/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9974",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine079/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0992",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine080/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7011",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine081/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4102",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine082/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1040",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine083/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1120",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine086/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5193",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine087/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2316",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine088/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4530",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine089/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7418",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine090/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1356",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine091/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0172",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine092/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2811",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine093/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7468",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine094/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7037",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine095/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4505",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine096/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9195",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine097/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4359",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine098/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0935",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine099/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9265",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine100/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5975",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine101/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3886",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine102/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6198",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/coffee_machines/CoffeeMachine103/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7702",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/counters/counter/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8612",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/counters/counter_with_opening/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9915",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2696",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6733",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher034/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1807",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9317",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4582",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8826",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher040/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1406",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1089",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4737",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7466",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4151",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0170",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6656",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1515",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher053/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1722",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher054/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9437",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher055/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7137",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher058/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2605",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher059/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0176",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher060/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2013",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher061/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0044",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher062/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2553",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher063/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0636",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/dishwashers/Dishwasher067/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3553",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7838",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7772",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7324",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6231",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7923",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1192",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3221",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5474",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0665",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5112",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0132",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0749",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle016/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7941",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9565",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle018/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3488",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9617",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5422",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7500",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2883",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3550",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7830",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0827",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6722",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/electric_kettles/ElectricKettle028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1504",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0235",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator033/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7741",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator034/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0767",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator035/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7529",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1919",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2041",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7836",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8217",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator040/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6838",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6106",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3784",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4640",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5167",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5459",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1731",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2759",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3197",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4537",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7264",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4075",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator052/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7545",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator053/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6687",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator054/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3107",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator055/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2621",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator056/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7672",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator057/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3596",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator058/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7317",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator059/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4540",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator060/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0859",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator061/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1021",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator062/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9500",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator063/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9007",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator064/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9291",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator065/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0373",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator066/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6595",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator067/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5004",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator068/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5400",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator072/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8744",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator076/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2192",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator077/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2334",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator078/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9476",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator079/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3787",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator080/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9342",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator082/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0862",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator083/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1936",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator084/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5890",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator085/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5023",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator086/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1992",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/fridges/Refrigerator087/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1854",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5347",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4356",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9801",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8622",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle005/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5017",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6581",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5587",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4681",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2688",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0066",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8963",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle012/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1161",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9879",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4090",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5888",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle016/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1471",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3267",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle018/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2132",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0703",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle020/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7543",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0593",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9134",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7983",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7456",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9174",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3128",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1801",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6827",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3145",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8571",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0456",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle033/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8290",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle035/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8329",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5307",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5922",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7944",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7159",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle040/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0021",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8838",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0605",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2976",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4296",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2152",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6351",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9999",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1298",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7723",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9946",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/CabinetHandle051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.bar_handle",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/bar_handle.xml"
+    },
+    {
+      "id": "robocasa.fixture.bar_handle_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/bar_handle_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.boxed_handle",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/boxed_handle.xml"
+    },
+    {
+      "id": "robocasa.fixture.boxed_handle_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/boxed_handle_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.knob_handle",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/knob_handle.xml"
+    },
+    {
+      "id": "robocasa.fixture.knob_handle_orig",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/handles/knob_handle_orig.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2220",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6559",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4507",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3864",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood005/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7755",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7733",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6211",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6366",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9843",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8141",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2736",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0686",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0338",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8809",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood018/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7780",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9275",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9618",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6482",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4911",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0324",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7899",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6237",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0227",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7632",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood029/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3860",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/hoods/RangeHood030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8402",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5357",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3491",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2570",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave034/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7943",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave035/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9218",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6700",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0215",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2628",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave040/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1071",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2790",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0323",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7895",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1245",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1521",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6292",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3666",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0289",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7090",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6105",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave052/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3247",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave054/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5619",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave055/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1614",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave057/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1476",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave058/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5279",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave059/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7276",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave061/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2073",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave062/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2090",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave064/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6768",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave065/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9466",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave066/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3999",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave067/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2825",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave068/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7550",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave069/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1410",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave070/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5858",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave071/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2745",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave072/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5018",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave073/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3362",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave074/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5668",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave075/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1859",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave078/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7404",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave079/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9612",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave080/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5409",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave081/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4823",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave082/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0817",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave083/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1332",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave084/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5524",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave085/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4136",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave086/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2842",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/microwaves/Microwave087/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8063",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven031/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9054",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4000",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven033/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5515",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven034/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1616",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven035/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4493",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven036/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7354",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9380",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven040/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2631",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven041/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0765",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5332",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven043/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0492",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6193",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven045/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2323",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1301",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0631",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0252",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven049/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5075",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6318",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven051/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6714",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven052/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4645",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven053/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1393",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven054/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7249",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/ovens/Oven055/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4518",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9498",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8223",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0503",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2254",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7210",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7205",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8179",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6143",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7023",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink012/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2989",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2490",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2912",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6255",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink016/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5313",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2159",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9013",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink020/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8976",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5094",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink022/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7628",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1100",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3329",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7426",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7214",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3896",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink029/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5581",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1413",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink032/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0564",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink033/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6546",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink037/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3339",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink038/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0774",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink039/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6657",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink042/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1325",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink044/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2191",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink046/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8509",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink047/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2908",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink048/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2165",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink050/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1204",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink052/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6930",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink053/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8731",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink054/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4390",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink055/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7881",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink056/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8499",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink057/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5896",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink058/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0420",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink059/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7946",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink060/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5794",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/sinks/Sink064/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7546",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7649",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer004/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3580",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer005/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2212",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer006/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1653",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer007/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6513",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer008/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5611",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer009/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6094",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer010/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8009",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer011/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2551",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer012/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1084",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer013/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_5089",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer014/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4880",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer015/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4332",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer017/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_8632",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer019/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7399",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer020/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3407",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer021/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1710",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer023/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_3482",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer024/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0341",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer025/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_1446",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2288",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0701",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer029/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7786",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stand_mixers/StandMixer030/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_6712",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove001/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_2308",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove002/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_7637",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove003/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9976",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove026/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_0343",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove027/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_9055",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove028/model.xml"
+    },
+    {
+      "id": "robocasa.fixture.model_4500",
+      "category": "fixture",
+      "path": "/Users/ke/Documents/wm/mujoco/home_scene/assets/robocasa/external/fixtures/stoves/Stove051/model.xml"
+    }
+  ],
+  "assets_truncated": true
+}

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MuJoCo 机器人抓杯仿真 — 进展汇报</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --border: #2d3a4f;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #3b82f6;
+      --accent2: #06b6d4;
+      --success: #22c55e;
+      --warn: #f59e0b;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 28px 48px;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+    }
+
+    header .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      background: rgba(6, 182, 212, 0.12);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    header .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 720px;
+    }
+
+    header .meta {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    header .meta span strong { color: var(--text); }
+
+    /* Section */
+    section {
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Pipeline */
+    .pipeline {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow-x: auto;
+      padding: 4px 0 8px;
+    }
+
+    .pipe-node {
+      flex: 1;
+      min-width: 100px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 12px;
+      text-align: center;
+      position: relative;
+    }
+
+    .pipe-node.highlight {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .pipe-node.optional {
+      border-style: dashed;
+      opacity: 0.85;
+    }
+
+    .pipe-node .icon {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .pipe-node .label {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .pipe-node .desc {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .pipe-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+      font-size: 18px;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .pipeline { flex-wrap: wrap; }
+      .pipe-arrow { display: none; }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card ul {
+      padding-left: 18px;
+    }
+
+    .card li { margin-bottom: 4px; }
+
+    /* KPI */
+    .kpi {
+      text-align: center;
+      padding: 18px 12px;
+    }
+
+    .kpi .num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .kpi .num.accent { color: var(--accent2); }
+    .kpi .num.success { color: var(--success); }
+    .kpi .num.warn { color: var(--warn); }
+
+    .kpi .unit {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Images */
+    .figure-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    figure {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    figure img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+
+    figcaption {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    figcaption strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--surface2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td { color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .badge.done { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+    .badge.progress { background: rgba(245, 158, 11, 0.15); color: var(--warn); }
+    .badge.planned { background: rgba(139, 156, 179, 0.15); color: var(--muted); }
+
+    /* State machine */
+    .state-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: ui-monospace, monospace;
+    }
+
+    .state-flow span {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 6px;
+      color: var(--accent2);
+    }
+
+    .state-flow .arr { color: var(--muted); border: none; background: none; padding: 0; }
+
+    /* Footer */
+    footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .highlight-box {
+      background: rgba(59, 130, 246, 0.06);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .highlight-box strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header>
+      <div class="tag">Simulation · Manipulation · IL + RL</div>
+      <h1>Unitree G1 桌面抓杯 — MuJoCo 仿真进展汇报</h1>
+      <p class="subtitle">
+        在 MuJoCo 中搭建 Unitree G1 人形机器人桌面抓杯场景，完成专家示教数据管线、严格成功判定、
+        LeRobot 数据集录制，以及 ACT 模仿学习与 Residual RL 闭环评估的全链路打通。
+      </p>
+      <div class="meta">
+        <span><strong>平台</strong> MuJoCo · LeRobot v3 · PyTorch</span>
+        <span><strong>机器人</strong> Unitree G1 23DOF (mode_10)</span>
+        <span><strong>任务</strong> 单臂抓杯 · 抬起 · 保持</span>
+        <span><strong>更新</strong> 2026-07-02</span>
+      </div>
+    </header>
+
+    <!-- KPI -->
+    <section>
+      <h2>关键指标</h2>
+      <div class="grid-3">
+        <div class="card kpi">
+          <div class="num success">25+</div>
+          <div class="unit">已录制成功 Episode<br/>目标 200 · 进行中</div>
+        </div>
+        <div class="card kpi">
+          <div class="num warn">~14%</div>
+          <div class="unit">Scripted 随机场景通过率<br/>严格成功标准下</div>
+        </div>
+        <div class="card kpi">
+          <div class="num accent">8</div>
+          <div class="unit">Proprio 维度 (state / action)<br/>+ 640×480 head_camera</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pipeline -->
+    <section>
+      <h2>端到端技术链路</h2>
+      <div class="pipeline">
+        <div class="pipe-node">
+          <div class="icon">🤖</div>
+          <div class="label">专家示教</div>
+          <div class="desc">Scripted 状态机<br/>Teleop 可选</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node highlight">
+          <div class="icon">📦</div>
+          <div class="label">LeRobot 数据</div>
+          <div class="desc">仅成功轨迹入库<br/>mp4 + parquet</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node">
+          <div class="icon">🧠</div>
+          <div class="label">ACT 模仿学习</div>
+          <div class="desc">视觉 + proprio<br/>基础策略</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node optional">
+          <div class="icon">⚡</div>
+          <div class="label">Residual RL</div>
+          <div class="desc">a = a_ACT + Δa<br/>PPO 微调</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node">
+          <div class="icon">🔄</div>
+          <div class="label">仿真闭环</div>
+          <div class="desc">统一成功判定<br/>Eval / RL Gym</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <strong>设计原则：</strong>本地离线运行，录制与训练均无需联网；IL（ACT）与 RL（PPO）模块解耦，
+        成功标准在录制、ACT eval、RL eval 三处共用同一套 <code>check_episode_success</code> 判定。
+      </div>
+    </section>
+
+    <!-- Scene + Images -->
+    <section>
+      <h2>仿真场景</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>场景布局</h3>
+          <ul>
+            <li>1.5 m × 0.6 m 桌面，G1 站在<strong>长边外侧</strong>（y ≈ −0.48），面朝 +Y</li>
+            <li>纸杯默认位于桌面靠机器人一侧（y ≈ −0.22）</li>
+            <li>批量录制对机器人 / 杯子 XY 做小范围随机化，增加泛化</li>
+            <li>固定 pelvis，控制腰 + 右臂 5DOF + 任务夹爪</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <div class="state-flow">
+              <span>SETTLE</span><span class="arr">→</span>
+              <span>APPROACH</span><span class="arr">→</span>
+              <span>ALIGN</span><span class="arr">→</span>
+              <span>CLOSE</span><span class="arr">→</span>
+              <span>LIFT</span><span class="arr">→</span>
+              <span>HOLD</span>
+            </div>
+          </div>
+        </div>
+        <div class="figure-row" style="grid-template-columns:1fr;">
+          <figure>
+            <img src="assets/img/report/scene_default.png" alt="默认场景 head camera 视角" />
+            <figcaption>
+              <strong>Head Camera 默认视角</strong>
+              机器人初始站位，杯子在桌面目标区域
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="assets/img/report/scene_approach.png" alt="Approach 姿态 head camera 视角" />
+            <figcaption>
+              <strong>Approach 末端姿态</strong>
+              离散 REACH 步进 + 几何微调，手心朝向杯子
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success criteria + Data -->
+    <section>
+      <h2>成功标准与数据规格</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Episode 成功判定（严格）</h3>
+          <table>
+            <thead>
+              <tr><th>维度</th><th>要求</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>抓取姿态</td><td>手心朝杯 · 指间有效接触 · 手腕未扭曲</td></tr>
+              <tr><td>抬起高度</td><td>相对初始高度 &gt; 5 cm</td></tr>
+              <tr><td>保持时间</td><td>Hold 阶段累计 ≥ 1.5 s 合理抓取</td></tr>
+              <tr><td>终态检验</td><td>episode 结束仍通过 can_initiate_grasp</td></tr>
+              <tr><td>入库策略</td><td>未达标 episode 直接丢弃，不写入训练集</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>LeRobot v3 数据格式</h3>
+          <table>
+            <thead>
+              <tr><th>字段</th><th>规格</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>observation.images.head_camera</td><td>640×480 RGB · 30 fps · H.264</td></tr>
+              <tr><td>observation.state</td><td>8 维 proprio（不含杯位姿）</td></tr>
+              <tr><td>action</td><td>8 维关节目标（与 proprio 对齐）</td></tr>
+              <tr><td>task</td><td>"pick up the cup"</td></tr>
+              <tr><td>存储路径</td><td>pickcupdata/train/&lt;name&gt;/</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Milestones -->
+    <section>
+      <h2>里程碑与进展</h2>
+      <div class="card" style="padding:0; overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>内容</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>场景与物理</td>
+              <td>G1 URDF → MJCF 编译；长边站位；碰撞 / 穿模修复；地板与杯体物理 sanitize</td>
+              <td><span class="badge done">已完成</span></td>
+            </tr>
+            <tr>
+              <td>Scripted 专家</td>
+              <td>离散 REACH 步进 · ALIGN 修正 · 动态 approach 规划 · 4 variant 试跑</td>
+              <td><span class="badge done">已完成</span></td>
+            </tr>
+            <tr>
+              <td>严格成功标准</td>
+              <td>can_initiate_grasp / can_maintain_grasp 统一；录制 / eval / RL 共用</td>
+              <td><span class="badge done">已完成</span></td>
+            </tr>
+            <tr>
+              <td>批量数据录制</td>
+              <td>pickcup_train_200 · 随机场景 · 仅成功入库 · 目标 200 episodes</td>
+              <td><span class="badge progress">进行中</span></td>
+            </tr>
+            <tr>
+              <td>ACT 训练</td>
+              <td>80k steps · MPS · 仿真闭环 eval</td>
+              <td><span class="badge planned">待数据就绪</span></td>
+            </tr>
+            <tr>
+              <td>Residual RL</td>
+              <td>PPO 纯 PyTorch · a = a_ACT + Δa · Gymnasium 环境</td>
+              <td><span class="badge planned">待 ACT baseline</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section>
+      <h2>软件架构</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>仿真层</h3>
+          <ul>
+            <li><code>lib/pickcup.py</code> — 场景、teleop、抓取几何</li>
+            <li><code>lib/pickcup_sim_core.py</code> — 状态机、成功判定</li>
+            <li>MuJoCo head_camera 渲染</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>数据层</h3>
+          <ul>
+            <li><code>lib/lerobot_recorder.py</code> — LeRobot v3 写入</li>
+            <li><code>scripts/pickcup_batch_record.py</code> — 批量筛选录制</li>
+            <li>两阶段：无视频试跑 → 正式录制</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>策略层</h3>
+          <ul>
+            <li><code>scripts/pickcup_train_act.py</code> — ACT IL</li>
+            <li><code>lib/pickcup_gym_env.py</code> — RL 环境</li>
+            <li><code>lib/pickcup_ppo.py</code> — Residual PPO</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next steps -->
+    <section>
+      <h2>后续计划</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>近期</h3>
+          <ul>
+            <li>完成 200 条严格筛选训练数据录制</li>
+            <li>ACT 80k steps 训练 + 仿真 eval 建立 baseline</li>
+            <li>抽检成功 episode 视频，评估 demo 质量</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>中期</h3>
+          <ul>
+            <li>Residual RL 在 ACT 基础上微调泛化</li>
+            <li>按 eval 结果迭代 scripted / 随机范围 / 阈值</li>
+            <li>可选：teleop 高质量 demo 与 scripted 混训</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>picktask · MuJoCo Simulation Report</span>
+      <span>打开方式：浏览器直接打开本 HTML（需与 assets/ 相对路径一致）</span>
+    </footer>
+
+  </div>
+</body>
+</html>

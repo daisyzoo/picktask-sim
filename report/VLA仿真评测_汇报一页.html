@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VLA仿真评测</title>
+<style>
+  @page { size: A4 landscape; margin: 8mm; }
+  :root {
+    --ink: #0b1220;
+    --muted: #64748b;
+    --line: #dbe3ee;
+    --soft: #f4f7fb;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-soft: #eff6ff;
+    --teal: #0d9488;
+    --teal-soft: #f0fdfa;
+    --violet: #6d28d9;
+    --violet-soft: #f5f3ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #e8eef5;
+    color: var(--ink);
+  }
+  .slide {
+    width: min(1280px, 100vw - 24px);
+    margin: 12px auto;
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(15, 23, 42, 0.08);
+    padding: 24px 32px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .top h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .top h1 em { font-style: normal; color: var(--blue); }
+  .top .aside {
+    text-align: right;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .protocol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    background: var(--soft);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+  }
+  .protocol .lab {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 12px;
+    margin-right: 2px;
+  }
+  .chip {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: #334155;
+  }
+  .chip b { color: var(--ink); }
+
+  .sec-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .step {
+    position: relative;
+    background: var(--blue-soft);
+    border: 1.5px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px 8px 11px;
+    text-align: center;
+  }
+  .step + .step { margin-left: 16px; }
+  .step + .step::before {
+    content: "";
+    position: absolute;
+    left: -12px; top: 50%;
+    width: 9px; height: 2px;
+    background: var(--blue);
+    transform: translateY(-50%);
+  }
+  .step + .step::after {
+    content: "";
+    position: absolute;
+    left: -6px; top: 50%;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 5px solid var(--blue);
+    transform: translateY(-50%);
+  }
+  .step .n {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }
+  .step .t { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .step .s { font-size: 11.5px; color: var(--muted); line-height: 1.3; }
+  .step.out { background: var(--teal-soft); border-color: #99f6e4; }
+  .step.out .n { background: var(--teal); }
+
+  .mid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 14px;
+  }
+  .panel {
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .stack { display: grid; gap: 7px; }
+  .row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 8px;
+    align-items: center;
+  }
+  .badge {
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 7px;
+  }
+  .badge.policy { background: var(--violet-soft); color: var(--violet); }
+  .badge.sim { background: var(--blue-soft); color: var(--blue); }
+  .badge.task { background: var(--teal-soft); color: var(--teal); }
+  .row .desc { font-size: 13px; color: #334155; }
+  .row .desc strong { color: var(--ink); }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .mcard {
+    border-radius: 10px;
+    padding: 11px 12px;
+    border: 1.5px solid var(--line);
+  }
+  .mcard.main {
+    background: linear-gradient(160deg, #eff6ff 0%, #fff 75%);
+    border-color: #bfdbfe;
+  }
+  .mcard .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .mcard .title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .mcard .rule {
+    font-size: 12.5px;
+    color: #334155;
+    line-height: 1.4;
+  }
+  .mcard .rule b { color: var(--ink); }
+
+  /* Bottom photos: compact strip */
+  .showcase {
+    margin-top: 2px;
+  }
+  .shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .shot {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--line);
+    background: #0f172a;
+    height: 148px;
+  }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+  }
+  .shot .cap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 7px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .shot .cap .v {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .shot .cap .d {
+    font-size: 11px;
+    opacity: 0.85;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .slide { width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="top">
+    <h1>仿真评测 <em>· VLA</em></h1>
+    <div class="aside">
+      vla_sim_eval · MuJoCo · G1 23DoF<br />
+      π0.5 6D · 拿杯 / 拎包
+    </div>
+  </div>
+
+  <div class="protocol">
+    <span class="lab">评测协议</span>
+    <span class="chip"><b>观测</b> 头显 RGB + 6D 状态 + 指令</span>
+    <span class="chip"><b>动作</b> 6D · 20Hz</span>
+    <span class="chip"><b>时限</b> max-steps 3000</span>
+    <span class="chip"><b>汇总</b> 任务均权平均</span>
+    <span class="chip"><b>成功</b> 目标条件 + 保持时间</span>
+    <span class="chip"><b>用途</b> 仿真选型 · 真机验收</span>
+  </div>
+
+  <div>
+    <div class="sec-label">评测流程</div>
+    <div class="pipeline">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">策略服务</div>
+        <div class="s">GPU 常驻加载</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">场景重置</div>
+        <div class="s">任务采样布局</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">观测</div>
+        <div class="s">头显 · 本体 · 指令</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">推理</div>
+        <div class="s">输出 6D 动作</div>
+      </div>
+      <div class="step">
+        <div class="n">5</div>
+        <div class="t">执行</div>
+        <div class="s">物理闭环步进</div>
+      </div>
+      <div class="step out">
+        <div class="n">6</div>
+        <div class="t">判定汇总</div>
+        <div class="s">成功率 · 均权平均</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mid">
+    <div class="panel">
+      <div class="sec-label">系统分层</div>
+      <div class="stack">
+        <div class="row">
+          <div class="badge policy">策略层</div>
+          <div class="desc"><strong>π0.5 推理服务</strong> — 图像 + 状态 + 语言 → 6D</div>
+        </div>
+        <div class="row">
+          <div class="badge sim">评测层</div>
+          <div class="desc"><strong>vla_sim_eval</strong> — 闭环编排 · 任务注册 · 结果聚合</div>
+        </div>
+        <div class="row">
+          <div class="badge task">物理层</div>
+          <div class="desc"><strong>picktask 内核</strong> — G1 · 相机 · 接触 / 穿带判定</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="sec-label">评测指标</div>
+      <div class="metrics">
+        <div class="mcard main">
+          <div class="label">主指标</div>
+          <div class="title">任务成功率</div>
+          <div class="rule">成功次数 / episode 数<br />多任务取 <b>均权平均</b></div>
+        </div>
+        <div class="mcard">
+          <div class="label">拿杯成功条件</div>
+          <div class="title">掌侧接触</div>
+          <div class="rule">正确接触并保持<br /><b>≥ 0.25 秒</b></div>
+        </div>
+        <div class="mcard">
+          <div class="label">拎包成功条件</div>
+          <div class="title">穿带承托</div>
+          <div class="rule">抬升 <b>≥ 12 cm</b><br />保持 <b>≥ 1.5 秒</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="showcase">
+    <div class="sec-label">实评画面</div>
+    <div class="shots">
+      <figure class="shot">
+        <img src="../vla_sim_eval/pictures/1.png" alt="拿杯仿真评测" />
+        <figcaption class="cap">
+          <span class="v">拿杯</span>
+          <span class="d">MuJoCo + 头显观测</span>
+        </figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="../vla_sim_eval/pictures/2.png" alt="拎包仿真评测" />
+        <figcaption class="cap">
+          <span class="v">拎包</span>
+          <span class="d">穿带 · 承托 · 抬升</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
